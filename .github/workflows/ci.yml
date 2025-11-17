@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+# 添加权限配置
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,5 +33,11 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          # 使用 GitHub 自动生成的 token（推荐）
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # 明确指定发布分支
+          publish_branch: gh-pages
           publish_dir: dist
+          # 可选：添加提交信息
+          commit_message: 'Deploy to GitHub Pages 🚀'
+          
