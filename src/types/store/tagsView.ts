@@ -1,30 +1,3 @@
-// import type { RouteLocationNormalized, RouteRecordName, LocationQuery } from "vue-router";
-// export interface View extends RouteLocationNormalized {
-//     meta: {
-//         title?: string;
-//         affix?: boolean;
-//         noCache?: boolean;
-//         link?: string;
-//         [key: string]: unknown;
-//     }
-//     title?: string;
-//     name: RouteRecordName;
-// }
-
-// export interface tagsViewState {
-//     visitedViews: View[];
-//     cachedViews: string[];
-//     iframeViews: View[];
-// }
-
-// export interface tagsViewAction {
-//     addView: (view: View) => void;
-//     // addIframeView: (view: View) => void;
-//     deleteView: (view: View) => Promise<tagsViewState>;
-//     delOthersViews: (view: View) => Promise<tagsViewState>
-//     delAllViews: () => Promise<tagsViewState>
-//     // delIframeView: (view: View) => Promise<tagsViewState>
-// }
 // @/types/store/tagsView.ts
 import type { RouteRecordName, RouteLocationNormalized } from 'vue-router'
 
@@ -40,6 +13,12 @@ export interface View extends RouteLocationNormalized {
   name: RouteRecordName
 }
 
+export interface RefreshPage {
+  name: string
+  path: string
+  query: any
+}
+
 export interface tagsViewState {
   visitedViews: View[]
   cachedViews: string[]
@@ -53,9 +32,8 @@ export interface tagsViewAction {
   deleteView: (view: View) => Promise<tagsViewState>
   delOthersViews: (view: View) => Promise<void>
   deleteIframeView: (view: View) => Promise<void>
-  refreshPage(view: View): Promise<void>
-  closeLeft(view: View): Promise<void>
-  closeRight(view: View): Promise<void>
-  closeAll(): Promise<void>
+  refreshPage: (view: View) => Promise<void>
+  closeLeft: (view: View) => Promise<void>        // 确保这里是 closeLeft
+  closeRight: (view: View) => Promise<void>       // 确保这里是 closeRight
+  closeAll: () => Promise<void>                   // 确保这里是 closeAll
 }
-

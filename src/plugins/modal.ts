@@ -69,11 +69,13 @@ export default {
   },
   // 打开遮罩层
   loading(content: string) {
-    loadingInstance = ElLoading.service({
+    const instance = ElLoading.service({
       lock: true,
       text: content,
       background: "rgba(0, 0, 0, 0.7)",
-    })
+    }) as unknown as LoadingOptions;
+
+    loadingInstance = instance;
   },
   // 关闭遮罩层
   closeLoading() {

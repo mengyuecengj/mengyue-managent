@@ -1,6 +1,6 @@
 import { useTagsViewStore } from '@/store/modules/tagsView'
 import router from '@/router'
-import { TagsViewState, View, RefreshPage } from '@/types/store/tagsView'
+import { tagsViewState, View, RefreshPage } from '@/types/store/tagsView'
 
 export default {
   // 刷新当前tab页签
@@ -33,7 +33,7 @@ export default {
         query: refreshObj.query,
         meta: { ...router.currentRoute.value.meta }
       }
-      await useTagsViewStore().deleteCachedView(view)
+      await useTagsViewStore().delCachedView(view)
       await router.replace({
         path: '/redirect' + refreshObj.path,
         query: refreshObj.query
@@ -50,12 +50,6 @@ export default {
   },
 
   // 关闭指定tab页签
-  /**
-   * Closes a page/tab in the tags view.
-   * If no parameter is provided, closes the current route and navigates to the last visited view or index.
-   * @param obj - Optional route object to close. If undefined, closes current route.
-   * @returns Promise that resolves after closing and navigation completes.
-   */
   async closePage(obj?: View | string): Promise<void> {
     if (!obj) {
       const { visitedViews } = await useTagsViewStore().deleteView(router.currentRoute.value)
@@ -72,25 +66,26 @@ export default {
   },
 
   // 关闭所有tab页签
-  async closeAllPage(): Promise<TagsViewState> {
-    return useTagsViewStore().deleteAllViews();
+  async closeAllPage(): Promise<void> {
+    return useTagsViewStore().closeAll(); // 改为 closeAll
   },
+
   // 关闭左侧tab页签
-  async closeLeftPage(obj: View | string): Promise<TagsViewState> {
+  async closeLeftPage(obj: View | string): Promise<void> {
     const view = typeof obj === 'string' ? { ...router.currentRoute.value, path: obj } : obj
-    return await useTagsViewStore().deleteLeftTags(view)
+    return await useTagsViewStore().closeLeft(view) // 改为 closeLeft
   },
 
   // 关闭右侧tab页签
-  async closeRightPage(obj: View | string): Promise<TagsViewState> {
+  async closeRightPage(obj: View | string): Promise<void> {
     const view = typeof obj === 'string' ? { ...router.currentRoute.value, path: obj } : obj
-    return await useTagsViewStore().deleteRightTags(view)
+    return await useTagsViewStore().closeRight(view) // 改为 closeRight
   },
 
   // 关闭其他tab页签
-  async closeOtherPage(obj: View | string): Promise<TagsViewState> {
+  async closeOtherPage(obj: View | string): Promise<void> {
     const view = typeof obj === 'string' ? { ...router.currentRoute.value, path: obj } : obj
-    return await useTagsViewStore().deleteOthersViews(view)
+    return await useTagsViewStore().delOthersViews(view)
   },
 
   // 打开tab页签
@@ -100,6 +95,6 @@ export default {
 
   // 修改tab页签
   async updatePage(view: View): Promise<void> {
-    await useTagsViewStore().updateVisitedView(view)
+    await useTagsViewStore().delVisitedView(view)
   }
 }
