@@ -1,0 +1,114 @@
+/* 组件面板样式 */
+.component-panel {
+  padding: 16px;
+}
+
+.component-list {
+  display: grid;
+  gap: 8px;
+}
+
+.component-item {
+  padding: 12px;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+}
+
+.component-item:hover {
+  border-color: #1890ff;
+}
+
+.component-item:active {
+  cursor: grabbing;
+}
+
+/* 画布样式 */
+.canvas-area {
+  padding: 20px;
+  min-height: 100%;
+}
+
+.canvas-content {
+  min-height: 500px;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.canvas-component {
+  position: relative;
+  margin: 8px;
+  padding: 4px;
+}
+
+.canvas-component.selected {
+  outline: 2px solid #1890ff;
+}
+
+.component-toolbar {
+  position: absolute;
+  top: -30px;
+  right: 0;
+  background: #1890ff;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.component-toolbar button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 100px 20px;
+  color: #999;
+}
+
+/* 属性面板样式 */
+.property-panel {
+  padding: 16px;
+}
+
+.property-group {
+  margin-bottom: 20px;
+}
+
+.property-group h4 {
+  margin: 0 0 12px 0;
+  color: #333;
+}
+
+.property-item {
+  margin-bottom: 12px;
+}
+
+.property-item label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  color: #666;
+}
+
+.property-item input,
+.property-item select {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+}
+
+.empty-properties {
+  text-align: center;
+  padding: 40px 20px;
+  color: #999;
+}

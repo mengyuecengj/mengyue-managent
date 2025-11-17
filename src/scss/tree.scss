@@ -1,0 +1,94 @@
+@use './variables.base.scss' as *;
+
+.my-tree {
+    background: transparent !important;
+    
+    .my-tree-node {
+        .my-tree-node__content {
+
+            .arrow,
+            .label {
+                color: var(--general);
+            }
+
+            &:hover {
+                background-color: $sidebar-text-active;
+
+                // 修改 hover 时的文本颜色
+                .arrow,
+                .label {
+                    color: var(--index-bg-color); // 或者你想要的颜色，如 #fff
+                }
+            }
+        }
+
+        // 子节点展开状态下的样式（可选）
+        .my-tree-node__children {
+            .my-tree-node {
+                .my-tree-node__content:hover {
+                    background-color: $sidebar-text-active;
+
+                    .arrow,
+                    .label {
+                        color: var(--index-bg-color);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.my-tree-select {
+    .my-tree-select__input {
+        background-color: transparent;
+        border: 1px solid var(--general) !important;
+
+        .placeholder {
+            color: var(--general) !important;
+        }
+
+        .arrow {
+            color: var(--general);
+        }
+    }
+
+    .my-tree-select__dropdown {
+        background: var(--general-two);
+
+        .tree-container {
+            .my-tree-node {
+                .my-tree-node__content {
+
+                    .arrow,
+                    .label {
+                        color: var(--general);
+                    }
+
+                    &:hover {
+                        background-color: $sidebar-text-active;
+
+                        // 修改 hover 时的文本颜色
+                        .arrow,
+                        .label {
+                            color: var(--index-bg-color); // 或者你想要的颜色，如 #fff
+                        }
+                    }
+                }
+
+                // 子节点展开状态下的样式（可选）
+                .my-tree-node__children {
+                    .my-tree-node {
+                        .my-tree-node__content:hover {
+                            background-color: $sidebar-text-active;
+
+                            .arrow,
+                            .label {
+                                color: var(--index-bg-color);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

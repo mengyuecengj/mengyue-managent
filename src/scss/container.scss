@@ -1,0 +1,46 @@
+.app-container {
+    .head-container {
+        padding: 20px;
+        margin-top: 8px;
+
+        .head-tree {
+            color: var(--navbar-text) !important;
+        }
+    }
+
+    .my-form {
+        background: var(--index-bg-color) !important;
+        box-shadow: none;
+        
+        .my-form-item__label {
+            color: var(--general);
+        }
+
+        .my-col {
+            margin-top: 10px;
+        }
+    }
+
+    .resetQuery {
+        margin-left: 30px;
+    }
+}
+
+// 角色 ==> 新增按钮： 菜单权限水平对齐
+.checkbox-row {
+    flex-wrap: nowrap;
+}
+
+.checkbox-label {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    white-space: nowrap;
+    /* 禁止换行 */
+    gap: 4px;
+    /* 控制复选框与文字间距 */
+}
+
+.my-row--align>.my-col {
+    margin-bottom: 16px !important;
+}

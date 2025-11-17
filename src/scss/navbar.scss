@@ -1,0 +1,138 @@
+// 定义顶部导航栏的整体样式
+.navbar {
+    height: 50px; // 导航栏高度
+    overflow: hidden;
+    position: relative;
+    background: var(--navbar-bg); // 下滑后固定顶部导航栏的背景颜色
+
+    // 汉堡菜单容器样式
+    .hamburger-container {
+        line-height: 46px;
+        height: 100%;
+        float: left;
+        cursor: pointer;
+    }
+
+    // 面包屑容器样式
+    .breadcrumb-container {
+        float: left;
+    }
+
+    // 顶部菜单容器样式
+    .topmenu-container {
+        position: absolute;
+        left: 50px;
+    }
+
+    // 右侧菜单容器样式
+    .right-menu {
+        float: right;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        cursor: pointer;
+
+        // 右侧菜单项样式
+        .right-menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 0 8px;
+            font-size: 18px;
+            color: var(--navbar-text);
+        }
+
+        // 图标尺寸样式
+        .size-icon {
+            font-size: 20px;
+            width: 20px;
+            height: 20px;
+        }
+
+        // 用户头像容器样式
+        .avatar-container {
+            .user-avatar {
+                width: 40px;
+                height: 40px;
+                border-radius: 10px;
+
+            }
+        }
+
+    }
+
+    // 移除dropdown的边框样式
+    .m-dropdown .m-btn {
+        border: none;
+    }
+}
+
+.m-dropdown__menu {
+    // 链接样式
+    .a_link {
+        text-decoration: none !important;
+        color: var(--general);
+
+        .my-dropdown-item {
+            display: flex;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+            min-width: 0;
+
+            .my-dropdown-item__content {
+                display: flex;
+                flex-wrap: nowrap;
+                white-space: nowrap;
+                min-width: 0;
+                overflow: hidden;
+
+                span {
+                    display: flex;
+                    flex-wrap: nowrap;
+                    white-space: nowrap;
+                    min-width: 0;
+                }
+            }
+        }
+    }
+
+    // 为非链接的下拉项也添加相同的样式
+    .my-dropdown-item {
+        display: flex;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+        min-width: 0;
+
+        .my-dropdown-item__content {
+            display: flex;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+            min-width: 0;
+            overflow: hidden;
+
+            span {
+                display: flex;
+                flex-wrap: nowrap;
+                white-space: nowrap;
+                min-width: 0;
+            }
+        }
+    }
+}
+
+// 下拉菜单项的hover状态样式
+.my-dropdown-item:hover {
+    color: var(--navbar-hover-text, #409eff);
+    background: var(--navbar-hover-bg) !important;
+}
+
+// 搜索框(dialog)x的样式
+.my-dialog .my-dialog__header .my-dialog__close {
+    color: var(--navbar-search-text);
+}
+
+.my-input-wrapper.search-input.my-input {
+    color: #000;
+}

@@ -1,0 +1,51 @@
+{
+  "compilerOptions": {
+    // 指定要包含的全局类型声明（如vite客户端类型）
+    "types": ["vite/client", "node"],
+    // 设置模块系统为ES模块（最新标准）
+    "module": "esnext",
+    // 编译目标为最新ES标准
+    "target": "esnext",
+    // 使用Node.js的模块解析策略
+    // 没使用mock
+    // "moduleResolution": "node",
+    // 使用mock为下面这种
+    "moduleResolution": "bundler",
+    // 允许混合导入CommonJS和ES模块（关键解决path导入报错）
+    "esModuleInterop": true,
+    // 允许导入JSON文件
+    "resolveJsonModule": true,
+    // 跳过库类型检查（加快编译速度）
+    "skipLibCheck": true,
+    // 启用所有严格类型检查
+    "strict": true,
+    "noImplicitAny": true,
+    // 基础路径（配合paths使用）
+    "baseUrl": ".",
+    // 路径别名配置（@/指向src/目录）
+    "typeRoots": ["./node_modules/@types"],
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "~/*": [
+        "*"
+      ]
+    }
+  },
+  // 包含哪些文件需要类型检查
+  "include": [
+    "vite-env.d.ts", // Vite环境类型声明
+    "src/**/*.ts", // 所有TS文件
+    "src/**/*.d.ts", // 所有类型声明文件
+    "src/**/*.tsx", // 所有TSX文件
+    "src/**/*.vue", // 所有Vue文件（需配合vue-tsc）
+    "src/api/system/user.ts",
+    "src/views/system/user/indexbak",
+    "src/auto-imports.d.ts",
+  ],
+  // 排除不需要检查的目录
+  "exclude": [
+    "node_modules"
+  ]
+}

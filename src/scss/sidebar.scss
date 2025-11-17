@@ -1,0 +1,107 @@
+@use './variables.base.scss' as *;
+
+/**
+ * layout/sidebar style
+ */
+
+/* ------------------------ 全局样式 ------------------------ */
+// 侧边栏根样式
+.aside {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: $sidebar-width; // 使用变量控制宽度
+    transition: $sidebar-transition-sidebar; // 平滑过渡效果
+    background: var(--sidebar-bg); // 动态背景色
+    border-right: none !important;
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1); // 添加阴影效果
+}
+
+// 内容区域样式
+.content-wrapper {
+    margin-left: $sidebar-width; // 默认左侧边距
+    transition: margin-left 0.7s ease; // 平滑过渡效果
+    background: var(--navbar-bg);
+
+    &.collapsed {
+        margin-left: $sidebar-collapsed-width; // 折叠时调整左边距
+    }
+
+    .main-content {
+        min-height: calc(100vh - 145px); // 确保内容区域高度适配
+        padding: 20px; // 内边距
+    }
+}
+
+// 当侧边栏折叠时，调整内容区域的左边距
+.aside.collapsed + .content-wrapper {
+    margin-left: $sidebar-collapsed-width;
+}
+
+/* ------------------------ 菜单项样式 ------------------------ */
+// 菜单项文本样式
+.menu-title {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis; // 文本溢出时显示省略号
+    white-space: nowrap; // 禁止换行
+    margin-left: 10px;
+    color: var(--menu-text, #c1cbd7); // 动态文本颜色
+}
+
+// 菜单项图标样式
+.menu-icon {
+    color: var(--menu-text, #c1cbd7); // 动态图标颜色
+}
+
+/* ------------------------ 交互状态样式 ------------------------ */
+// active选中样式
+.my-menu-item.is-active {
+    // 动态选中背景颜色
+    background-color: var(--sidebar-bg, #2a303d);
+    .menu-title,
+    .menu-icon {
+        color: $sidebar-text-active !important; // 动态选中文本颜色
+    }
+}
+
+// 鼠标经过菜单时样式
+.my-menu-item {
+    &:hover {
+        background-color: var(--menu-hover-bg, #2a303d); // 动态悬停背景色
+        border-radius: 4px; // 圆角效果
+    }
+
+    .menu-icon {
+        margin-left: 10px; // 图标间距
+    }
+
+    .menu-title {
+        margin-left: 20px; // 文本间距
+    }
+}
+
+/* ------------------------ 特殊样式 ------------------------ */
+// 二级和二级以上菜单
+.my-submenu .submenu-list {
+    padding: 0 !important; // 移除内边距
+}
+
+// 二级菜单背景颜色
+.submenu-list {
+    background-color: var(--sidebar-two-bg); // 动态二级菜单背景色
+}
+
+// 首页特殊样式
+.sidebar-container {
+    .home-menu-item {
+        .svg-icon,
+        [class*="icon"] {
+            margin-left: 0; // 移除图标间距
+        }
+
+        .menu-title {
+            margin-left: 10px; // 调整文本间距
+        }
+    }
+}

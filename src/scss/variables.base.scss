@@ -1,0 +1,113 @@
+:root {
+  --index-bg-color: #ffffff;
+
+  // 左侧导航栏
+  --sidebar-bg: #304156;
+  --sidebar-logo-text: #ffffff;
+  --sidebar-two-bg: #222D3C;
+  --menu-text: #c1cbd7;
+
+  // 顶部导航栏
+  --navbar-bg: #ffffff;
+  --navbar-hover-bg: #f0f0f0;
+  --navbar-text: #302b2b;
+  --navbar-hamburger: #302b2b;
+  --navbar-search-text: #0b1110;
+
+  // scroll
+  --track-color: #fff;
+
+  // tags
+  --tags-item-text: #333333; // 标签文字颜色
+  --tags-item-active: #3e5d7c; // 活动标签背景色
+
+  // table
+  --table-header-bg: #f5faf7;
+  --table-border-color: #fafafa;
+  --table-body-bg: #ffffff;
+  // 表格斑马纹
+  --table-stripe-bg: #f1f2f0;
+  // 表格border
+  --table-border: #bdbdbd;
+
+  // dialog
+  --dialog-bg: #ffffff;
+
+  // 通用1
+  --general: #0b1110;
+  // 通用2
+  --general-two: #ffffff;
+  // 文本通用1
+  --general-text: #409EFF;
+
+  // 边框通用
+  --border-color: #c7c7c7;
+}
+
+// 暗黑模式变量
+html.dark {
+  --index-bg-color: #0a1017;
+
+  // 左侧导航栏(--sidebar-two-bg可以再次调整)
+  --sidebar-bg: #0a1017;
+  --sidebar-logo-text: #dde9e8;
+  --sidebar-two-bg: #0e1620;
+  --menu-text: #c1cbd7;
+
+  /* 顶部导航栏 */
+  --navbar-bg: #081018;
+  --navbar-hover-bg: #2a2a2b;
+  --navbar-text: #ffffff;
+  --navbar-hamburger: #e7e0e0;
+  --navbar-search-text: #ebefee;
+
+  // scroll
+  --track-color: #0a1017;
+
+  // tags
+  --tags-item-text: #e0e0ff; // 标签文字颜色
+  --tags-item-active: #1e3a6f; // 活动标签背景色
+
+  // table
+  --table-header-bg: #060813;
+  --table-border-color: #2d3446;
+  --table-body-bg: #0a1017;
+  // 表格斑马纹
+  --table-stripe-bg: #121a24;
+  // 表格border
+  --table-border: #2d3446;
+
+  // dialog
+  --dialog-bg: #0b1115;
+
+  // 通用1
+  --general: #e7ebea;
+  // 通用2
+  --general-two: #151414;
+  // 文本通用1
+  --general-text: #409EFF;
+  // 边框通用
+  --border-color: #0a1919;
+}
+
+// sidebar about
+$sidebar-width: 220px;
+$sidebar-collapsed-width: 54px;
+$sidebar-transition-sidebar: width 0.7s ease; // sidebar专用
+$sidebar-text-active: #409eff;
+
+// tags about
+$tags-border-color: #3d4454; // 边框颜色
+$tags-bg-hover: #2a303d;
+$tags-text-hover: #e0e0ff; // hover / active 标签文字颜色
+$tags-cricle: #5a6a8a; // 每个标签视图前面的小圆点
+$tags-circle-active: #6a9eff; // 每个标签视图前面的小圆点 active
+$tags-close-hover: #ff5555; // 在 tagsview.scss 中用于 close-btn hover
+$tags-height: 34px;
+$tags-item-height: 26px;
+$tags-border-radius: 4px; // 通用圆角
+$tags-padding: 8px; // 基础padding
+$tags-margin: 6px; // 基础margin
+$tags-transition-base: all tags-transition-duration ease; // 基础过渡
+$tags-transition-duration: 0.3s; // 过渡时长（多处如 transition: all 0.3s ease;）
+$tags-shadow-base: 0 1px 4px rgba(0, 0, 0, 0.3); // 基础阴影

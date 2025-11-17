@@ -1,0 +1,157 @@
+@use './container.scss' as *;
+@use './tree.scss' as *;
+@use './sidebar.scss' as *;
+@use './tagsview.scss' as *;
+@use './variables.base.scss' as *;
+@use './navbar.scss' as *;
+@use './apiDocs.scss' as *;
+@use './builder.scss' as *;
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+
+  &::-webkit-scrollbar-track {
+    border-radius: 0;
+  }
+}
+
+// my-form 全局统一样式
+.my-input-wrapper .my-input {
+  border: 1px solid var(--general) !important;
+}
+
+// MYSelect 全局统一样式
+.select-e {
+  background-color: transparent !important;
+  border: 1px solid var(--general) !important;
+  height: 30px !important;
+
+  .select-trigger {
+    background-color: transparent !important;
+
+    .selected-value {
+      color: var(--general) !important;
+    }
+  }
+
+  .select-dropdown {
+    background-color: var(--general-two);
+  }
+}
+
+// select-option全局统一样式
+.select-option {
+  color: var(--general) !important;
+}
+
+// 表格全局样式
+.my-table {
+  margin-top: 10px;
+  background: transparent !important;
+  border: none !important;
+
+  th,
+  td {
+    border-color: var(--table-border) !important;
+  }
+}
+
+// 分页器全局样式
+.pagination-container {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  /* 右对齐分页器（或改为 flex-start） */
+  box-sizing: border-box;
+  margin-left: auto;
+  /* 可选：内侧留白，视具体 UI 调整 */
+
+  .my-pagination .total {
+    color: var(--general);
+  }
+
+  .page-sizes {
+    background: transparent;
+    color: var(--general);
+  }
+
+  .btn-prev {
+    color: var(--general);
+  }
+
+  .btn-next {
+    color: var(--general);
+  }
+
+  .jumper {
+    color: var(--general);
+
+    input {
+      background: transparent;
+      color: var(--general);
+    }
+  }
+}
+
+// 全局dialog中form表单样式
+.dialog_form {
+  background: var(--dialog-bg) !important;
+  box-shadow: none !important;
+
+  .my-form-item__label {
+    color: var(--general);
+  }
+
+  .my-input-wrapper {
+    .my-input {
+      color: var(--general);
+    }
+  }
+}
+
+// 全局radio样式
+.my-radio-group {
+  margin: 7px;
+
+  .my-radio__input {
+    margin-left: 10px;
+
+    .my-radio__label {
+      color: var(--general-two) !important;
+    }
+  }
+}
+
+// transfer lin
+.my-dialog {
+  background: var(--general-two) !important;
+
+  .my-dialog__header {
+    .my-dialog__title {
+      color: var(--general) !important;
+    }
+  }
+
+  .my-form {
+    box-shadow: none;
+
+    .my-form-item {
+      margin-top: 20px;
+    }
+  }
+}
+
+.my-transfer {
+  .transfer-panel__list {
+    .transfer-panel__item {
+      color: var(--general) !important;
+
+      .transfer-panel__checkbox::before {
+        color: var(--general) !important;
+      }
+    }
+  }
+}
+
