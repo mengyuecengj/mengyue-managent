@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import Layout from '@/layout/index.vue';
 import { CustomRouteConfig } from '@/types/store/permission';
 
@@ -93,7 +93,7 @@ export const dynamicRoutes = [
   },
 ] as unknown as CustomRouteConfig[];
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes: constantRoutes as RouteRecordRaw[],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
