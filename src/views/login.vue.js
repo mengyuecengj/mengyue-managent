@@ -205,6 +205,7 @@ const __VLS_31 = __VLS_asFunctionalComponent(__VLS_30, new __VLS_30({
     placeholder: "请输入用户名",
     width: "100%",
     ...{ class: "form-input" },
+    textColor: "#fff",
     autoComplete: "off",
     modelValue: (__VLS_ctx.formData.username),
 }));
@@ -213,6 +214,7 @@ const __VLS_32 = __VLS_31({
     placeholder: "请输入用户名",
     width: "100%",
     ...{ class: "form-input" },
+    textColor: "#fff",
     autoComplete: "off",
     modelValue: (__VLS_ctx.formData.username),
 }, ...__VLS_functionalComponentArgsRest(__VLS_31));
@@ -263,6 +265,7 @@ const __VLS_47 = __VLS_asFunctionalComponent(__VLS_46, new __VLS_46({
     placeholder: "请输入密码",
     type: "password",
     width: "100%",
+    textColor: "#fff",
     ...{ class: "form-input" },
     autoComplete: "off",
     modelValue: (__VLS_ctx.formData.password),
@@ -272,6 +275,7 @@ const __VLS_48 = __VLS_47({
     placeholder: "请输入密码",
     type: "password",
     width: "100%",
+    textColor: "#fff",
     ...{ class: "form-input" },
     autoComplete: "off",
     modelValue: (__VLS_ctx.formData.password),
@@ -327,6 +331,7 @@ const __VLS_63 = __VLS_asFunctionalComponent(__VLS_62, new __VLS_62({
     placeholder: "请输入验证码",
     width: "100%",
     ...{ class: "form-input" },
+    textColor: "#fff",
     modelValue: (__VLS_ctx.formData.code),
     autoComplete: "off",
 }));
@@ -336,6 +341,7 @@ const __VLS_64 = __VLS_63({
     placeholder: "请输入验证码",
     width: "100%",
     ...{ class: "form-input" },
+    textColor: "#fff",
     modelValue: (__VLS_ctx.formData.code),
     autoComplete: "off",
 }, ...__VLS_functionalComponentArgsRest(__VLS_63));

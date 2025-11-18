@@ -39,7 +39,7 @@
                         <MYForm-item prop="username" class="horizontal-item">
                             <div class="input-row">
                                 <MYText type="default" class="form-label">账号</MYText>
-                                <MYInput placeholder="请输入用户名" width="100%" class="form-input" auto-complete="off"
+                                <MYInput placeholder="请输入用户名" width="100%" class="form-input" textColor="#fff" auto-complete="off"
                                     v-model="formData.username" @blur="() => formRef?.validateField('username')" />
                             </div>
                         </MYForm-item>
@@ -48,7 +48,7 @@
                         <MYForm-item prop="password" class="horizontal-item">
                             <div class="input-row">
                                 <MYText type="default" class="form-label">密码</MYText>
-                                <MYInput placeholder="请输入密码" type="password" width="100%" class="form-input"
+                                <MYInput placeholder="请输入密码" type="password" width="100%" textColor="#fff" class="form-input"
                                     auto-complete="off" v-model="formData.password"
                                     @blur="() => formRef?.validateField('password')" />
                             </div>
@@ -59,7 +59,7 @@
                             <div class="input-row">
                                 <MYText type="default" class="form-label">验证码</MYText>
                                 <div class="code-wrapper">
-                                    <MYInput placeholder="请输入验证码" width="100%" class="form-input"
+                                    <MYInput placeholder="请输入验证码" width="100%" class="form-input" textColor="#fff"
                                         v-model="formData.code" auto-complete="off" @keyup.enter="login"
                                         @blur="() => formRef?.validateField('code')" />
                                     <div class="code-img">
