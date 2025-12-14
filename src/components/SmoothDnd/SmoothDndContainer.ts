@@ -22,6 +22,7 @@
 
 import { getTagProps, validateTagProp } from '@/utils/general'
 import { dropHandlers, smoothDnD, type SmoothDnD } from 'smooth-dnd'
+import { ref, defineComponent } from 'vue'
 
 smoothDnD.dropHandler = dropHandlers.reactDropHandler().handler;
 smoothDnD.wrapChild = false;
@@ -46,9 +47,10 @@ export const SmoothDndContainer = defineComponent({
     
     // setup 函数用于声明响应式状态和逻辑
     setup() {
-        // 声明响应式变量用于存储 smooth-dnd 容器实例
-        // 使用类型断言明确变量类型，便于后续类型检查和代码提示
+        const containerRef = ref<HTMLElement | null>(null)
+        
         return {
+            containerRef,
             container: null as SmoothDnD | null
         }
     },
@@ -68,9 +70,11 @@ export const SmoothDndContainer = defineComponent({
             }
         }
 
+        options.getGhostParent = () => document.body
+
         // 获取需要应用拖放功能的 DOM 元素
-        // 优先使用 ref="container" 指定的元素，否则使用组件根元素
-        const containerElement = this.$refs.container || this.$el
+        // 使用 containerRef.value 替代之前的 $refs.container
+        const containerElement = this.containerRef || this.$el
 
         // 初始化 smooth-dnd 拖放功能
         // 将配置好的选项应用到 DOM 容器
@@ -144,7 +148,7 @@ export const SmoothDndContainer = defineComponent({
         // 3. this.$slots.default?.(): 渲染默认插槽内容
         return h(
             tagProps.value,
-            Object.assign({}, {ref: 'container'}, tagProps.props),
+            Object.assign({}, {ref: this.containerRef}, tagProps.props),
             this.$slots.default?.()
         )
     }

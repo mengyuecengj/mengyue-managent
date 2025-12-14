@@ -123,7 +123,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue';
 import * as echarts from 'echarts/core';
 import { MapChart, ScatterChart, EffectScatterChart } from 'echarts/charts';
 import { GeoComponent, TooltipComponent } from 'echarts/components';

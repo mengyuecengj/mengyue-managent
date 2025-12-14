@@ -90,6 +90,11 @@ html.dark {
   --border-color: #0a1919;
 }
 
+// text about
+$dashboard-background: linear-gradient(to right, #13374C, #0F6677);
+$dashboard-border: #00BAFF;
+$dashboard-background-hover: #0F6677;
+
 // sidebar about
 $sidebar-width: 220px;
 $sidebar-collapsed-width: 54px;

@@ -33,6 +33,8 @@ import router from '@/router'
 
 import SvgIcon from '@/components/SvgIcon/index.vue';
 
+import DataVVue3 from '@kjgl77/datav-vue3'
+
 import '@/permission'
 
 import { useDict } from './utils/dict';
@@ -69,6 +71,7 @@ app.use(router);
 app.use(pinia);
 app.use(plugins);
 app.use(MengyuePlus);
+app.use(DataVVue3)
 // app.use(ElementPlus);
 app.component('SvgIcon', SvgIcon);
 

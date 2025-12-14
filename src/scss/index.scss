@@ -6,6 +6,8 @@
 @use './navbar.scss' as *;
 @use './apiDocs.scss' as *;
 @use './builder.scss' as *;
+@use './dashboard.scss' as *;
+@use './editor.scss' as *;
 
 html,
 body {
@@ -154,4 +156,3 @@ body {
     }
   }
 }
-

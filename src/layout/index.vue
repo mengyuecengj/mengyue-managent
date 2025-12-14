@@ -1,8 +1,15 @@
 <template>
   <div>
-    <template v-if="isFullscreen">
+    <!-- 1. 最高优先级：noLayout 路由（大屏编辑器）→ 完全裸渲染 -->
+    <template v-if="isNoLayoutRoute">
+      <router-view v-slot="{ Component }">
+        <component :is="Component" />
+      </router-view>
+    </template>
+
+    <!-- 2. 次高优先级：fullscreen 路由（你原来那种带标题栏的全屏大屏） -->
+    <template v-else-if="isFullscreen">
       <div class="fullscreen-wrapper">
-        <!-- 这里只渲染主内容区域，使其覆盖整个视口 -->
         <MYMain class="main-content main-content--fullscreen">
           <router-view v-slot="{ Component }">
             <transition name="slide-fade" mode="out-in">
@@ -13,17 +20,17 @@
       </div>
     </template>
 
-    <!-- 非 fullscreen 原始布局（保持你现有结构） -->
+    <!-- 3. 普通后台页面布局 -->
     <template v-else>
       <div class="layout-container">
-        <MYScroll class="layout-scrollbar" thumbColor="#454a58" thumbHoverColor="#454a58" trackColor="var(--track-color)">
+        <MYScroll class="layout-scrollbar" thumbColor="#454a58" thumbHoverColor="#454a58"
+          trackColor="var(--track-color)">
           <MYAside class="aside" :class="{ collapsed: !sidebarOpened }" :width="sidebarWidth" height="100vh">
             <Sidebar />
           </MYAside>
 
           <div class="content-wrapper">
             <MYHeader class="header" height="50px" fixed>
-              <!-- 监听 Navbar 发出的 setLayout 事件 -->
               <Navbar @setLayout="showSettings = true" />
             </MYHeader>
 
@@ -36,9 +43,6 @@
                 </transition>
               </router-view>
             </MYMain>
-
-            <!-- 改成 v-model 控制 Settings 抽屉 -->
-            <!-- <Settings v-model="showSettings" /> -->
           </div>
         </MYScroll>
       </div>
@@ -47,24 +51,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import useAppStore from '@/store/modules/app'
 import Sidebar from './components/Sidebar/index.vue'
 import { Navbar, TagsView } from './components/index'
-// import Settings from './components/Settings/index.vue'
 
 const route = useRoute()
 const appStore = useAppStore()
 
-// 根据 route.meta.fullscreen 决定是否进入伪全屏分支
+// 1. 大屏编辑器专用：完全不走任何 Layout
+const isNoLayoutRoute = computed(() => route.meta?.noLayout === true)
+
+// 2. 你原来支持的伪全屏大屏（有标题栏、控制按钮等）
 const isFullscreen = computed(() => !!route.meta?.fullscreen)
 
-// 侧边栏开关与宽度（保持你原有逻辑）
+// 侧边栏逻辑保持不变
 const sidebarOpened = computed(() => appStore.sidebar.opened)
 const sidebarWidth = computed(() => (sidebarOpened.value ? '220px' : '54px'))
 
-// settings 抽屉显示控制
 const showSettings = ref(false)
 </script>
 

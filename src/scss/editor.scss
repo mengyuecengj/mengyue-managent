@@ -1,0 +1,305 @@
+@use './variables.base.scss' as *;
+
+.dashboard-top {
+    background: #0a1017;
+    height: 100vh;
+
+    .top-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        height: 51px;
+        background: #0a1017;
+        border-bottom: 1px solid #2D343C;
+    }
+
+    .dashboard-dropdown {
+        .content {
+            padding: 10px;
+        }
+    }
+
+    .m-dropdown .m-btn {
+        background: #0a1017;
+        border: none;
+
+        // 鼠标触碰时样式
+        &:hover {
+            background: #323943;
+        }
+    }
+
+    .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .nav-right {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.dashboard-content {
+    display: flex;
+    justify-content: space-between;
+    height: calc(100vh - 52px);
+    overflow: hidden;
+
+    .dashboard-left {
+        width: 220px;
+        height: 100%;
+        background: #1D1F26;
+
+        .dashboard-title {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            font-weight: 800;
+            width: auto;
+            height: auto;
+            background: #2D343C;
+        }
+    }
+
+    .dashboard-center {
+        flex: 1;
+        padding: 0;
+        background: #0a1017;
+
+        .canvas-container {
+            background: #0e1015;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+    }
+
+    .dashboard-right {
+        width: 260px;
+        background: #1D1F26;
+
+        .dashboard-title {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 10px;
+            font-weight: 800;
+            width: auto;
+            height: auto;
+            background: #2D343C;
+        }
+
+        .props-panel {
+            margin-top: 10px;
+
+            .back-btn {
+                display: flex;
+                justify-content: center;
+            }
+
+            .operation-list {
+                background-color: transparent;
+
+                .my-input-wrapper {
+                    .my-input {
+                        color: #fff !important;
+                    }
+                }
+
+                .my-form-item__label {
+                    color: #cfd3dc;
+                    margin-bottom: 20px;
+                    font-weight: 300;
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+}
+
+/* 自定义 Cascader 下拉整体样式 */
+.my-custom-cascader-popper {
+    background: #1d1f26;
+    border: 1px solid #2d343c !important;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 0;
+
+    /* Cascader 主体：左右两列布局 */
+    .el-cascader-panel {
+        display: flex;
+        background: #1d1f26;
+        border-radius: 0;
+    }
+
+    /* ========================
+     左侧 一级分组菜单
+  ======================== */
+    .el-cascader-menu:first-child {
+        width: 180px;
+        background: #1d1f26;
+        border-right: 1px solid #2d343c;
+        overflow-y: auto;
+
+        .el-cascader-node {
+            color: #cfd3dc;
+            padding: 12px 16px;
+            font-size: 14px;
+            border-radius: 0;
+
+            &:hover {
+                background: #2d343c;
+            }
+
+            &.is-active {
+                background: #2d343c;
+                color: #fff;
+            }
+        }
+    }
+
+    /* ========================
+     右侧 二级网格布局（图表预览）
+  ======================== */
+    .el-cascader-menu:last-child {
+        flex: 1;
+        padding: 4px;
+        background: #1d1f26;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+
+        .el-cascader-node {
+            &:hover {
+                background: #2d343c;
+            }
+        }
+    }
+
+    .item-label {
+        color: #cfd3dc;
+        font-size: 13px;
+        text-align: center;
+        width: 100%;
+    }
+}
+
+.data-editor-container {
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 20px;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+}
+
+/* 表格区域样式 */
+.data-table {
+    border: 1px solid #e4e7ed;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    .table-header {
+        display: flex;
+        background: #3b3c3d;
+
+        font-weight: 600;
+
+        .header-cell {
+            flex: 1;
+            padding: 12px 15px;
+            border-bottom: 1px solid #ebeef5;
+            color: #fff;
+            text-align: center;
+
+        }
+    }
+
+    .table-body {
+        overflow: auto;
+
+        .table-row {
+            display: flex;
+            transition: background-color 0.2s;
+
+            &:hover {
+                background-color: #2b2b2d;
+            }
+
+            .cell {
+                flex: 1;
+                padding: 10px 15px;
+                display: flex;
+                justify-content: center;
+
+                .my-input-wrapper {
+                    .my-input {
+                        color: #fff !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* JSON 预览区域样式 */
+.data-preview {
+    background: #282c34;
+    color: #abb2bf;
+    border-radius: 4px;
+    padding: 12px;
+    margin-top: 16px;
+    overflow: auto;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+
+    h4 {
+        color: #e0e0e0;
+        margin: 0 0 8px;
+        font-weight: 500;
+    }
+
+    pre {
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.5;
+        white-space: pre-wrap;
+        word-break: break-all;
+    }
+}
+
+/* 底部操作栏样式 */
+.dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-top: 30px;
+}
+
+.scrollbar-containers {
+    height: 30vh !important;
+    overflow: auto;
+}
+
+// 顶部文本旁边的箭头符号
+.m-dropdown__caret {
+    color: #fff !important;
+}
+
+.m-dropdown__menu {
+    background: #2d343c !important;
+    color: #fff;
+    border: none !important;
+}
+
+// 颜色选择器移除过多的白边
+.my-form-item__control select,
+.my-form-item__control textarea,
+.my-form-item__control {
+    padding: 0 !important;
+}

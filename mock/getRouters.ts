@@ -32,24 +32,46 @@ export default [
                 component: 'dashboard/display/index',
                 meta: {
                   title: '数据大屏展示',
-                  icon: 'peoples',
+                  icon: 'fullscreen',
                   noCache: false,
                   link: null,
                   fullscreen: true
                 }
               },
-              // {
-              //   name: 'desgin',
-              //   path: 'desgin',
-              //   hidden: false,
-              //   component: 'dashboard/design/index',
-              //   meta: {
-              //     title: '数据大屏设计',
-              //     icon: 'peoples',
-              //     noCache: false,
-              //     link: null
-              //   }
-              // }
+              {
+                name: 'design',
+                path: 'design',
+                hidden: false,
+                redirect: '/dashboard/design/list',
+                meta: {
+                  title: '数据大屏设计',
+                  icon: 'fullscreen',
+                  noCache: false,
+                  link: null
+                },
+                children: [
+                  {
+                    name: 'DashboardDesignList',
+                    path: 'list',
+                    component: 'dashboard/design/index',
+                    meta: {
+                      title: '数据大屏设计',
+                      noCache: false
+                    }
+                  },
+                  {
+                    name: 'DashboardEditor',
+                    path: 'editor/:id?',
+                    hidden: true,
+                    component: 'dashboard/design/editor',
+                    meta: {
+                      title: '大屏编辑器',
+                      activeMenu: '/dashboard/design/list',
+                      noLayout: true
+                    }
+                  }
+                ]
+              },
             ]
           },
           {
@@ -230,30 +252,6 @@ export default [
                   link: null
                 }
               },
-              // {
-              //   name: 'Job',
-              //   path: 'job',
-              //   hidden: false,
-              //   component: 'monitor/job/index',
-              //   meta: {
-              //     title: '定时任务',
-              //     icon: 'job',
-              //     noCache: false,
-              //     link: null
-              //   }
-              // },
-              // {
-              //   name: 'Druid',
-              //   path: 'druid',
-              //   hidden: false,
-              //   component: 'monitor/druid/index',
-              //   meta: {
-              //     title: '数据监控',
-              //     icon: 'druid',
-              //     noCache: false,
-              //     link: null
-              //   }
-              // },
               {
                 name: 'Server',
                 path: 'server',
@@ -278,18 +276,6 @@ export default [
                   link: null
                 }
               },
-              // {
-              //   name: 'CacheList',
-              //   path: 'cacheList',
-              //   hidden: false,
-              //   component: 'monitor/cache/list',
-              //   meta: {
-              //     title: '缓存列表',
-              //     icon: 'redis-list',
-              //     noCache: false,
-              //     link: null
-              //   }
-              // }
             ]
           },
           {
@@ -318,72 +304,8 @@ export default [
                   link: null
                 }
               },
-              // {
-              //   name: 'Gens',
-              //   path: 'gens',
-              //   hidden: false,
-              //   component: 'tool/gens/index',
-              //   meta: {
-              //     title: '代码生成',
-              //     icon: 'code',
-              //     noCache: false,
-              //     link: null
-              //   }
-              // },
-              // {
-              //   name: 'Gen',
-              //   path: 'gen',
-              //   hidden: false,
-              //   component: 'tool/gen/index',
-              //   meta: {
-              //     title: '单页生成',
-              //     icon: 'slider',
-              //     noCache: false,
-              //     link: null
-              //   }
-              // },
-              // {
-              //   name: 'Swagger',
-              //   path: 'swagger',
-              //   hidden: false,
-              //   component: 'tool/swagger/index',
-              //   meta: {
-              //     title: '系统接口',
-              //     icon: 'swagger',
-              //     noCache: false,
-              //     link: null
-              //   }
-              // }
             ]
           },
-          // {
-          //   name: 'Ai',
-          //   path: '/ai',
-          //   hidden: false,
-          //   redirect: 'noRedirect',
-          //   component: 'Layout',
-          //   alwaysShow: true,
-          //   meta: {
-          //     title: 'AI智能助手',
-          //     icon: 'swagger',
-          //     noCache: false,
-          //     link: null
-          //   },
-          //   children: [
-          //     {
-          //       name: 'deepseek',
-          //       path: 'ai',
-          //       hidden: false,
-          //       component: 'ai/index',
-          //       meta: {
-          //         title: 'deepseek',
-          //         icon: 'swagger',
-          //         noCache: false,
-          //         link: null
-          //       }
-          //     }
-          //   ]
-          // },
           {
             name: 'Api',
             path: '/api',
@@ -415,7 +337,7 @@ export default [
                 path: 'system',
                 hidden: false,
                 redirect: 'noRedirect',
-                component: 'ParentView',  // 二级菜单使用 ParentView
+                component: 'ParentView',
                 alwaysShow: true,
                 meta: {
                   title: '系统管理接口文档',
@@ -428,7 +350,7 @@ export default [
                     name: 'ApiUser',
                     path: 'user',
                     hidden: false,
-                    component: 'api/system/apiUser',  // 三级菜单使用具体组件
+                    component: 'api/system/apiUser',
                     meta: {
                       title: '用户管理接口文档',
                       icon: 'user',

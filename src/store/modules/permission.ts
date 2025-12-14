@@ -62,6 +62,10 @@ export const usePermissionStore = defineStore('permission', {
             const defaultRoutes: RouteConfig[] = filterAsyncRouter(defaultData)
             const asyncRoutes: RouteConfig[] = filterDynamicRoutes(dynamicRoutes)
 
+            rewriteRoutes.forEach((route: any) => {
+              router.addRoute(route)
+            })
+
             asyncRoutes.forEach((route: RouteConfig) => {
               router.addRoute(route as RouteRecordRaw)
             })
@@ -105,11 +109,12 @@ function filterAsyncRouter(
         route.component = loadView(route.component as string)
       }
     }
-    if (route.children && route.children.length) {
-      route.children = filterAsyncRouter(route.children, route, type)
-    } else {
-      delete route.children
-      delete route.redirect
+    if (route.children != null && route.children.length > 0) {
+      if (type && route.component === ParentView) {
+        route.children = filterChildren(route.children, route)
+      } else {
+        route.children = filterAsyncRouter(route.children, route, type)
+      }
     }
     return true
   })
@@ -150,16 +155,28 @@ export function filterDynamicRoutes(routes: RouteConfig[]): RouteConfig[] {
 }
 
 /** 动态加载视图组件 */
-export const loadView = (view: string): () => Promise<{ default: Component }> => {
-  let res: () => Promise<{ default: Component }> = () => Promise.reject(`组件 ${view} 未找到`)
+export const loadView = (view: string) => {
+  // 情况1：直接写 dashboard/design/editor（对应 editor.vue）
+  const directPath = `@/views/${view}.vue`
+  if (modules[directPath]) {
+    return modules[directPath]
+  }
+
+  // 情况2：写 dashboard/design/editor（对应 editor/index.vue）
+  const indexPath = `@/views/${view}/index.vue`
+  if (modules[indexPath]) {
+    return modules[indexPath]
+  }
+
+  // 情况3：你原来那种 xxx/index 的写法（兼容旧代码）
   for (const path in modules) {
     const dir = path.split('views/')[1].split('.vue')[0]
-    if (dir === view) {
-      res = () => modules[path]()
-      break
+    if (dir === view || dir === view + '/index') {
+      return modules[path]
     }
   }
-  return res
-}
 
+  console.warn('[loadView] 未找到组件:', view)
+  return () => import('@/views/error/404.vue')
+}
 export default usePermissionStore

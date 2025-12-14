@@ -1,0 +1,108 @@
+@use './variables.base.scss' as *;
+
+.dashboard-description {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 100px;
+    padding: 20px;
+
+    .create-dashboard {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+        width: 300px;
+        background: $dashboard-background;
+        border: 1px solid $dashboard-border;
+        box-shadow: 1px 1px 4px rgba(115, 185, 255, 0.6);
+
+        &:hover {
+            cursor: pointer;
+            background: $dashboard-background-hover;
+        }
+    }
+
+    .dashboard-list {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+        width: 300px;
+        border: 1px solid $dashboard-border;
+        box-shadow: 1px 1px 4px rgba(115, 185, 255, 0.6);
+        overflow: hidden; // 重要：防止子元素溢出破坏圆角或边框
+
+        .dashboard-button {
+            opacity: 0 !important;
+            transition: opacity 0.2s;
+        }
+
+        // 新的真实 DOM 实现底部区域
+        .dashboard-list-item {
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 25px;
+            background-color: #1D262E;
+            z-index: 1;
+
+            .dashboard-item-left {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 8px;
+                padding: 0 10px;
+            }
+
+            .dashboard-item-right {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                gap: 8px;
+                padding: 0 10px;
+            }
+        }
+
+        // 底部分割线也用真实元素实现（可选，更稳妥）
+        .dashboard-list-item::before {
+            content: '';
+            position: absolute;
+            top: 0; // 紧贴填充区顶部
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #1D262E;
+            z-index: 2;
+        }
+
+        &:hover {
+            cursor: pointer;
+            background: rgba($dashboard-background-hover, 0.3);
+
+            .dashboard-button {
+                opacity: 1 !important;
+            }
+        }
+
+    }
+}
+
+.dashboard-dialog-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+.dashboard-input {
+    margin-left: 20px;
+}

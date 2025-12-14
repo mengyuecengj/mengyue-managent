@@ -50,25 +50,17 @@
             <div class="template-master">
                 <div class="template-slave">
                     <MYText Tecolor="var(--navbar-text)" class="fast-title">快速入口</MYText>
-                    <MYButton type="primary" class="document">
-                        <MYa href="/api/leading" color="#fff" underline>
-                            查阅接口文档
-                        </MYa>
+                    <MYButton type="primary" class="document" @click="navigateTo('/api/leading')">
+                        查阅接口文档
                     </MYButton>
-                    <MYButton type="primary" colorText="#fff" class="document">
-                        <MYa href="/tool/build" color="#fff" underline>
-                            表单构建
-                        </MYa>
+                    <MYButton type="primary" colorText="#fff" class="document" @click="navigateTo('/tool/build')">
+                        表单构建
                     </MYButton>
-                    <MYButton type="primary" colorText="#fff" class="document">
-                        <MYa href="/system/user" color="#fff" underline>
-                            用户管理
-                        </MYa>
+                    <MYButton type="primary" colorText="#fff" class="document" @click="navigateTo('/system/user')">
+                        用户管理
                     </MYButton>
-                    <MYButton type="primary" colorText="#fff" class="document">
-                        <MYa href="/monitor/online" color="#fff" underline>
-                            在线用户
-                        </MYa>
+                    <MYButton type="primary" colorText="#fff" class="document" @click="navigateTo('/monitor/online')">
+                        在线用户
                     </MYButton>
                 </div>
                 <div class="template-notice">
@@ -90,6 +82,12 @@ import * as echarts from 'echarts';
 const cache = ref([]) as any;
 const commandstats = ref(null);
 const usedmemory = ref(null);
+
+const router = useRouter();
+const navigateTo = (path: string) => {
+    router.push(path);
+};
+
 function getList() {
     modal.loading("正在加载缓存监控数据，请稍候！");
     getCache().then(response => {
