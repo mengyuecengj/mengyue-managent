@@ -2,6 +2,7 @@
 import { ref, onMounted, onBeforeUnmount, watch, shallowRef, nextTick } from 'vue'
 import * as echarts from 'echarts'
 import type { ChartConfig } from '@/data/dashboard/barChart'
+import { cloneDeep } from 'lodash-es'
 
 interface Props {
   config: ChartConfig
@@ -41,10 +42,10 @@ function getOptionsWithColor() {
   if (!baseOptions) return null
 
   if (!props.color || !isHexString(props.color)) {
-    return JSON.parse(JSON.stringify(baseOptions))
+    return cloneDeep(baseOptions)
   }
 
-  const options = JSON.parse(JSON.stringify(baseOptions))
+  const options = cloneDeep(baseOptions)
   const color = props.color
 
   if (options.series) {

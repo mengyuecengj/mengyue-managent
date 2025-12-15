@@ -77,10 +77,10 @@
                         </div>
                     </MYDialog>
                 </MYForm-item>
-                <MYForm-item label="x轴设置" v-if="!isPieChart">
+                <MYForm-item label="x轴设置" v-if="isAxisChart">
                     <MYSwitch v-model="selectedBlock.xAlign" />
                 </MYForm-item>
-                <div v-if="selectedBlock.xAlign && !isPieChart">
+                <div v-if="selectedBlock.xAlign && isAxisChart">
                     <MYForm-item label="x轴名称">
                         <MYInput v-model="selectedBlock.xName" placeholder="请输入x轴名称" @input="updateXName" />
                     </MYForm-item>
@@ -110,10 +110,10 @@
                         <MYInput v-model="selectedBlock.xDataSize" placeholder="请输入x轴数据字号" />
                     </MYForm-item>
                 </div>
-                <MYForm-item label="y轴设置" v-if="!isPieChart">
+                <MYForm-item label="y轴设置" v-if="isAxisChart">
                     <MYSwitch v-model="selectedBlock.yAlign" />
                 </MYForm-item>
-                <div v-if="selectedBlock.yAlign && !isPieChart">
+                <div v-if="selectedBlock.yAlign && isAxisChart">
                     <MYForm-item label="名称">
                         <MYInput v-model="selectedBlock.yName" placeholder="请输入y轴名称" @input="updateYName" />
                     </MYForm-item>
@@ -154,10 +154,10 @@
                         </MYForm-item>
                     </div>
                 </div>
-                <MYForm-item label="坐标边距">
+                <MYForm-item label="坐标边距" v-if="isAxisChart">
                     <MYSwitch v-model="selectedBlock.MPAlign" />
                 </MYForm-item>
-                <div v-if="selectedBlock.MPAlign">
+                <div v-if="selectedBlock.MPAlign && isAxisChart">
                     <MYForm-item label="顶边距">
                         <MYSlidebar v-model="selectedBlock.MPTop" :max="100" :min="0" thumbColor="#409EFF"
                             style="width: 100px;" />
@@ -194,6 +194,7 @@
 
 <script setup lang="ts">
 import { useDashboardStore } from '@/store/modules/dashboard'
+import { cloneDeep } from 'lodash-es'
 
 // 基础数据
 const formModel = reactive({})
@@ -201,6 +202,16 @@ const dashboardStore = useDashboardStore()
 const barChartTypes = ['basic-bar', 'horizontal-bar', 'stacked-bar', 'capsule-bar', 'line-bar', 'percent-bar']
 const dataDialogVisible = ref(false)
 const currentData = ref<Array<{ name: string; value: number }>>([])
+
+// 定义轴图表类型
+const axisChartTypes = [
+    // 柱形图
+    'basic-bar', 'horizontal-bar', 'stacked-bar', 'capsule-bar', 'line-bar', 'percent-bar',
+    // 折线图
+    'basic-line', 'area-line', 'smooth-line',
+    // 散点图
+    'basic-scatter'
+]
 
 // 计算属性
 const selectedBlock = computed(() => {
@@ -216,6 +227,11 @@ const isBarChart = computed(() => {
 const isPieChart = computed(() => {
     if (!selectedBlock.value) return false
     return ['basic-pie', 'ring-pie', 'rose-pie', 'rotate-pie'].includes(selectedBlock.value.type)
+})
+
+const isAxisChart = computed(() => {
+    if (!selectedBlock.value) return false
+    return axisChartTypes.includes(selectedBlock.value.type)
 })
 
 // 图层名称相关
@@ -571,7 +587,7 @@ const updateXName = (value: string) => {
         xAxis.name = value
     }
 
-    const newConfig = JSON.parse(JSON.stringify(block.config))
+    const newConfig = cloneDeep(block.config)
 
     dashboardStore.updateBlock(block.id, {
         config: newConfig
@@ -661,7 +677,7 @@ const updateYName = (value: string) => {
         yAxis.name = value
     }
 
-    const newConfig = JSON.parse(JSON.stringify(block.config))
+    const newConfig = cloneDeep(block.config)
 
     dashboardStore.updateBlock(block.id, {
         config: newConfig

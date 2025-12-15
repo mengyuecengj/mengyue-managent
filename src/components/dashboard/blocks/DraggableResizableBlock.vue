@@ -65,30 +65,34 @@ const previewMode = computed(() => store.previewMode)
 // 拖拽
 const startDrag = (e: MouseEvent) => {
   if (previewMode.value) return;
-
+  
   store.selectBlock(props.block.id)
-
+  
   if ((e.target as HTMLElement).closest('.resize-handle')) return
-
+  
   const startX = e.clientX - props.block.x
   const startY = e.clientY - props.block.y
-
+  let newX = props.block.x
+  let newY = props.block.y
+  
   const move = (e: MouseEvent) => {
-    store.updateBlock(props.block.id, {
-      x: e.clientX - startX,
-      y: e.clientY - startY
-    })
+    newX = e.clientX - startX
+    newY = e.clientY - startY
   }
-
+  
   const up = () => {
+    store.updateBlock(props.block.id, {
+      x: newX,
+      y: newY
+    })
+    
     document.removeEventListener('mousemove', move)
     document.removeEventListener('mouseup', up)
   }
-
+  
   document.addEventListener('mousemove', move)
   document.addEventListener('mouseup', up)
 }
-
 
 // 缩放
 const startResize = (e: MouseEvent) => {
@@ -98,17 +102,22 @@ const startResize = (e: MouseEvent) => {
   const startY = e.clientY
   const startW = parseInt(props.block.width)
   const startH = parseInt(props.block.height)
+  let newWidth = startW
+  let newHeight = startH
 
   const move = (e: MouseEvent) => {
     const w = startW + (e.clientX - startX)
     const h = startH + (e.clientY - startY)
-    store.updateBlock(props.block.id, {
-      width: Math.max(200, w).toString(),
-      height: Math.max(100, h).toString()
-    })
+    newWidth = Math.max(200, w)
+    newHeight = Math.max(100, h)
   }
 
   const up = () => {
+    store.updateBlock(props.block.id, {
+      width: newWidth.toString(),
+      height: newHeight.toString()
+    })
+    
     document.removeEventListener('mousemove', move)
     document.removeEventListener('mouseup', up)
   }

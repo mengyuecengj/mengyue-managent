@@ -12,9 +12,6 @@
                 </div>
                 <div class="dashboard-item-right">
                     <MYDelete size="16px" color="var(--general)" @click="delDashboard(item)" />
-                    <!-- <MYViewEye size="16px" color="var(--general)" />
-                    <MYOdometerText size="16px" color="var(--general)" />
-                    <MYPointerA size="16px" color="var(--general)" /> -->
                 </div>
             </div>
         </div>

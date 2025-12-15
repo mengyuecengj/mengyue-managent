@@ -27,6 +27,8 @@ import '@/scss/index.scss'
 import MengyuePlus from 'mengyue-plus'
 import 'mengyue-plus/style.css'
 
+import { PiniaUndo } from 'pinia-undo';
+
 import App from './App.vue'
 import pinia from '@/store'
 import router from '@/router'
@@ -48,6 +50,7 @@ import RightToolbar from '@/components/RightToolbar/index.vue';
 import directive from '@/directive';
 
 import plugins from './plugins'
+pinia.use(PiniaUndo);
 
 const app = createApp(App);
 

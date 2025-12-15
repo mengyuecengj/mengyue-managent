@@ -35,6 +35,9 @@
             {{ dashboardStore.previewMode ? '退出预览' : '预览' }}
           </MYText>
           <MYText Tecolor="#fff" size="large" style="margin-bottom: 5px;" @click="dashboardStore.saveCurrentDashboard()">保存</MYText>
+          <!-- 新增 undo/redo 按钮 -->
+          <MYText Tecolor="#fff" size="large" style="margin-bottom: 5px;" @click="dashboardStore.undo()">撤销</MYText>
+          <MYText Tecolor="#fff" size="large" style="margin-bottom: 5px;" @click="dashboardStore.redo()">重做</MYText>
         </div>
       </div>
       <div class="nav-right">
@@ -127,6 +130,7 @@ import DraggableResizableBlock from '@/components/dashboard/blocks/DraggableResi
 import operation from './operation.vue'
 import { getPropsPanel } from '@/components/dashboard/propsPanel';
 import { resolveComponentByType } from '@/utils/resolveComponentByType'
+import { cloneDeep } from 'lodash-es';
 
 const dashboardStore = useDashboardStore()
 const { blocks: chartBlocks, screen } = storeToRefs(dashboardStore)
@@ -258,7 +262,7 @@ const getChildPayload = (index: number) => {
   } else {
     return {
       type: child.value,
-      config: JSON.parse(JSON.stringify(child.componentConfig))
+      config: cloneDeep(child.componentConfig)
     }
   }
 }
@@ -309,5 +313,15 @@ onMounted(() => {
   }))
 })
 
+  // 添加键盘快捷键监听
+  window.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'z') {
+      e.preventDefault();
+      dashboardStore.undo();
+    } else if (e.ctrlKey && e.key === 'y') {
+      e.preventDefault();
+      dashboardStore.redo();
+    }
+  });
 });
 </script>

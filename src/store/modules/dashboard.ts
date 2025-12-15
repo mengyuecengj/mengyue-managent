@@ -3,6 +3,7 @@ import { ref, reactive, markRaw, shallowRef } from 'vue'
 import { findItem } from '@/data/dashboard/dropdownTop'
 import { DashboardBlock } from '@/types/store/dashboard'
 import modal from '@/plugins/modal'
+import { cloneDeep } from 'lodash-es'
 
 // 图表
 const BASE_BLOCK_CONFIG = {
@@ -83,7 +84,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
   }
 
   const createChartBlock = (item: any, componentConfig: any, defaultName: string) => {
-    const config = JSON.parse(JSON.stringify(componentConfig))
+    const config = cloneDeep(componentConfig)
     const defaultWidth = config.options?.width || 600
     const defaultHeight = config.options?.height || 400
 
@@ -127,7 +128,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
   }
 
   const createMapBlock = (item: any, componentConfig: any, defaultName: any) => {
-    const config = JSON.parse(JSON.stringify(componentConfig))
+    const config = cloneDeep(componentConfig)
     config.options = config.options || {}
     config.options.map = config.options.map || 'world'
     config.options.roam = config.options.roam ?? true
@@ -337,6 +338,16 @@ export const useDashboardStore = defineStore('dashboard', () => {
     }
   }
 
+  // 新增 undo 和 redo 方法（假设 pinia-undo 插件已注册，它们会自动可用，这里暴露以便调用）
+  const undo = () => {
+    // @ts-ignore pinia-undo adds this
+    this.undo()
+  }
+
+  const redo = () => {
+    // @ts-ignore pinia-undo adds this
+    this.redo()
+  }
 
   return {
     screen,
@@ -354,6 +365,12 @@ export const useDashboardStore = defineStore('dashboard', () => {
     copyBlock,
     togglePreview,
     saveCurrentDashboard,
-    restoreDashboard
+    restoreDashboard,
+    undo,
+    redo
+  }
+}, {
+  undo: {
+    omit: ['previewMode', 'selectedId']  // 忽略临时 UI 状态
   }
 })

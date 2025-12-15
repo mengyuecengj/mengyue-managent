@@ -71,6 +71,9 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
       mengyue-plus:
         specifier: 0.0.66
         version: 0.0.66(vue@3.5.24(typescript@5.8.3))
@@ -86,6 +89,9 @@ importers:
       pinia:
         specifier: ^3.0.4
         version: 3.0.4(typescript@5.8.3)(vue@3.5.24(typescript@5.8.3))
+      pinia-undo:
+        specifier: ^0.2.4
+        version: 0.2.4(pinia@3.0.4(typescript@5.8.3)(vue@3.5.24(typescript@5.8.3)))
       pinyin-pro:
         specifier: ^3.27.0
         version: 3.27.0
@@ -150,6 +156,9 @@ importers:
       '@types/lodash':
         specifier: ^4.17.17
         version: 4.17.20
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
       '@types/mocha':
         specifier: ^10.0.10
         version: 10.0.10
@@ -2384,6 +2393,11 @@ packages:
     resolution: {integrity: sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==}
     engines: {node: '>=12'}
 
+  pinia-undo@0.2.4:
+    resolution: {integrity: sha512-czb1fOkTBWJPYkjNTVsGa6x8drL8Kwu9pA6Vldn7pulg3Gc4G17AF5+b01uogH1g00p11T5xQt+3hnRWy4ipkQ==}
+    peerDependencies:
+      pinia: ^2.0.0
+
   pinia@3.0.4:
     resolution: {integrity: sha512-l7pqLUFTI/+ESXn6k3nu30ZIzW5E2WZF/LaHJEpoq6ElcLD+wduZoB2kBN19du6K/4FDpPMazY2wJr+IndBtQw==}
     peerDependencies:
@@ -2809,6 +2823,9 @@ packages:
 
   undici-types@6.21.0:
     resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
+
+  undo-stacker@0.2.1:
+    resolution: {integrity: sha512-wEFIuUlJtSB0Rt/LBxPqiZqKN2AMKqjdYIr2VTIPUPOEZxAOVE4zVY+z2b2yPBL1NvLW+Sm/kbCaqeWlINPZNA==}
 
   unimport@4.2.0:
     resolution: {integrity: sha512-mYVtA0nmzrysnYnyb3ALMbByJ+Maosee2+WyE0puXl+Xm2bUwPorPaaeZt0ETfuroPOtG8jj1g/qeFZ6buFnag==}
@@ -5261,6 +5278,11 @@ snapshots:
 
   picomatch@4.0.3: {}
 
+  pinia-undo@0.2.4(pinia@3.0.4(typescript@5.8.3)(vue@3.5.24(typescript@5.8.3))):
+    dependencies:
+      pinia: 3.0.4(typescript@5.8.3)(vue@3.5.24(typescript@5.8.3))
+      undo-stacker: 0.2.1
+
   pinia@3.0.4(typescript@5.8.3)(vue@3.5.24(typescript@5.8.3)):
     dependencies:
       '@vue/devtools-api': 7.7.7
@@ -5739,6 +5761,8 @@ snapshots:
   ufo@1.6.1: {}
 
   undici-types@6.21.0: {}
+
+  undo-stacker@0.2.1: {}
 
   unimport@4.2.0:
     dependencies:
