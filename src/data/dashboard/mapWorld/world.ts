@@ -1,7 +1,6 @@
 import * as echarts from 'echarts'
 import worldMapData from '~/MapWorld.json'
 import chinaMapData from '~/china.json'
-console.log(chinaMapData.features[0].properties.name);  // 应该输出 "北京"
 
 declare global {
     interface Window {
@@ -13,8 +12,6 @@ if (typeof window !== 'undefined') {
     window.echarts = echarts
     echarts.registerMap('world', worldMapData as any)
     echarts.registerMap('china', chinaMapData as any)
-    const chinaMap = echarts.getMap('china');
-    console.log(chinaMap ? 'China map registered' : 'China map not registered');
 }
 
 export enum MapType {
@@ -108,64 +105,6 @@ export const worldMapChart = {
         ]
     }
 }
-
-// export const worldMapBubbleChart = {
-//     id: 'world-map-bubble',
-//     name: '世界地图气泡图',
-//     type: MapType.Map_World,
-//     options: {
-//         tooltip: {
-//             trigger: 'item',
-//             formatter: (p: any) => `${p.name}<br/>人口：${p.value?.[2]}`
-//         },
-//         geo: {
-//             map: 'world',
-//             roam: true,
-//             itemStyle: { areaColor: '#283650', borderColor: '#14b82a' }
-//         },
-//         visualMap: {
-//             min: 0,
-//             max: 1500000000,
-//             inRange: { symbolSize: [8, 40] },
-//             textStyle: { color: '#fff' }
-//         },
-//         series: [
-//             {
-//                 name: '人口数量',
-//                 type: 'scatter',
-//                 coordinateSystem: 'geo',
-//                 data: convertGeoData(),
-//                 symbolSize: (val: number[]) => val[2] / 5e7,
-//                 emphasis: { itemStyle: { borderColor: '#fff', borderWidth: 1 } }
-//             }
-//         ]
-//     }
-// }
-
-// export const worldMapHeatmapChart = {
-//     id: 'world-map-heatmap',
-//     name: '世界地图热力图',
-//     type: MapType.Map_World,
-//     options: {
-//         geo: { map: 'world', roam: true, itemStyle: { areaColor: '#283650', borderColor: '#14b82a' } },
-//         visualMap: {
-//             min: 0,
-//             max: 1500000000,
-//             textStyle: { color: '#fff' },
-//             inRange: { color: ['#283650', '#14b82a', '#ffeb3b', '#ff5722'] }
-//         },
-//         series: [
-//             {
-//                 name: '人口热力',
-//                 type: 'heatmap',
-//                 coordinateSystem: 'geo',
-//                 data: convertGeoData(),
-//                 pointSize: 20,
-//                 blurSize: 30
-//             }
-//         ]
-//     }
-// }
 
 export const chinaMapChart = {
     id: 'china-map-1',

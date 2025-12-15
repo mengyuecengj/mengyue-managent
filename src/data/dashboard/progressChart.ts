@@ -1,13 +1,11 @@
 import * as echarts from 'echarts'
 
-// 确保 echarts 在全局可用
 declare global {
   interface Window {
     echarts: typeof echarts;
   }
 }
 
-// 如果需要在配置中使用 echarts，确保它已挂载
 if (typeof window !== 'undefined') {
   window.echarts = echarts;
 }
@@ -25,7 +23,6 @@ export interface ChartConfig {
   description?: string;
 }
 
-// 水波图（模拟水波效果）
 export const basicProgressChart: ChartConfig = {
   id: 'basic-progress-1',
   name: '进度图',
@@ -115,7 +112,6 @@ export const basicProgressChart: ChartConfig = {
   }
 };
 
-// 环形进度图
 export const ringProgressChart: ChartConfig = {
   id: 'ring-progress-1',
   name: '环形进度图',

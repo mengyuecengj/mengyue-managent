@@ -1,13 +1,11 @@
 import * as echarts from 'echarts'
 
-// 确保 echarts 在全局可用
 declare global {
   interface Window {
     echarts: typeof echarts;
   }
 }
 
-// 如果需要在配置中使用 echarts，确保它已挂载
 if (typeof window !== 'undefined') {
   window.echarts = echarts;
 }

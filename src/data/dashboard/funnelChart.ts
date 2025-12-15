@@ -1,13 +1,11 @@
 import * as echarts from 'echarts'
 
-// 确保 echarts 在全局可用
 declare global {
   interface Window {
     echarts: typeof echarts;
   }
 }
 
-// 如果需要在配置中使用 echarts，确保它已挂载
 if (typeof window !== 'undefined') {
   window.echarts = echarts;
 }
@@ -81,11 +79,10 @@ export const basicFunnelChart: ChartConfig = {
           position: 'inside',
           formatter: '{b}',
           color: '#fff',
-          // 关键：为不同位置的标签设置不同的偏移量
           offset: function(value: string, index: number) {
             if (index === 0) { // 销售能力 - 保持原位
               return [0, 0];
-            } else { // 其他标签 - 向下移动
+            } else {
               return [0, 10];
             }
           }
@@ -116,7 +113,6 @@ export const basicFunnelChart: ChartConfig = {
   }
 };
 
-// 导出所有漏斗图配置
 export const funnelChartConfigs: ChartConfig[] = [
   basicFunnelChart
 ];

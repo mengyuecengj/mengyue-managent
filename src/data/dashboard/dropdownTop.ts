@@ -12,7 +12,6 @@ import { progressChartConfigs } from './progressChart';
 import { decorationItems } from './border/decorationItems';
 import textRenderer from '@/components/dashboard/renderers/TextRenderer.vue'
 import { mapChartConfigs } from './mapWorld/world'
-// import { provinceMapChartConfigs } from './mapWorld/province'
 import { centerChinaProvinceMaps } from '@/data/dashboard/mapWorld/CenterChinaProvinces'
 import { eastChinaProvinceMaps } from '@/data/dashboard/mapWorld/EastChinaProvinces'
 import { northChinaProvinceMaps } from '@/data/dashboard/mapWorld/NorthChinaProvinces'
@@ -32,7 +31,6 @@ const transformToCascaderOptions = (items: DropdownItem[]): any[] => {
   }));
 };
 
-// 图表分类的级联菜单
 export const chartItems: DropdownItem[] = [
   {
     text: '柱形图',
@@ -42,37 +40,37 @@ export const chartItems: DropdownItem[] = [
         text: '基础柱形图',
         value: 'basic-bar',
         type: 'chart',
-        componentConfig: barChartConfigs[0] // 基础柱形图
+        componentConfig: barChartConfigs[0]
       },
       {
         text: '横向柱形图',
         value: 'horizontal-bar',
         type: 'chart',
-        componentConfig: barChartConfigs[1] // 横向柱形图
+        componentConfig: barChartConfigs[1]
       },
       {
         text: '堆叠柱形图',
         value: 'stacked-bar',
         type: 'chart',
-        componentConfig: barChartConfigs[2] // 堆叠柱形图
+        componentConfig: barChartConfigs[2]
       },
       {
         text: '胶囊图',
         value: 'capsule-bar',
         type: 'chart',
-        componentConfig: barChartConfigs[3] // 胶囊图
+        componentConfig: barChartConfigs[3]
       },
       {
         text: '折柱图',
         value: 'line-bar',
         type: 'chart',
-        componentConfig: barChartConfigs[4] // 折柱图
+        componentConfig: barChartConfigs[4]
       },
       {
         text: '百分比条形图',
         value: 'percent-bar',
         type: 'chart',
-        componentConfig: barChartConfigs[5] // 百分比条形图
+        componentConfig: barChartConfigs[5]
       }
     ]
   },
@@ -335,7 +333,7 @@ export const dropdownConfigs: DropdownConfig[] = [
   },
 ];
 
-// 辅助函数：根据值查找配置
+// 辅助函数，根据值查找配置
 export const findComponentConfig = (value: string | number): any => {
   // 扁平化所有配置项进行搜索
   const flattenItems = (items: DropdownItem[]): DropdownItem[] => {
@@ -372,8 +370,6 @@ export const findItem = (value: string): DropdownItem | null => {
     ...flattenItems(decorationItems),
     ...flattenItems(textItems),
     ...flattenItems(mapItems),
-    // ...flattenItems(operationItems),
-    // ...flattenItems(previewItems)
   ]
   return allOriginalItems.find(item => item.value === value) || null
 }

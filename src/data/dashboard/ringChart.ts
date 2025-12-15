@@ -7,7 +7,6 @@ declare global {
   }
 }
 
-// 如果需要在配置中使用 echarts，确保它已挂载
 if (typeof window !== 'undefined') {
   window.echarts = echarts;
 }
@@ -25,7 +24,6 @@ export interface ChartConfig {
   description?: string;
 }
 
-// 基础环形图 (保持不变)
 export const basicRingChart: ChartConfig = {
   id: 'basic-ring-1',
   name: '基础环形图',
@@ -66,7 +64,7 @@ export const basicRingChart: ChartConfig = {
       {
         name: '访问来源',
         type: 'pie',
-        radius: ['50%', '70%'], // 内外半径设置形成环形
+        radius: ['50%', '70%'],
         avoidLabelOverlap: false,
         itemStyle: {
           borderRadius: 0,
@@ -99,7 +97,6 @@ export const basicRingChart: ChartConfig = {
   }
 };
 
-// 动态环形图 (已替换)
 export const dynamicRingChart: ChartConfig = {
   id: 'dynamic-ring-1',
   name: '可交互环形图',
@@ -194,7 +191,6 @@ export const dynamicRingChart: ChartConfig = {
             fontWeight: 'bold'
           }
         },
-        // 添加点击交互效果
         selectedMode: 'single',
         selectedOffset: 25
       }
@@ -202,7 +198,6 @@ export const dynamicRingChart: ChartConfig = {
   }
 };
 
-// 导出所有环形图配置
 export const ringChartConfigs: ChartConfig[] = [
   basicRingChart,
   dynamicRingChart

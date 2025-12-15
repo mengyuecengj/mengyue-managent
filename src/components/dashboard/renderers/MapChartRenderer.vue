@@ -21,10 +21,6 @@ let ro: ResizeObserver | null = null
 const mapRegistry: Record<string, { mapName: string; mapData: any }> = {
   'map-china': { mapName: 'china', mapData: chinaMapData },
   'map-province': { mapName: 'province', mapData: chinaMapData },
-  // 如果后续添加更多省份地图，例如北京：
-  // 'map-beijing': { mapName: 'beijing', mapData: import('~/beijing.json') }, // 假设有单独的beijing.json
-  // 'map-shanghai': { mapName: 'shanghai', mapData: import('~/shanghai.json') },
-  // ... 可以轻松添加30多个省份，而不改动逻辑代码
 }
 
 const initChart = () => {
@@ -43,14 +39,14 @@ const initChart = () => {
       const options = { ...props.config.options }
       if (options.geo) {
         if (!options.geo.map) {
-          options.geo.map = mapName // 只在未设置时覆盖
+          options.geo.map = mapName
         }
       }
       if (options.series && Array.isArray(options.series)) {
         options.series.forEach((s: any) => {
           if (s.type === 'map') {
             if (!s.map) {
-              s.map = mapName // 只在未设置时覆盖，避免覆盖原配置
+              s.map = mapName
             }
           }
         })

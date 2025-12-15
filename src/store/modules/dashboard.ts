@@ -44,9 +44,6 @@ const BASE_BLOCK_CONFIG = {
 export const useDashboardStore = defineStore('dashboard', () => {
   const blocks = ref<DashboardBlock[]>([])
   const selectedId = ref<string | null>(null)
-  const isDirty = ref(false)
-
-  // 新增：预览模式状态
   const previewMode = ref(false)
   const dashboards = ref<Record<string, any>>({})
   const currentId = ref<string>('')
@@ -76,7 +73,6 @@ export const useDashboardStore = defineStore('dashboard', () => {
     thumbnail: ''
   })
 
-  // 获取下一个 zIndex 值
   const getNextZIndex = (): number => {
     if (blocks.value.length === 0) return 1
     return Math.max(...blocks.value.map(b => b.zIndex)) + 1
@@ -86,7 +82,6 @@ export const useDashboardStore = defineStore('dashboard', () => {
     selectedId.value = id
   }
 
-  // 创建图表块
   const createChartBlock = (item: any, componentConfig: any, defaultName: string) => {
     const config = JSON.parse(JSON.stringify(componentConfig))
     const defaultWidth = config.options?.width || 600
@@ -102,7 +97,6 @@ export const useDashboardStore = defineStore('dashboard', () => {
     }
   }
 
-  // 创建装饰块
   const createDecorationBlock = (item: any, componentConfig: any, defaultName: string) => {
     return {
       rendererType: 'border' as const,
@@ -134,8 +128,6 @@ export const useDashboardStore = defineStore('dashboard', () => {
 
   const createMapBlock = (item: any, componentConfig: any, defaultName: any) => {
     const config = JSON.parse(JSON.stringify(componentConfig))
-
-    // 补全地图基础结构
     config.options = config.options || {}
     config.options.map = config.options.map || 'world'
     config.options.roam = config.options.roam ?? true
@@ -164,7 +156,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
 
     const defaultName = item.text || '未命名组件'
     let blockData: {
-      rendererType: 'chart' | 'border' | 'text' | 'map' | undefined,  // 添加 'map'
+      rendererType: 'chart' | 'border' | 'text' | 'map' | undefined,
       config: any,
       component: any,
       defaultWidth: number,
@@ -183,7 +175,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
       case 'text':
         blockData = createTextBlock(item, componentConfig, defaultName)
         break
-      case 'map':  // 添加 map 类型的处理
+      case 'map':
         blockData = createMapBlock(item, componentConfig, defaultName)
         break
       default:
@@ -213,7 +205,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
       borderSlaveColor: '',
       backgroundColor: '',
 
-      // w文本
+      // 文本
       textName: blockData.defaultName,
       textVisible: false,
       textContainer: '这是段文本内容',
@@ -258,7 +250,6 @@ export const useDashboardStore = defineStore('dashboard', () => {
     const block = blocks.value.find(b => b.id === id)
     if (!block) return
 
-    // 先更新 block 属性
     Object.assign(block, updates)
 
     if ('borderMasterColor' in updates || 'borderSlaveColor' in updates) {
@@ -299,7 +290,6 @@ export const useDashboardStore = defineStore('dashboard', () => {
     const block = blocks.value.find(b => b.id === id)
     if (block) {
       block.name = newName.trim()
-      // 同步更新标题文本
       if (block.title) {
         block.titleText = newName.trim()
       }

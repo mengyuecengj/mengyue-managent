@@ -1,13 +1,11 @@
 import * as echarts from 'echarts'
 
-// 确保 echarts 在全局可用
 declare global {
   interface Window {
     echarts: typeof echarts;
   }
 }
 
-// 如果需要在配置中使用 echarts，确保它已挂载
 if (typeof window !== 'undefined') {
   window.echarts = echarts;
 }
@@ -25,7 +23,6 @@ export interface ChartConfig {
   description?: string;
 }
 
-// 基础仪表盘
 export const basicGaugeChart: ChartConfig = {
   id: 'basic-gauge-1',
   name: '基础仪表盘',
@@ -124,7 +121,6 @@ export const basicGaugeChart: ChartConfig = {
   }
 };
 
-// 多色仪表盘
 export const dynamicGaugeChart: ChartConfig = {
   id: 'dynamic-gauge-1',
   name: '多色仪表盘',
@@ -237,7 +233,6 @@ export const dynamicGaugeChart: ChartConfig = {
   }
 };
 
-// 导出所有仪表盘配置
 export const gaugeChartConfigs: ChartConfig[] = [
   basicGaugeChart,
   dynamicGaugeChart

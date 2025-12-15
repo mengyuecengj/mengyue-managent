@@ -73,7 +73,6 @@ const textContainer = computed({
 // 文本颜色
 const textColor = computed({
   get() {
-    // 提供默认值 #fff
     return selectedBlock.value?.textColor ?? ''
   },
   set(val: string) {
@@ -100,7 +99,6 @@ const textSize = computed({
 // 文本粗细
 const textWeight = computed({
   get() {
-    // 提供默认值 600（与 BASE_BLOCK_CONFIG 中的 dataWeight 一致）
     return selectedBlock.value?.textWeight ?? ""
   },
   set(val: number | string) {

@@ -66,10 +66,8 @@ const previewMode = computed(() => store.previewMode)
 const startDrag = (e: MouseEvent) => {
   if (previewMode.value) return;
 
-  // ⭐ 点击 block 时选中它
   store.selectBlock(props.block.id)
 
-  // 避免点击 resize handle 时触发选中
   if ((e.target as HTMLElement).closest('.resize-handle')) return
 
   const startX = e.clientX - props.block.x
@@ -125,21 +123,18 @@ const startResize = (e: MouseEvent) => {
   border: 2px solid transparent;
   border-radius: 8px;
   overflow: hidden;
-  /* box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4); */
   cursor: move;
   user-select: none;
-  height: fit-content; /* 新增：适应内容高度 */
+  height: fit-content;
 }
 
 .chart-block.active {
   border-color: #409eff;
-  /* box-shadow: 0 0 0 3px rgba(64, 158, 255, 0.3), 0 8px 30px rgba(0, 0, 0, 0.6); */
-  height: fit-content; /* 适应内容 */
+  height: fit-content;
 }
 
-/* 边框特定样式：更小 min-height，避免过高 */
 .chart-block.border-type {
-  min-height: 100px; /* 调整为边框期望最小高，根据您的图片约 100-150px */
+  min-height: 100px;
 }
 
 .chart-block.border-type.active {
@@ -149,10 +144,8 @@ const startResize = (e: MouseEvent) => {
 .resize-handle {
   position: absolute;
   right: -10px;
-  /* 扩大点击区域 */
   bottom: -10px;
   width: 30px;
-  /* 更大的透明触发区 */
   height: 30px;
   cursor: se-resize;
 }

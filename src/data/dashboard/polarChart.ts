@@ -1,13 +1,11 @@
 import * as echarts from 'echarts'
 
-// 确保 echarts 在全局可用
 declare global {
   interface Window {
     echarts: typeof echarts;
   }
 }
 
-// 如果需要在配置中使用 echarts，确保它已挂载
 if (typeof window !== 'undefined') {
   window.echarts = echarts;
 }
@@ -25,7 +23,6 @@ export interface ChartConfig {
   description?: string;
 }
 
-// 象形柱图（极坐标柱状图）
 export const polarBarChart: ChartConfig = {
   id: 'polar-bar-1',
   name: '象形柱图',
@@ -56,7 +53,6 @@ export const polarBarChart: ChartConfig = {
       axisLabel: {
         color: '#fff',
         fontSize: 12,
-        // 关键修复：调整标签位置避免重叠
         margin: 20,
         formatter: function(value: string) {
           return value;
@@ -122,7 +118,6 @@ export const polarBarChart: ChartConfig = {
   }
 };
 
-// 象形折线图（极坐标折线图）
 export const polarLineChart: ChartConfig = {
   id: 'polar-line-1',
   name: '象形折线图',
@@ -150,7 +145,6 @@ export const polarLineChart: ChartConfig = {
       axisLabel: {
         color: '#fff',
         fontSize: 12,
-        // 关键修复：调整标签位置避免重叠
         margin: 20,
         formatter: function(value: string) {
           return value;
@@ -239,7 +233,6 @@ export const polarLineChart: ChartConfig = {
   }
 };
 
-// 导出所有极坐标图表配置
 export const polarChartConfigs: ChartConfig[] = [
   polarBarChart,
   polarLineChart

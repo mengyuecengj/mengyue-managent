@@ -1,14 +1,11 @@
-// types/dashboard-types.ts
-
-// 基础下拉项类型
 export interface DropdownItem {
   [x: string]: any;
   text: string;
   value?: string;
-  type?: string; // 组件类型标识
+  type?: string;
   disabled?: boolean;
-  children?: DropdownItem[]; // 支持多级
-  componentConfig?: any; // 组件配置
+  children?: DropdownItem[];
+  componentConfig?: any;
 }
 
 export interface DropdownConfig {
@@ -16,7 +13,6 @@ export interface DropdownConfig {
   items: DropdownItem[];
 }
 
-// 图表组件类型
 export enum ChartType {
   BASIC_BAR = 'basic-bar',
   HORIZONTAL_BAR = 'horizontal-bar',

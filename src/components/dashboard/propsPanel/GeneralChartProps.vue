@@ -343,7 +343,6 @@ const updateTitleText = (text: string) => {
 
     const block = selectedBlock.value
 
-    // 确保 title 对象存在
     if (!block.config.options.title) {
         block.config.options.title = {
             text: '',
@@ -521,7 +520,6 @@ const saveData = () => {
     const options = block.config.options
 
     if (isPieChart.value) {
-        // 饼图：更新 series[0].data
         if (options.series && options.series.length > 0) {
             options.series[0].data = currentData.value.map(item => ({
                 name: item.name,
@@ -529,7 +527,6 @@ const saveData = () => {
             }))
         }
     } else {
-        // 其他图表：更新 xAxis 和 series
         const names = currentData.value.map(item => item.name)
         const values = currentData.value.map(item => item.value)
 
@@ -682,20 +679,16 @@ const updateYAxisProperty = (
         const block = selectedBlock.value
         const options = block.config.options
 
-        // 确保 yAxis 存在
         if (!options.yAxis) {
             options.yAxis = Array.isArray(options.yAxis) ? [] : {}
         }
 
-        // 获取 yAxis 引用
         const yAxis = Array.isArray(options.yAxis) ?
             (options.yAxis[0] || (options.yAxis[0] = {})) :
             options.yAxis
 
-        // 应用具体更新逻辑
         updater(yAxis, newVal)
 
-        // 更新配置
         const newConfig = {
             ...block.config,
             options: { ...options }

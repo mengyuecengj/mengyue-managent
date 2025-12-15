@@ -63,15 +63,11 @@
           </div>
         </MYScrollbar>
       </div>
-      <!-- 中心画布区域（核心改造部分） -->
       <div class="dashboard-center">
-        <!-- 外层滚动容器（只有这里出滚动条） -->
         <MYScrollbar height="100vh" ScrollWidth="4px" @mouse.self="cancelSelect">
           <div :class="['canvas-outer', { 'preview-fullscreen': dashboardStore.previewMode }]"
             @mousemove="updateMousePosition">
-            <!-- 居中容器（让画布在视野中居中） -->
             <div class="canvas-wrapper">
-              <!-- 真实画布（尺寸由 canvasStyle 控制） -->
               <div class="canvas-placeholder" :style="canvasStyle" @mousedown="cancelSelect">
                 <SmoothDndContainer class="block-group" group-name="components" @drop="handleDrop">
                   <SmoothDndDraggable v-for="block in chartBlocks" :key="block.id">
@@ -79,12 +75,10 @@
                   </SmoothDndDraggable>
                 </SmoothDndContainer>
 
-                <!-- 空状态提示 -->
                 <div v-if="!chartBlocks.length" class="empty-hint">
                   从左侧拖入组件
                 </div>
 
-                <!-- 尺寸标签 -->
                 <div class="size-tag">
                   {{ screen.width }}×{{ screen.height }}
                 </div>
@@ -135,7 +129,7 @@ import { getPropsPanel } from '@/components/dashboard/propsPanel';
 import { resolveComponentByType } from '@/utils/resolveComponentByType'
 
 const dashboardStore = useDashboardStore()
-const { blocks: chartBlocks, screen } = storeToRefs(dashboardStore) // 新增 screen 解构
+const { blocks: chartBlocks, screen } = storeToRefs(dashboardStore)
 const router = useRouter();
 const browserFullscreen = ref(false);
 const activeChildren = ref<any[]>([])
@@ -145,13 +139,11 @@ const menuTop = ref(0)
 const currentRightClickBlockId = ref<string | null>(null)
 
 const cancelSelect = (e: MouseEvent) => {
-  // 如果点击落在某个图层（或图层内部元素）上，则不取消选中
   const target = e.target as HTMLElement | null
   if (target && target.closest && target.closest('.chart-block')) {
     return
   }
 
-  // 使用 store 的方法取消选中（优先用已有方法）
   if (typeof dashboardStore.selectBlock === 'function') {
     dashboardStore.selectBlock(null)
   } else {
@@ -214,13 +206,12 @@ const finishRename = (id: string) => {
 const canvasStyle = computed(() => ({
   width: `${screen.value.width}px`,
   height: `${screen.value.height}px`,
-  backgroundColor: screen.value.backgroundColor, // 使用 screen.value
+  backgroundColor: screen.value.backgroundColor,
   backgroundImage: screen.value.backgroundImage ? `url(${screen.value.backgroundImage})` : 'none',
   backgroundSize: 'cover',
   backgroundPosition: 'center'
 }))
 
-// 深度克隆对象，确保每个组件都是独立的
 const deepClone = (obj: any): any => {
   if (obj === null || typeof obj !== 'object') return obj;
   if (obj instanceof Date) return new Date(obj);
@@ -247,7 +238,6 @@ const handleDrop = (dropResult: DropResult) => {
   const { payload, addedIndex } = dropResult
   if (!payload || addedIndex === null) return
 
-  // 用鼠标位置计算 x/y（移除 dropEvent）
   const canvas = document.querySelector('.canvas-placeholder') as HTMLElement | null
   const rect = canvas?.getBoundingClientRect()
   const x = mouseX.value - (rect?.left || 0) - 200 || 200 // 偏移以块居中
@@ -263,7 +253,7 @@ const getChildPayload = (index: number) => {
   if (child.type === 'decoration') {
     return {
       type: child.value,
-      component: child.componentConfig // 直接传
+      component: child.componentConfig
     }
   } else {
     return {
@@ -304,19 +294,6 @@ const gotoexit = () => {
   router.push("/dashboard/design/list");
 };
 
-const saveScreen = () => {
-  const data = {
-    screen: dashboardStore.screen,
-    blocks: dashboardStore.blocks.map(b => ({
-      ...b,
-      component: undefined   // 🚨 不能保存组件对象
-    }))
-  }
-
-  localStorage.setItem('dashboard-screen', JSON.stringify(data))
-  ElMessage.success('保存成功！')
-}
-
 onMounted(() => {
   document.addEventListener('fullscreenchange', handleFullscreenChange);
   onMounted(() => {
@@ -328,224 +305,9 @@ onMounted(() => {
   dashboardStore.screen = data.screen
   dashboardStore.blocks = data.blocks.map((b: any) => ({
     ...b,
-    component: resolveComponentByType(b)   // 🔥 自动还原
+    component: resolveComponentByType(b)
   }))
 })
 
 });
 </script>
-
-<style scoped lang="scss">
-.dashboard-center {
-  overflow: auto !important;
-}
-
-.bar-chart-renderer {
-  width: 100% !important;
-  height: 100% !important;
-}
-
-.multi-column-dropdown {
-  width: 320px !important;
-}
-
-.dropdown-columns {
-  display: flex;
-  min-height: 200px;
-  height: auto;
-}
-
-.column {
-  flex: 1;
-  border-right: 1px solid var(--el-border-color-light);
-
-  &:last-child {
-    border-right: none;
-  }
-}
-
-.my-dropdown-link {
-  color: #fff;
-  display: flex;
-  align-items: center;
-  gap: 32px; // 控制“预览”和“保存”之间的间距
-  font-size: 16px; // 与下拉菜单字体一致
-  cursor: pointer;
-}
-
-.my-dropdown-link .content {
-  font-size: 16px;
-}
-
-.canvas-placeholder {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  min-height: 600px;
-  background: #0f0f0f url('data:image/svg+xml,...网格背景...') repeat;
-  overflow: hidden;
-}
-
-.block-group {
-  width: 100%;
-  height: 100%;
-}
-
-.layers-list {
-  margin-top: 12px;
-  max-height: calc(100% - 53px);
-}
-
-.layer-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 12px;
-  margin: 4px 8px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-size: 13px;
-  color: #ddd;
-
-  &:hover {
-    background: rgba(64, 158, 255, 0.2);
-  }
-
-  &.active {
-    background: rgba(64, 158, 255, 0.4);
-    color: white;
-    font-weight: 500;
-  }
-}
-
-.layer-name {
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.rename-input {
-  width: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid #409eff;
-  color: white;
-  padding: 2px 6px;
-  border-radius: 4px;
-  outline: none;
-}
-
-.canvas-outer {
-  flex: 1;
-  overflow: auto;
-  background: #111;
-  padding: 40px;
-  // 可选：网格背景
-  background-image: radial-gradient(circle, #222 1px, transparent 1px);
-  background-size: 20px 20px;
-}
-
-.canvas-wrapper {
-  width: 100%;
-  min-height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.canvas-placeholder {
-  position: relative;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
-  border: 1px solid #333;
-  overflow: hidden;
-  // 关键：移除 width: 100%！让它由 canvasStyle 控制
-}
-
-.block-group {
-  width: 100%;
-  height: 100%;
-}
-
-.context-menu {
-  position: fixed;
-  z-index: 9999;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  padding: 4px 0;
-  min-width: 120px;
-  list-style: none;
-  margin: 0;
-
-  li {
-    padding: 8px 12px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-
-    .li-icon {
-      margin-right: 8px;
-      width: 16px;
-      height: 16px;
-    }
-  }
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-:deep(.el-dropdown-menu__item) {
-  padding: 8px 16px;
-  font-size: 14px;
-  color: var(--el-text-color-regular);
-
-  &:hover {
-    background-color: var(--el-color-primary-light-9);
-    color: var(--el-color-primary);
-  }
-}
-
-/* 预览时让画布区域铺满屏幕 */
-.preview-fullscreen {
-  position: fixed !important;
-  z-index: 99980;
-  left: 0;
-  top: 0;
-  width: 100vw !important;
-  height: 100vh !important;
-  padding: 0 !important;
-  background: var(--el-color-black, #0a0a0a);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* 预览退出悬浮按钮 */
-.preview-exit-btn {
-  position: fixed;
-  top: 18px;
-  right: 18px;
-  z-index: 99990;
-}
-
-/* 确保 canvas 内真实画布仍按 canvasStyle 控制尺寸（不要破坏） */
-.preview-fullscreen .canvas-wrapper {
-  justify-content: center;
-  align-items: center;
-}
-
-/* 当全屏预览时隐藏滚动条背景、padding 等视觉杂项（可选） */
-.preview-fullscreen .canvas-placeholder {
-  box-shadow: none;
-  border: none;
-  min-height: 0;
-}
-</style>

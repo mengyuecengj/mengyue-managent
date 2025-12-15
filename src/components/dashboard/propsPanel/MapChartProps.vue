@@ -108,7 +108,6 @@ const visibleName = computed({
     const id = selectedBlock.value.id
     const config = { ...selectedBlock.value.config }
 
-    // 确保 options 存在
     if (!config.options) {
       config.options = {}
     }
@@ -154,7 +153,6 @@ const mapNameSize = computed({
     const id = selectedBlock.value.id
     const config = { ...selectedBlock.value.config }
     
-    // 确保 options 和 tooltip 结构完整
     if (!config.options) {
       config.options = {}
     }
@@ -171,10 +169,8 @@ const mapNameSize = computed({
       config.options.tooltip.textStyle = {}
     }
     
-    // 更新 fontSize
     config.options.tooltip.textStyle.fontSize = val
     
-    // 关键：调用 updateBlock 保存修改
     dashboardStore.updateBlock(id, {
       config
     })
@@ -209,10 +205,8 @@ const mapNameColor = computed({
       config.options.tooltip.textStyle = {}
     }
     
-    // 更新 color
     config.options.tooltip.textStyle.color = val
     
-    // 关键：调用 updateBlock 保存修改
     dashboardStore.updateBlock(id, {
       config
     })

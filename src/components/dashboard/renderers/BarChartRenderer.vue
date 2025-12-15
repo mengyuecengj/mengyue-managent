@@ -37,16 +37,13 @@ function darkenColor(color: string, percent: number): string {
 
 // 获取应用颜色后的配置
 function getOptionsWithColor() {
-  // 直接使用最新配置，不再依赖初始化时保存的引用
   const baseOptions = props.config?.options
   if (!baseOptions) return null
 
-  // 如果没有颜色变化，直接返回配置的深拷贝
   if (!props.color || !isHexString(props.color)) {
     return JSON.parse(JSON.stringify(baseOptions))
   }
 
-  // 创建配置的深拷贝，避免修改原始数据
   const options = JSON.parse(JSON.stringify(baseOptions))
   const color = props.color
 
@@ -54,15 +51,12 @@ function getOptionsWithColor() {
     options.series = options.series.map((series: any) => {
       const newSeries = { ...series }
 
-      // 处理 itemStyle
       if (newSeries.itemStyle) {
         newSeries.itemStyle = { ...newSeries.itemStyle }
 
-        // 如果是字符串颜色
         if (typeof newSeries.itemStyle.color === 'string') {
           newSeries.itemStyle.color = color
         }
-        // 如果是 ECharts 的 LinearGradient 对象
         else if (newSeries.itemStyle.color && newSeries.itemStyle.color.type === 'linear') {
           const gradient = newSeries.itemStyle.color
           const newColorStops = gradient.colorStops.map((stop: any) => ({
@@ -74,7 +68,6 @@ function getOptionsWithColor() {
             colorStops: newColorStops
           }
         }
-        // 如果是其他类型（比如函数），直接忽略或重置
         else {
           newSeries.itemStyle.color = color
         }
@@ -109,7 +102,6 @@ function getOptionsWithColor() {
 onMounted(() => {
   if (!chartEl.value) return
 
-  // 获取应用颜色后的配置
   const options = getOptionsWithColor()
   if (options) {
     chartInstance.value = echarts.init(chartEl.value)
@@ -151,11 +143,8 @@ watch(
     
     if (options && chartInstance.value) {
       
-      // 先清除图表
       chartInstance.value.clear()
-      // 重新设置选项
       chartInstance.value.setOption(options, true)
-      // 重绘图表
       chartInstance.value.resize()
     }
   },

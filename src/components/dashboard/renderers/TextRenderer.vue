@@ -14,7 +14,7 @@
       fontWeight: config.fontWeight,
       textAlign: config.textAlign,
       lineHeight: config.lineHeight,
-      whiteSpace: 'pre-wrap' // 支持换行
+      whiteSpace: 'pre-wrap'
     }">
       {{ config.text || '请设置文本内容' }}
     </div>

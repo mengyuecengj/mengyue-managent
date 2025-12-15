@@ -1,13 +1,11 @@
 import * as echarts from 'echarts'
 
-// 确保 echarts 在全局可用
 declare global {
   interface Window {
     echarts: typeof echarts;
   }
 }
 
-// 如果需要在配置中使用 echarts，确保它已挂载
 if (typeof window !== 'undefined') {
   window.echarts = echarts;
 }
@@ -26,7 +24,6 @@ export interface ChartConfig {
   description?: string;
 }
 
-// 基础折线图
 export const basicLineChart: ChartConfig = {
   id: 'basic-line-1',
   name: '基础折线图',
@@ -106,7 +103,6 @@ export const basicLineChart: ChartConfig = {
   }
 };
 
-// 面积图
 export const areaLineChart: ChartConfig = {
   id: 'area-line-1',
   name: '面积图',
@@ -232,7 +228,6 @@ export const areaLineChart: ChartConfig = {
   }
 };
 
-// 平滑折线图
 export const smoothLineChart: ChartConfig = {
   id: 'smooth-line-1',
   name: '平滑折线图',
@@ -317,7 +312,6 @@ export const smoothLineChart: ChartConfig = {
   }
 };
 
-// 导出所有折线图配置
 export const lineChartConfigs: ChartConfig[] = [
   basicLineChart,
   areaLineChart,

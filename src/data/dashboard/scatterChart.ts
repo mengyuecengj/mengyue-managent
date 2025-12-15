@@ -1,13 +1,11 @@
 import * as echarts from 'echarts'
 
-// 确保 echarts 在全局可用
 declare global {
   interface Window {
     echarts: typeof echarts;
   }
 }
 
-// 如果需要在配置中使用 echarts，确保它已挂载
 if (typeof window !== 'undefined') {
   window.echarts = echarts;
 }
@@ -25,7 +23,6 @@ export interface ChartConfig {
   description?: string;
 }
 
-// 基础散点图
 export const basicScatterChart: ChartConfig = {
   id: 'basic-scatter',
   name: '基础散点图',
@@ -128,7 +125,6 @@ export const basicScatterChart: ChartConfig = {
   }
 };
 
-// 导出所有散点图配置
 export const scatterChartConfigs: ChartConfig[] = [
   basicScatterChart,
 ];

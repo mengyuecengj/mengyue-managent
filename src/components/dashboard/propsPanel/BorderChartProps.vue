@@ -15,16 +15,6 @@
           <MYSwitch v-model="selectedBlock.visible" />
         </MYForm-item>
 
-        <!-- ✅ 合并为主副颜色输入框 -->
-        <!-- <MYForm-item label="边框颜色">
-          <MYInput
-            v-model="colorString"
-            placeholder="请输入颜色数组，如：['#4fd2dd', '#235fa7']"
-            type="textarea"
-            :rows="2"
-          />
-        </MYForm-item> -->
-
         <MYForm-item label="背景颜色">
           <MYInput v-model="backgroundColor" placeholder="请输入背景颜色" />
         </MYForm-item>
@@ -70,7 +60,7 @@ const backgroundColor = computed({
   }
 })
 
-// ✅ 边框颜色（合并输入）
+// 边框颜色
 const colorString = computed({
   get() {
     const block = selectedBlock.value

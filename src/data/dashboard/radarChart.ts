@@ -1,13 +1,11 @@
 import * as echarts from 'echarts'
 
-// 确保 echarts 在全局可用
 declare global {
   interface Window {
     echarts: typeof echarts;
   }
 }
 
-// 如果需要在配置中使用 echarts，确保它已挂载
 if (typeof window !== 'undefined') {
   window.echarts = echarts;
 }
@@ -25,7 +23,6 @@ export interface ChartConfig {
   description?: string;
 }
 
-// 基础雷达图（修复文本重叠）
 export const basicRadarChart: ChartConfig = {
   id: 'basic-radar-1',
   name: '基础雷达图',
@@ -65,7 +62,6 @@ export const basicRadarChart: ChartConfig = {
       axisName: {
         color: '#fff',
         fontSize: 10,
-        // 关键修复：调整文本位置和旋转角度
         rotate: 0,
         align: 'center',
         verticalAlign: 'middle',
@@ -127,7 +123,6 @@ export const basicRadarChart: ChartConfig = {
   }
 };
 
-// 多雷达图（修复文本重叠）
 export const multipleRadarChart: ChartConfig = {
   id: 'multiple-radar-1',
   name: '多雷达图',
@@ -168,7 +163,6 @@ export const multipleRadarChart: ChartConfig = {
       axisName: {
         color: '#fff',
         fontSize: 12,
-        // 关键修复：调整文本位置和旋转角度
         rotate: 0,
         align: 'center',
         verticalAlign: 'middle',
@@ -264,7 +258,6 @@ export const multipleRadarChart: ChartConfig = {
   }
 };
 
-// 导出所有雷达图配置
 export const radarChartConfigs: ChartConfig[] = [
   basicRadarChart,
   multipleRadarChart

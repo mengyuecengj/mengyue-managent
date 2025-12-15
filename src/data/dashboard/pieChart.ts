@@ -1,13 +1,11 @@
 import * as echarts from 'echarts'
 
-// 确保 echarts 在全局可用
 declare global {
     interface Window {
         echarts: typeof echarts;
     }
 }
 
-// 如果需要在配置中使用 echarts，确保它已挂载
 if (typeof window !== 'undefined') {
     window.echarts = echarts;
 }
@@ -27,7 +25,6 @@ export interface ChartConfig {
     description?: string;
 }
 
-// 基础饼图
 export const basicPieChart: ChartConfig = {
     id: 'basic-pie-1',
     name: '基础饼图',
@@ -69,7 +66,7 @@ export const basicPieChart: ChartConfig = {
                 type: 'pie',
                 radius: '55%',
                 center: ['50%', '60%'],
-                colorBy: 'data', // 确保按数据项分配颜色
+                colorBy: 'data',
                 data: [
                     { value: 335, name: '直接访问' },
                     { value: 310, name: '邮件营销' },
@@ -133,7 +130,7 @@ export const ringPieChart: ChartConfig = {
                 radius: ['50%', '70%'],
                 center: ['50%', '50%'],
                 roseType: 'radius',
-                colorBy: 'data', // 确保按数据项分配颜色
+                colorBy: 'data',
                 data: [
                     { value: 335, name: '直接访问' },
                     { value: 310, name: '邮件营销' },
@@ -198,7 +195,7 @@ export const rosePieChart: ChartConfig = {
                 radius: ['50%', '70%'],
                 center: ['50%', '50%'],
                 avoidLabelOverlap: false,
-                colorBy: 'data', // 确保按数据项分配颜色
+                colorBy: 'data',
                 label: {
                     show: false,
                     position: 'center'
@@ -286,7 +283,7 @@ export const rotatePieChart: ChartConfig = {
                 },
                 animationType: 'scale',
                 animationEasing: 'elasticOut',
-                animationDelay: function (idx: number) {
+                animationDelay: function () {
                     return Math.random() * 200;
                 }
             }
@@ -294,7 +291,6 @@ export const rotatePieChart: ChartConfig = {
     }
 };
 
-// 导出所有饼图配置
 export const pieChartConfigs: ChartConfig[] = [
     basicPieChart,
     ringPieChart,

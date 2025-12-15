@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { defineProps } from 'vue'
 import BarChartRenderer from '@/components/dashboard/renderers/BarChartRenderer.vue'
 
 import type { ChartConfig } from '@/data/dashboard/barChart'
 
 interface BlockItem {
   id: string
-  type: string       // 比如 basic-bar, horizontal-bar
+  type: string 
   config: ChartConfig
 }
 
@@ -14,9 +13,7 @@ const props = defineProps<{
   blocks: BlockItem[]
 }>()
 
-/**
- * 渲染器映射表
- */
+
 const rendererMap: Record<string, any> = {
   'basic-bar': BarChartRenderer,
   'horizontal-bar': BarChartRenderer,
