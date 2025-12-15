@@ -338,7 +338,6 @@ export const useDashboardStore = defineStore('dashboard', () => {
     }
   }
 
-  // 新增 undo 和 redo 方法（假设 pinia-undo 插件已注册，它们会自动可用，这里暴露以便调用）
   const undo = () => {
     // @ts-ignore pinia-undo adds this
     this.undo()
@@ -371,6 +370,6 @@ export const useDashboardStore = defineStore('dashboard', () => {
   }
 }, {
   undo: {
-    omit: ['previewMode', 'selectedId']  // 忽略临时 UI 状态
+    omit: ['previewMode', 'selectedId']
   }
 })

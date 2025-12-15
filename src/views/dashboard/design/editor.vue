@@ -35,7 +35,6 @@
             {{ dashboardStore.previewMode ? '退出预览' : '预览' }}
           </MYText>
           <MYText Tecolor="#fff" size="large" style="margin-bottom: 5px;" @click="dashboardStore.saveCurrentDashboard()">保存</MYText>
-          <!-- 新增 undo/redo 按钮 -->
           <MYText Tecolor="#fff" size="large" style="margin-bottom: 5px;" @click="dashboardStore.undo()">撤销</MYText>
           <MYText Tecolor="#fff" size="large" style="margin-bottom: 5px;" @click="dashboardStore.redo()">重做</MYText>
         </div>
@@ -244,7 +243,7 @@ const handleDrop = (dropResult: DropResult) => {
 
   const canvas = document.querySelector('.canvas-placeholder') as HTMLElement | null
   const rect = canvas?.getBoundingClientRect()
-  const x = mouseX.value - (rect?.left || 0) - 200 || 200 // 偏移以块居中
+  const x = mouseX.value - (rect?.left || 0) - 200 || 200
   const y = mouseY.value - (rect?.top || 0) - 150 || 200
 
   dashboardStore.addBlock(payload.type, payload.component || payload.config, x, y)
