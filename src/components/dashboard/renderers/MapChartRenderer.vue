@@ -4,8 +4,8 @@
 
 <script setup lang="ts">
 import * as echarts from 'echarts'
-import worldMapData from '~/MapWorld.json'
-import chinaMapData from '~/china.json'  // 新增导入中国地图数据
+import worldMapData from '~/geo-coordinate/map-JsonData/MapWorld.json'
+import chinaMapData from '~/geo-coordinate/map-JsonData/china.json'
 import { onMounted, onUnmounted, ref, watch, nextTick } from 'vue'
 
 interface Props {

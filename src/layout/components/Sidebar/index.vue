@@ -18,7 +18,6 @@ import { useRoute, useRouter } from 'vue-router';
 import { ref, computed, onMounted } from 'vue';
 import Logo from '@/layout/components/Sidebar/Logo.vue';
 import SidebarItem from '@/layout/components/Sidebar/SidebarItem.vue';
-import variables from '@/scss/variables.base.scss';
 import useAppStore from '@/store/modules/app';
 import useSettingsStore from '@/store/modules/settings';
 import usePermissionStore from '@/store/modules/permission';

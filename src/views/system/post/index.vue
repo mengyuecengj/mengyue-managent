@@ -5,24 +5,27 @@
         <MYRow :gutter="16">
           <!-- 角色名称 -->
           <MYCol :span="6">
-            <MYForm-item label="岗位编码" prop="postCode">
-              <MYInput v-model="queryParams.postCode" placeholder="请输入角色名称" clearable @keyup.enter="handleQuery"
-                placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" />
+            <MYForm-item :label="t('system.post.postCode')" prop="postCode">
+              <MYInput v-model="queryParams.postCode" :placeholder="t('system.post.placeholder.postPlaceholder')"
+                clearable @keyup.enter="handleQuery" placeholderColor="var(--navbar-text)"
+                textColor="var(--navbar-text)" />
             </MYForm-item>
           </MYCol>
 
           <!-- 权限字符 -->
           <MYCol :span="6">
-            <MYForm-item label="岗位名称" prop="postName">
-              <MYInput v-model="queryParams.postName" placeholder="请输入权限字符" clearable @keyup.enter="handleQuery"
-                placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" />
+            <MYForm-item :label="t('system.post.postName')" prop="postName">
+              <MYInput v-model="queryParams.postName" :placeholder="t('system.post.placeholder.postNamePlaceholder')"
+                clearable @keyup.enter="handleQuery" placeholderColor="var(--navbar-text)"
+                textColor="var(--navbar-text)" />
             </MYForm-item>
           </MYCol>
 
           <!-- 状态 -->
           <MYCol :span="7">
-            <MYForm-item label="状态" prop="status">
-              <MYSelect v-model="queryParams.status" placeholder="角色状态" clearable>
+            <MYForm-item :label="t('system.post.status')" prop="status">
+              <MYSelect v-model="queryParams.status" :placeholder="t('system.post.placeholder.statusPlaceholder')"
+                clearable>
                 <MYOption v-for="dict in sys_normal_disable" :key="dict.value" :label="dict.label"
                   :value="dict.value" />
               </MYSelect>
@@ -30,16 +33,18 @@
           </MYCol>
 
           <!-- 搜索按钮 -->
-          <MYCol :span="2">
+          <MYCol :span="3">
             <MYForm-item>
-              <MYButton type="primary" icon="MYSearch" @click="handleQuery">搜索</MYButton>
+              <MYButton type="primary" icon="MYSearch" @click="handleQuery">{{ t('system.user.query.search') }}
+              </MYButton>
             </MYForm-item>
           </MYCol>
 
           <!-- 重置按钮 -->
           <MYCol :span="1">
             <MYForm-item>
-              <MYButton type="info" icon="MYRefreshRight" @click="resetQuery">重置</MYButton>
+              <MYButton type="info" icon="MYRefreshRight" @click="resetQuery">{{ t('system.user.query.reset') }}
+              </MYButton>
             </MYForm-item>
           </MYCol>
         </MYRow>
@@ -49,17 +54,18 @@
     <!-- 操作按钮 -->
     <MYRow :gutter="10" class="mb8" style="margin-top: 10px;">
       <MYCol :span="2">
-        <MYButton type="primary" icon="MYPlus" @click="handleAdd" v-hasPermi="['system:post:add']">新增</MYButton>
+        <MYButton type="primary" icon="MYPlus" @click="handleAdd" v-hasPermi="['system:post:add']">{{
+          t('system.role.button.add') }}</MYButton>
       </MYCol>
       <MYCol :span="2">
         <MYButton type="success" icon="MYEdit" :disabled="single" @click="() => handleUpdate()"
-          v-hasPermi="['system:role:edit']">修改</MYButton>
+          v-hasPermi="['system:role:edit']">{{ t('system.role.button.edit') }}</MYButton>
       </MYCol>
       <MYCol :span="2">
         <MYButton type="danger" icon="MYDelete" :disabled="multiple" @click="() => handleDelete()"
-          v-hasPermi="['system:role:remove']">删除</MYButton>
+          v-hasPermi="['system:role:remove']">{{ t('system.role.button.del') }}</MYButton>
       </MYCol>
-      <right-toolbar v-model:showSearch="showSearch" @queryTable="getList" />
+      <!-- <right-toolbar v-model:showSearch="showSearch" @queryTable="getList" /> -->
     </MYRow>
 
     <!-- 表格数据 -->
@@ -68,25 +74,26 @@
       borderColor="var(--table-border-color)" bodyBackgroundColor="var(--table-body-bg)"
       headerTextColor="var(--general)" bodyTextColor="var(--general)" table-layout="fixed">
       <MYTable-column type="selection" width="60" align="center" />
-      <MYTable-column label="岗位编号" align="center" prop="postId" width="100" />
-      <MYTable-column label="岗位编码" align="center" prop="postCode" width="120" />
-      <MYTable-column label="岗位名称" align="center" prop="postName" width="150" />
-      <MYTable-column label="岗位排序" align="center" prop="postSort" width="100" />
-      <MYTable-column label="状态" align="center" prop="status" width="100" />
+      <MYTable-column :label="t('system.post.postId')" align="center" prop="postId" width="100" />
+      <MYTable-column :label="t('system.post.postCode')" align="center" prop="postCode" width="120" />
+      <MYTable-column :label="t('system.post.postName')" align="center" prop="postName" width="150" />
+      <MYTable-column :label="t('system.post.postOrder')" align="center" prop="postSort" width="100" />
+      <MYTable-column :label="t('system.post.status')" align="center" prop="status" width="100" />
       <template #status="scope">
         <dict-tag :options="sys_normal_disable" :value="scope.row.status" />
       </template>
-      <MYTable-column label="创建时间" align="center" prop="createTime" width="180">
+      <MYTable-column :label="t('system.post.createTime')" align="center" prop="createTime" width="180">
         <template #default="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </MYTable-column>
-      <MYTable-column label="操作" align="center" prop="operation" width="150" class-name="small-padding fixed-width" />
+      <MYTable-column :label="t('system.post.actions')" align="center" prop="operation" width="150"
+        class-name="small-padding fixed-width" />
       <template #operation="scope">
         <MYButton link type="primary" icon="MYEdit" @click="() => handleUpdate(scope.row)"
-          v-hasPermi="['system:post:edit']" colorBg="var(--table-body-bg)" colorText="var(--general-text)">修改</MYButton>
+          v-hasPermi="['system:post:edit']" colorBackground="transparent" colorText="var(--general-text)">{{ t('system.user.button.edit') }}</MYButton>
         <MYButton link type="primary" icon="MYDelete" @click="() => handleDelete(scope.row)"
-          v-hasPermi="['system:post:remove']" colorBg="var(--table-body-bg)" colorText="var(--general-text)">删除
+          v-hasPermi="['system:post:remove']" colorBackground="transparent" colorText="var(--general-text)">{{ t('system.user.button.delete') }}
         </MYButton>
       </template>
     </MYTable>
@@ -99,27 +106,30 @@
     <MYDialog height="480px" :title="title" v-model="open" width="600px" append-to-body
       backgroundColor="var(--dialog-bg) !important" textColor="var(--general)">
       <MYForm class="dialog_form" ref="postRef" :model="form" :rules="rules" label-width="100px">
-        <MYForm-item label="岗位编码" prop="postCode">
-          <MYInput v-model="form.postCode" placeholder="请输入岗位编码" placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" />
+        <MYForm-item :label="t('system.post.postCode')" prop="postCode">
+          <MYInput v-model="form.postCode" :placeholder="t('system.post.placeholder.postPlaceholder')" placeholderColor="var(--navbar-text)"
+            textColor="var(--navbar-text)" />
         </MYForm-item>
-        <MYForm-item label="岗位名称" prop="postName">
-          <MYInput v-model="form.postName" placeholder="请输入岗位名称" placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" />
+        <MYForm-item :label="t('system.post.postName')" prop="postName">
+          <MYInput v-model="form.postName" :placeholder="t('system.post.placeholder.postNamePlaceholder')" placeholderColor="var(--navbar-text)"
+            textColor="var(--navbar-text)" />
         </MYForm-item>
-        <MYForm-item label="岗位排序" prop="postSort">
+        <MYForm-item :label="t('system.post.postOrder')" prop="postSort">
           <MYInputNumber v-model="form.postSort" :min="0" controls-position="right" />
         </MYForm-item>
-        <MYForm-item label="状态" prop="status">
+        <MYForm-item :label="t('system.post.status')" prop="status">
           <MYRadio-group v-model="form.status">
-            <MYRadio v-for="dict in sys_normal_disable" :key="dict.value" :label="dict.value">{{ dict.label }}</MYRadio>
+            <MYRadio v-for="dict in sys_normal_disable" :key="dict.value" :value="dict.value">{{ dict.label }}</MYRadio>
           </MYRadio-group>
         </MYForm-item>
-        <MYForm-item label="备注" prop="remark">
-          <MYInput v-model="form.remark" type="textarea" placeholder="请输入备注" placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" />
+        <MYForm-item :label="t('system.user.form.remark')" prop="remark">
+          <MYInput v-model="form.remark" type="textarea" :placeholder="t('system.user.form.remark')" placeholderColor="var(--navbar-text)"
+            textColor="var(--navbar-text)" />
         </MYForm-item>
       </MYForm>
       <template #footer>
-        <MYButton type="primary" @click="submitForm">确 定</MYButton>
-        <MYButton @click="cancel">取 消</MYButton>
+        <MYButton type="primary" @click="submitForm">{{ t('system.user.action.confirm') }}</MYButton>
+        <MYButton @click="cancel">{{ t('system.user.action.cancel') }}</MYButton>
       </template>
     </MYDialog>
   </div>
@@ -137,8 +147,9 @@ import { useDict } from '@/utils/dict';
 import { parseTime } from '@/utils/general';
 import { DictResult } from '@/types/views/user';
 import { Post, ListPostResponse, GetPostResponse } from '@/types/views/post'
-import { MYRadioGroup } from 'mengyue-plus';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 // ===== 字典 =====
 const { sys_normal_disable } = useDict(
   'sys_normal_disable'

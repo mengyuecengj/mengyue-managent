@@ -16,14 +16,18 @@
         <!-- 左侧介绍 -->
         <div class="left-container">
             <MYText type="info" size="36px" class="brand-title">
-                MengYue低代码平台
+                {{ $t('login.title') }}
             </MYText>
             <MYText type="default" size="20px" class="brand-subtitle">
-                建筑未来 · 码力全开
+                {{ $t('login.leftContentA') }}
             </MYText>
             <MYText type="default" size="16px" class="brand-desc">
-                简筑未来应用，低码引擎驱动创造力；<br />
-                可视化搭建无门槛，让每个人都可以搭积木式开发，创无限可能。
+                <!-- 简筑未来应用，低码引擎驱动创造力；<br />
+                可视化搭建无门槛，让每个人都可以搭积木式开发，创无限可能。 -->
+                {{ $t('login.leftContentB') }}
+            </MYText>
+            <MYText type="default" size="16px" class="brand-desc">
+                {{ $t('login.leftContentC') }}
             </MYText>
         </div>
 
@@ -31,25 +35,26 @@
         <div class="right-container">
             <div class="login-box">
                 <div class="login-title">
-                    <MYText type="default" size="24px">MengYue低代码平台</MYText>
+                    <MYText type="default" size="24px">{{ $t('login.title') }}</MYText>
                 </div>
 
                 <MYForm class="form" ref="formRef" :rules="loginrules" :modelValue="formData">
                     <div class="form-item">
                         <MYForm-item prop="username" class="horizontal-item">
                             <div class="input-row">
-                                <MYText type="default" class="form-label">账号</MYText>
-                                <MYInput placeholder="请输入用户名" width="100%" class="form-input" textColor="#fff" auto-complete="off"
-                                    v-model="formData.username" @blur="() => formRef?.validateField('username')" />
+                                <MYText type="default" class="form-label">{{ $t('login.account') }}</MYText>
+                                <MYInput v-bind:placeholder="$t('login.pleaseAccount')" width="100%" class="form-input"
+                                    textColor="#fff" auto-complete="off" v-model="formData.username"
+                                    @blur="() => formRef?.validateField('username')" />
                             </div>
                         </MYForm-item>
                     </div>
                     <div class="form-item">
                         <MYForm-item prop="password" class="horizontal-item">
                             <div class="input-row">
-                                <MYText type="default" class="form-label">密码</MYText>
-                                <MYInput placeholder="请输入密码" type="password" width="100%" textColor="#fff" class="form-input"
-                                    auto-complete="off" v-model="formData.password"
+                                <MYText type="default" class="form-label">{{ $t('login.password') }}</MYText>
+                                <MYInput v-bind:placeholder="$t('login.pleasePassword')" type="password" width="100%"
+                                    textColor="#fff" class="form-input" auto-complete="off" v-model="formData.password"
                                     @blur="() => formRef?.validateField('password')" />
                             </div>
                         </MYForm-item>
@@ -57,20 +62,20 @@
                     <div class="form-item">
                         <MYForm-item prop="code" class="horizontal-item">
                             <div class="input-row">
-                                <MYText type="default" class="form-label">验证码</MYText>
+                                <MYText type="default" class="form-label">{{ $t('login.code') }}</MYText>
                                 <div class="code-wrapper">
-                                    <MYInput placeholder="请输入验证码" width="100%" class="form-input" textColor="#fff"
-                                        v-model="formData.code" auto-complete="off" @keyup.enter="login"
-                                        @blur="() => formRef?.validateField('code')" />
+                                    <MYInput v-bind:placeholder="$t('login.pleaseCode')" width="100%" class="form-input"
+                                        textColor="#fff" v-model="formData.code" auto-complete="off"
+                                        @keyup.enter="login" @blur="() => formRef?.validateField('code')" />
                                     <div class="code-img">
-                                        <span>0000</span> <!-- 临时静态，稍后动态 -->
+                                        <span>0000</span> <!-- 临时静态 -->
                                     </div>
                                 </div>
                             </div>
                         </MYForm-item>
                     </div>
                     <div class="form-item">
-                        <MYButton type="primary" class="login-button-style" @click.prevent="login">登录</MYButton>
+                        <MYButton type="primary" class="login-button-style" @click.prevent="login">{{ $t('login.login') }}</MYButton>
                     </div>
                 </MYForm>
             </div>
@@ -395,7 +400,7 @@ async function login() {
         }
 
         .form {
-            background-color: transparent;
+            background-color: transparent !important;
         }
 
         .form-item {
@@ -424,6 +429,7 @@ async function login() {
 
         .form-input {
             flex: 1;
+            border-color: rgba(255, 255, 255, 0.2) !important;
         }
 
         .code-wrapper {

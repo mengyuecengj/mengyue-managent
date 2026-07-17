@@ -3,17 +3,17 @@
         <MYRow :gutter="20" class="app-row">
             <MYCol :span="6" v-for="item in data.appList" :key="item.name">
                 <div class="app-list">
-                    <MYText Tecolor="var(--navbar-text)" class="name">{{ item.name }}</MYText>
-                    <MYText TTecolor="var(--navbar-text)" class="total">{{ item.total }}</MYText>
+                    <MYText textColor="var(--navbar-text)" class="name">{{ item.name }}</MYText>
+                    <MYText textColor="var(--navbar-text)" class="total">{{ item.total }}</MYText>
                     <MYButton :type="item.type" round class="num" colorText="#fff">{{ item.num }}</MYButton>
-                    <MYText Tecolor="var(--navbar-text)" class="context">{{ item.context }}</MYText>
+                    <MYText textColor="var(--navbar-text)" class="context">{{ item.context }}</MYText>
                 </div>
             </MYCol>
         </MYRow>
 
         <div class="content-wrapper">
             <div class="template-container">
-                <MYText Tecolor="var(--navbar-text)" class="template-title">监控概览</MYText>
+                <MYText textColor="var(--navbar-text)" class="template-title">监控概览</MYText>
                 <MYRow :gutter="20" class="template-row" justify="space-between">
                     <!-- 命令统计卡片 -->
                     <MYCol :span="11" class="card-box">
@@ -49,7 +49,7 @@
 
             <div class="template-master">
                 <div class="template-slave">
-                    <MYText Tecolor="var(--navbar-text)" class="fast-title">快速入口</MYText>
+                    <MYText textColor="var(--navbar-text)" class="fast-title">快速入口</MYText>
                     <MYButton type="primary" class="document" @click="navigateTo('/api/leading')">
                         查阅接口文档
                     </MYButton>
@@ -64,9 +64,9 @@
                     </MYButton>
                 </div>
                 <div class="template-notice">
-                    <MYText Tecolor="var(--navbar-text)" class="fast-title">系统公告</MYText>
+                    <MYText textColor="var(--navbar-text)" class="fast-title">系统公告</MYText>
                     <div class="timeline-container">
-                        <MYText Tecolor="var(--general)">暂无</MYText>
+                        <MYText textColor="var(--general)">暂无</MYText>
                     </div>
                 </div>
             </div>

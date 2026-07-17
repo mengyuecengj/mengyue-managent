@@ -19,7 +19,10 @@ const tagsViewStore = useTagsViewStore();
 
 <style lang="scss" scoped>
 .app-main {
-    // 50= navbar 50
+    // 跟随右侧背景主题
+    background: var(--content-bg);
+    transition: background 0.3s ease;
+
     min-height: calc(100% - 50px);
     width: 100%;
     position: relative;
@@ -32,7 +35,6 @@ const tagsViewStore = useTagsViewStore();
 
 .hasTagsView {
     .app-main {
-        // 84 = navbar + tags-view = 50 + 34
         min-height: calc(100vh - 84px);
     }
     .fixed-header + .app-main {
@@ -48,18 +50,4 @@ const tagsViewStore = useTagsViewStore();
         padding-right: 6px;
     }
 }
-
-// ::-webkit-scrollbar {
-//     width: 6px;
-//     height: 6px;
-// }
-
-// ::-webkit-scrollbar-track {
-//     background-color: #f1f1f1;
-// }
-
-// ::-webkit-scrollbar-thumb {
-//     background-color: #c0c0c0;
-//     border-radius: 3px;
-// }
 </style>

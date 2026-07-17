@@ -19,15 +19,93 @@ body {
   }
 }
 
+/* ====================== 系统主题颜色变量（亮色默认） ====================== */
+:root {
+  --btn-color-primary: #409eff;
+  /* 主色改为 #409eff (原来为 #13C2C2) */
+  --btn-color-primary-hover: #79bbff;
+  /* hover 色可相应调整 */
+  --navbar-bg: #ffffff;
+  /* 亮色顶栏背景 */
+  --sidebar-bg: #304156;
+  /* 亮色侧边栏背景 */
+  --menu-bg: #304156;
+  /* 与侧边栏一致 */
+  /* 以下变量补充完整（从原 variables.scss 亮色部分） */
+  --sidebar-logo-text: #ffffff;
+  --sidebar-two-bg: #222D3C;
+  --menu-text: #c1cbd7;
+  --navbar-hover-bg: #f0f0f0;
+  --navbar-text: #302b2b;
+  --navbar-hamburger: #302b2b;
+  --navbar-search-text: #0b1110;
+  --track-color: #fff;
+  --tags-item-text: #333333;
+  --tags-item-active: #3e5d7c;
+  --table-header-bg: #f5faf7;
+  --table-border-color: #fafafa;
+  --table-body-bg: #ffffff;
+  --table-stripe-bg: #f1f2f0;
+  --table-border: #bdbdbd;
+  --dialog-bg: #ffffff;
+  --general: #0b1110;
+  --general-two: #ffffff;
+  --general-text: #409eff;
+  --border-color: #757272;
+}
+
+/* ====================== 暗黑模式变量覆盖 ====================== */
+html.dark {
+  --btn-color-primary: #409eff;
+  --btn-color-primary-hover: #79bbff;
+  --sidebar-bg: #0a1017;
+  --menu-bg: #0a1017;
+  --sidebar-logo-text: #dde9e8;
+  --sidebar-two-bg: #0e1620;
+  --menu-text: #c1cbd7;
+  --navbar-hover-bg: #2a2a2b;
+  --navbar-text: #ffffff;
+  --navbar-hamburger: #e7e0e0;
+  --navbar-search-text: #ebefee;
+  --track-color: #0a1017;
+  --tags-item-text: #e0e0ff;
+  --tags-item-active: #1e3a6f;
+  --table-header-bg: #060813;
+  --table-border-color: #2d3446;
+  --table-body-bg: #0a1017;
+  --table-stripe-bg: #121a24;
+  --table-border: #2d3446;
+  --dialog-bg: #0b1115;
+  --general: #e7ebea;
+  --general-two: #151414;
+  --general-text: #409eff;
+  --border-color: #7e8383;
+}
+
+
+/* ====================== 覆盖 MYSwitch 硬编码颜色（只在项目生效） ====================== */
+.my-switch input:checked+.slider {
+  background-color: var(--btn-color-primary) !important;
+}
+
+.my-switch .slider-text {
+  color: var(--btn-color-primary) !important;
+}
+
+//
+
+
 // my-form 全局统一样式
 .my-input-wrapper .my-input {
-  border: 1px solid var(--general) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--general);
 }
 
 // MYSelect 全局统一样式
 .select-e {
   background-color: transparent !important;
-  border: 1px solid var(--general) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--general);
   height: 30px !important;
 
   .select-trigger {
@@ -39,7 +117,7 @@ body {
   }
 
   .select-dropdown {
-    background-color: var(--general-two);
+    background-color: var(--general-two) !important;
   }
 }
 
@@ -138,6 +216,7 @@ body {
 
   .my-form {
     box-shadow: none;
+    background: transparent !important;
 
     .my-form-item {
       margin-top: 20px;
@@ -155,4 +234,64 @@ body {
       }
     }
   }
+}
+
+.my-drawer {
+  /* 假设 MYDrawer 的 class 是 .my-drawer，实际替换为你组件的 class 名 */
+  background: var(--content-bg) !important;
+  transition: background 0.3s ease !important;
+}
+
+.my-drawer .setting-drawer {
+  background: var(--content-bg) !important;
+}
+
+/* 覆盖抽屉内部卡片（稍有层次） */
+.my-drawer .setting-card {
+  background: color-mix(in srgb, var(--content-bg) 96%, #ffffff) !important;
+}
+
+/* 确保分割线、按钮等也适配 */
+.my-drawer .my-border {
+  border-color: var(--border-color) !important;
+}
+
+.my-drawer .my-button {
+  background: var(--btn-color-primary) !important;
+  color: #fff !important;
+}
+
+/* 覆盖组件库 Input 样式 */
+.my-input::placeholder {
+  color: var(--general);
+  opacity: 0.6;
+}
+
+/* Select dropdown 全局主题适配 */
+.select-dropdown {
+  background-color: var(--general) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--general) !important;
+}
+
+.select-dropdown .select-option {
+  color: var(--general) !important;
+}
+
+.select-dropdown .select-option:hover {
+  background: var(--navbar-hover-bg) !important;
+}
+
+.select-dropdown .select-option.selected {
+  background: var(--btn-color-primary) !important;
+  color: #fff !important;
+}
+
+.result {
+  padding: 0 !important;
+}
+
+.result-icon {
+  width: 200px !important;
+  height: 200px !important;
 }

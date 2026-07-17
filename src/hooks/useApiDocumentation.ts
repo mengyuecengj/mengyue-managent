@@ -1,4 +1,3 @@
-// hooks/useApiDocumentation.ts
 import { ref, computed, nextTick, watch, onMounted } from 'vue'
 import Prism from 'prismjs'
 import 'prismjs/themes/prism-tomorrow.css'

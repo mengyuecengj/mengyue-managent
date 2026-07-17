@@ -3,7 +3,7 @@
     <div class="top-nav">
       <div class="nav-left">
         <MYDropdown v-for="(config, index) in dropdownConfigs" :key="index" trigger="click" placement="bottom-end"
-          @command="handleCommand">
+          @command="handleCommand" backGroundColor="var(--sidebar-bg)">
           <span class="my-dropdown-link">
             <MYText class="content">{{ config.title }}</MYText>
           </span>
@@ -31,25 +31,25 @@
           </template>
         </MYDropdown>
         <div class="my-dropdown-link">
-          <MYText Tecolor="#fff" size="large" style="margin-bottom: 5px;" @click="dashboardStore.togglePreview()">
-            {{ dashboardStore.previewMode ? '退出预览' : '预览' }}
+          <MYText textColor="#fff" size="large" style="margin-bottom: 5px;" @click="togglePreview">
+            {{ dashboardStore.previewMode ? $t('dashboard.editor.exitPreview') : $t('dashboard.editor.preview') }}
           </MYText>
-          <MYText Tecolor="#fff" size="large" style="margin-bottom: 5px;" @click="dashboardStore.saveCurrentDashboard()">保存</MYText>
-          <MYText Tecolor="#fff" size="large" style="margin-bottom: 5px;" @click="dashboardStore.undo()">撤销</MYText>
-          <MYText Tecolor="#fff" size="large" style="margin-bottom: 5px;" @click="dashboardStore.redo()">重做</MYText>
+          <MYText textColor="#fff" size="large" style="margin-bottom: 5px;" @click="handleSave">{{ $t('dashboard.editor.save') }}</MYText>
+          <MYText textColor="#fff" size="large" style="margin-bottom: 5px;" @click="dashboardStore.undo()">{{ $t('dashboard.editor.undo') }}</MYText>
+          <MYText textColor="#fff" size="large" style="margin-bottom: 5px;" @click="dashboardStore.redo()">{{ $t('dashboard.editor.redo') }}</MYText>
         </div>
       </div>
       <div class="nav-right">
         <MYButton @click="toggleBrowserFullscreen" plain>
-          {{ browserFullscreen ? '退出可视化全屏' : '进入可视化全屏' }}
+          {{ browserFullscreen ? $t('dashboard.editor.exitFullscreen') : $t('dashboard.editor.enterFullscreen') }}
         </MYButton>
-        <MYButton @click="gotoexit" style="margin-left: 8px" type="danger" plain>退出可视化系统</MYButton>
+        <MYButton @click="gotoexit" style="margin-left: 8px" type="danger" plain>{{ $t('dashboard.editor.exitSystem') }}</MYButton>
       </div>
     </div>
     <div class="dashboard-content">
       <div class="dashboard-left" v-if="!dashboardStore.previewMode">
         <div class="dashboard-title">
-          <MYText Tecolor="var(--general)" size="20px">图层</MYText>
+          <MYText textColor="var(--general)" size="20px">{{ $t('dashboard.editor.layer') }}</MYText>
         </div>
         <MYScrollbar height="calc(100vh - 53px)" ScrollWidth="4px">
           <div class="layers-list">
@@ -78,7 +78,7 @@
                 </SmoothDndContainer>
 
                 <div v-if="!chartBlocks.length" class="empty-hint">
-                  从左侧拖入组件
+                  {{ $t('dashboard.editor.emptyHint') }}
                 </div>
 
                 <div class="size-tag">
@@ -95,18 +95,18 @@
             role="menu">
             <li role="menuitem" @click="contextDelete()">
               <MYClose class="li-icon"></MYClose>
-              <span>删除图层</span>
+              <span>{{ $t('dashboard.editor.deleteLayer') }}</span>
             </li>
             <li role="menuitem" @click="contextCopy()">
               <MYOdometerText class="li-icon"></MYOdometerText>
-              <span>复制图层</span>
+              <span>{{ $t('dashboard.editor.copyLayer') }}</span>
             </li>
           </ul>
         </Transition>
       </Teleport>
       <div class="dashboard-right" v-if="!dashboardStore.previewMode">
         <div class="dashboard-title">
-          <MYText Tecolor="var(--general)" size="20px">操作</MYText>
+          <MYText textColor="var(--general)" size="20px">{{ $t('dashboard.editor.layer') }}</MYText>
           <MYScrollbar height="calc(100vh - 53px)" ScrollWidth="4px">
             <operation v-if="!selectBlock" />
             <component v-else :is="propsPanelComponent" :config="selectBlock.config" :block="selectBlock" />
@@ -119,7 +119,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { dropdownConfigs, findComponentConfig } from '@/data/dashboard/dropdownTop';
+import { createDropdownConfigs, getAllFlatItems, findComponentConfig } from '@/api-data/dashboard/dropdownTop';
 import { toggleBrowserFullscreen } from '@/utils/dashboard';
 import { SmoothDndContainer } from '@/components/SmoothDnd/SmoothDndContainer';
 import { SmoothDndDraggable } from '@/components/SmoothDnd/SmoothDndDraggable';
@@ -130,7 +130,9 @@ import operation from './operation.vue'
 import { getPropsPanel } from '@/components/dashboard/propsPanel';
 import { resolveComponentByType } from '@/utils/resolveComponentByType'
 import { cloneDeep } from 'lodash-es';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const dashboardStore = useDashboardStore()
 const { blocks: chartBlocks, screen } = storeToRefs(dashboardStore)
 const router = useRouter();
@@ -140,6 +142,11 @@ const menuVisible = ref(false)
 const menuLeft = ref(0)
 const menuTop = ref(0)
 const currentRightClickBlockId = ref<string | null>(null)
+
+// 动态生成下拉配置
+const dropdownConfigs = computed(() => createDropdownConfigs(t));
+// 获取所有扁平化的项，用于查找组件配置
+const allFlatItems = computed(() => getAllFlatItems(t));
 
 const cancelSelect = (e: MouseEvent) => {
   const target = e.target as HTMLElement | null
@@ -153,7 +160,6 @@ const cancelSelect = (e: MouseEvent) => {
     dashboardStore.selectedId = null
   }
 }
-
 
 const handleContextMenu = (e: MouseEvent, block: any) => {
   e.preventDefault()
@@ -171,9 +177,11 @@ const handleContextMenu = (e: MouseEvent, block: any) => {
   }, 100)
 }
 
+const getDefaultTitle = () => t('dashboard.defaultTitle')
+
+
 const selectBlock = computed(() => {
   return chartBlocks.value.find(item => item.id === dashboardStore.selectedId)
-
 })
 
 const propsPanelComponent = computed(() => {
@@ -246,28 +254,28 @@ const handleDrop = (dropResult: DropResult) => {
   const x = mouseX.value - (rect?.left || 0) - 200 || 200
   const y = mouseY.value - (rect?.top || 0) - 150 || 200
 
-  dashboardStore.addBlock(payload.type, payload.component || payload.config, x, y)
+  dashboardStore.addBlock(payload.type, payload.component || payload.config, x, y, payload.name)
 }
 
 const getChildPayload = (index: number) => {
   const child = activeChildren.value[index]
   if (!child?.componentConfig) return null
 
-  if (child.type === 'decoration') {
-    return {
-      type: child.value,
-      component: child.componentConfig
-    }
-  } else {
-    return {
-      type: child.value,
-      config: cloneDeep(child.componentConfig)
-    }
+  const payload: any = {
+    type: child.value,
+    name: child.label,
   }
+
+  if (child.type === 'decoration') {
+    payload.component = child.componentConfig
+  } else {
+    payload.config = cloneDeep(child.componentConfig)
+  }
+  return payload
 }
 
 const handleCommand = (command: string) => {
-  const componentConfig = findComponentConfig(command)
+  const componentConfig = findComponentConfig(command, allFlatItems.value)
   if (!componentConfig) return
 }
 
@@ -297,9 +305,16 @@ const gotoexit = () => {
   router.push("/dashboard/design/list");
 };
 
+const togglePreview = () => {
+  dashboardStore.togglePreview();
+};
+
+const handleSave = () => {
+  dashboardStore.saveCurrentDashboard();
+};
+
 onMounted(() => {
   document.addEventListener('fullscreenchange', handleFullscreenChange);
-  onMounted(() => {
   const saved = localStorage.getItem('dashboard-screen')
   if (!saved) return
 
@@ -310,7 +325,6 @@ onMounted(() => {
     ...b,
     component: resolveComponentByType(b)
   }))
-})
 
   // 添加键盘快捷键监听
   window.addEventListener('keydown', (e) => {

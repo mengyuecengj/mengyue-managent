@@ -19,7 +19,7 @@ export default [
             component: 'Layout',
             alwaysShow: true,
             meta: {
-              title: '数据大屏',
+              title: 'menu.dashboardIndex',
               icon: 'fullscreen',
               noCache: false,
               link: null
@@ -31,7 +31,7 @@ export default [
                 hidden: false,
                 component: 'dashboard/display/index',
                 meta: {
-                  title: '数据大屏展示',
+                  title: 'menu.dashboardDisplay',
                   icon: 'fullscreen',
                   noCache: false,
                   link: null,
@@ -44,7 +44,7 @@ export default [
                 hidden: false,
                 redirect: '/dashboard/design/list',
                 meta: {
-                  title: '数据大屏设计',
+                  title: 'menu.dashboardDesign',
                   icon: 'fullscreen',
                   noCache: false,
                   link: null
@@ -55,7 +55,7 @@ export default [
                     path: 'list',
                     component: 'dashboard/design/index',
                     meta: {
-                      title: '数据大屏设计',
+                      title: 'menu.dashboardDesign',
                       noCache: false
                     }
                   },
@@ -82,7 +82,7 @@ export default [
             component: 'Layout',
             alwaysShow: true,
             meta: {
-              title: '系统管理',
+              title: 'menu.systemManagement',
               icon: 'system',
               noCache: false,
               link: null
@@ -94,7 +94,7 @@ export default [
                 hidden: false,
                 component: 'system/user/index',
                 meta: {
-                  title: '用户管理',
+                  title: 'menu.userManagement',
                   icon: 'user',
                   noCache: false,
                   link: null
@@ -106,7 +106,7 @@ export default [
                 hidden: false,
                 component: 'system/role/index',
                 meta: {
-                  title: '角色管理',
+                  title: 'menu.roleManagement',
                   icon: 'peoples',
                   noCache: false,
                   link: null
@@ -118,7 +118,7 @@ export default [
                 hidden: false,
                 component: 'system/menu/index',
                 meta: {
-                  title: '菜单管理',
+                  title: 'menu.menuManagement',
                   icon: 'tree-table',
                   noCache: false,
                   link: null
@@ -130,7 +130,7 @@ export default [
                 hidden: false,
                 component: 'system/dept/index',
                 meta: {
-                  title: '部门管理',
+                  title: 'menu.deptManagement',
                   icon: 'tree',
                   noCache: false,
                   link: null
@@ -142,7 +142,7 @@ export default [
                 hidden: false,
                 component: 'system/post/index',
                 meta: {
-                  title: '岗位管理',
+                  title: 'menu.postManagement',
                   icon: 'post',
                   noCache: false,
                   link: null
@@ -154,7 +154,7 @@ export default [
                 hidden: false,
                 component: 'system/dict/index',
                 meta: {
-                  title: '字典管理',
+                  title: 'menu.dictManagement',
                   icon: 'dict',
                   noCache: false,
                   link: null
@@ -166,7 +166,7 @@ export default [
                 hidden: false,
                 component: 'system/config/index',
                 meta: {
-                  title: '参数设置',
+                  title: 'menu.configManagement',
                   icon: 'edit',
                   noCache: false,
                   link: null
@@ -178,7 +178,7 @@ export default [
                 hidden: false,
                 component: 'system/notice/index',
                 meta: {
-                  title: '通知公告',
+                  title: 'menu.notice',
                   icon: 'message',
                   noCache: false,
                   link: null
@@ -192,7 +192,7 @@ export default [
                 component: 'ParentView',
                 alwaysShow: true,
                 meta: {
-                  title: '日志管理',
+                  title: 'menu.logManagement',
                   icon: 'log',
                   noCache: false,
                   link: null
@@ -204,7 +204,7 @@ export default [
                     hidden: false,
                     component: 'monitor/operlog/index',
                     meta: {
-                      title: '操作日志',
+                      title: 'menu.operateLog',
                       icon: 'form',
                       noCache: false,
                       link: null
@@ -216,7 +216,7 @@ export default [
                     hidden: false,
                     component: 'monitor/logininfor/index',
                     meta: {
-                      title: '登录日志',
+                      title: 'menu.loginLog',
                       icon: 'logininfor',
                       noCache: false,
                       link: null
@@ -234,7 +234,7 @@ export default [
             component: 'Layout',
             alwaysShow: true,
             meta: {
-              title: '系统监控',
+              title: 'menu.systemMonitor',
               icon: 'monitor',
               noCache: false,
               link: null
@@ -246,7 +246,7 @@ export default [
                 hidden: false,
                 component: 'monitor/online/index',
                 meta: {
-                  title: '在线用户',
+                  title: 'menu.onlineUser',
                   icon: 'online',
                   noCache: false,
                   link: null
@@ -258,7 +258,7 @@ export default [
                 hidden: false,
                 component: 'monitor/server/index',
                 meta: {
-                  title: '服务监控',
+                  title: 'menu.serverMonitor',
                   icon: 'server',
                   noCache: false,
                   link: null
@@ -270,7 +270,7 @@ export default [
                 hidden: false,
                 component: 'monitor/cache/index',
                 meta: {
-                  title: '缓存监控',
+                  title: 'menu.cacheMonitor',
                   icon: 'redis',
                   noCache: false,
                   link: null
@@ -286,7 +286,7 @@ export default [
             component: 'Layout',
             alwaysShow: true,
             meta: {
-              title: '系统工具',
+              title: 'menu.systemUtils',
               icon: 'tool',
               noCache: false,
               link: null
@@ -298,7 +298,7 @@ export default [
                 hidden: false,
                 component: 'tool/builder/index',
                 meta: {
-                  title: '表单构建',
+                  title: 'menu.buildForm',
                   icon: 'build',
                   noCache: false,
                   link: null
@@ -314,7 +314,7 @@ export default [
             component: 'Layout',
             alwaysShow: true,
             meta: {
-              title: '接口参考文档',
+              title: 'menu.apiDocs',
               icon: 'swagger',
               noCache: false,
               link: null
@@ -326,7 +326,7 @@ export default [
                 hidden: false,
                 component: 'api/apiLeading',
                 meta: {
-                  title: '前置',
+                  title: 'menu.leading',
                   icon: 'slider',
                   noCache: false,
                   link: null
@@ -340,7 +340,7 @@ export default [
                 component: 'ParentView',
                 alwaysShow: true,
                 meta: {
-                  title: '系统管理接口文档',
+                  title: 'menu.systemApiDocs',
                   icon: 'system',
                   noCache: false,
                   link: null
@@ -352,7 +352,7 @@ export default [
                     hidden: false,
                     component: 'api/system/apiUser',
                     meta: {
-                      title: '用户管理接口文档',
+                      title: 'menu.userApiDocs',
                       icon: 'user',
                       noCache: false,
                       link: null
@@ -364,7 +364,7 @@ export default [
                     hidden: false,
                     component: 'api/system/apiRole',
                     meta: {
-                      title: '角色管理接口文档',
+                      title: 'menu.roleApiDocs',
                       icon: 'peoples',
                       noCache: false,
                       link: null
@@ -376,7 +376,7 @@ export default [
                     hidden: false,
                     component: 'api/system/apiMenu',
                     meta: {
-                      title: '菜单管理接口文档',
+                      title: 'menu.menuApiDocs',
                       icon: 'tree-table',
                       noCache: false,
                       link: null
@@ -388,8 +388,20 @@ export default [
                     hidden: false,
                     component: 'api/system/apiDept',
                     meta: {
-                      title: '部门管理接口文档',
+                      title: 'menu.deptApiDocs',
                       icon: 'tree',
+                      noCache: false,
+                      link: null
+                    }
+                  },
+                  {
+                    name: 'ApiPost',
+                    path: 'post',
+                    hidden: false,
+                    component: 'api/system/apiPost',
+                    meta: {
+                      title: 'menu.postApiDocs',
+                      icon: 'post',
                       noCache: false,
                       link: null
                     }
@@ -400,7 +412,7 @@ export default [
                     hidden: false,
                     component: 'api/system/apiDict',
                     meta: {
-                      title: '字典管理接口文档',
+                      title: 'menu.dictApiDocs',
                       icon: 'dict',
                       noCache: false,
                       link: null
@@ -412,7 +424,7 @@ export default [
                     hidden: false,
                     component: 'api/system/apiConfig',
                     meta: {
-                      title: '参数管理接口文档',
+                      title: 'menu.configApiDocs',
                       icon: 'edit',
                       noCache: false,
                       link: null
@@ -424,7 +436,7 @@ export default [
                     hidden: false,
                     component: 'api/system/apiNotice',
                     meta: {
-                      title: '通知公告接口文档',
+                      title: 'menu.noticeApiDocs',
                       icon: 'message',
                       noCache: false,
                       link: null
@@ -437,7 +449,7 @@ export default [
                     component: 'ParentView',
                     alwaysShow: true,
                     meta: {
-                      title: '日志管理接口文档',
+                      title: 'menu.logApiDocs',
                       icon: 'log',
                       noCache: false,
                       link: null
@@ -449,7 +461,7 @@ export default [
                         hidden: false,
                         component: 'api/system/apiOperlog',
                         meta: {
-                          title: '操作日志接口文档',
+                          title: 'menu.operApiDocs',
                           icon: 'form',
                           noCache: false,
                           link: null
@@ -461,7 +473,7 @@ export default [
                         hidden: false,
                         component: 'api/system/apiLogininfor',
                         meta: {
-                          title: '登录日志接口文档',
+                          title: 'menu.loginApiDocs',
                           icon: 'logininfor',
                           noCache: false,
                           link: null
@@ -479,7 +491,7 @@ export default [
                 component: 'ParentView',
                 alwaysShow: true,
                 meta: {
-                  title: '系统监控接口',
+                  title: 'menu.systemMonitor',
                   icon: 'monitor',
                   noCache: false,
                   link: null
@@ -491,7 +503,7 @@ export default [
                     hidden: false,
                     component: 'api/monitor/apiOnline',
                     meta: {
-                      title: '在线用户接口文档',
+                      title: 'menu.onlineApiDocs',
                       icon: 'online',
                       noCache: false,
                       link: null
@@ -503,7 +515,7 @@ export default [
                     hidden: false,
                     component: 'api/monitor/apiServer',
                     meta: {
-                      title: '服务监控接口文档',
+                      title: 'menu.serverApiDocs',
                       icon: 'server',
                       noCache: false,
                       link: null
@@ -515,7 +527,7 @@ export default [
                     hidden: false,
                     component: 'api/monitor/apiCache',
                     meta: {
-                      title: '缓存监控接口文档',
+                      title: 'menu.cacheApiDocs',
                       icon: 'redis',
                       noCache: false,
                       link: null

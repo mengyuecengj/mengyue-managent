@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount, watch, shallowRef, nextTick } from 'vue'
 import * as echarts from 'echarts'
-import type { ChartConfig } from '@/data/dashboard/barChart'
+import type { ChartConfig } from '@/api-data/dashboard/barChart'
 import { cloneDeep } from 'lodash-es'
 
 interface Props {

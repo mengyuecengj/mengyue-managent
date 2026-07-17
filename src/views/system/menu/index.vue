@@ -1,36 +1,36 @@
 <template>
   <div class="app-container" ref="tableContainer">
-    <MYRow :gutter="20">
+    <MYRow :gutter="24">
       <MYForm :modelValue="queryParams" ref="queryRef" :inline="true" v-show="showSearch" :rules="queryRules">
-        <MYRow :gutter="20">
+        <MYRow :gutter="24">
           <MYCol :span="9">
-            <MYForm-item prop="menuName" label="菜单名称">
-              <MYInput v-model="queryParams.menuName" placeholder="请输入菜单名称" clearable style="width: 200px"
+            <MYForm-item prop="menuName" :label="t('system.menu.menuName')">
+              <MYInput v-model="queryParams.menuName" :placeholder="t('system.menu.placeholder.placeholderMenu')" clearable
                 @keyup.enter="handleQuery" placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" />
             </MYForm-item>
           </MYCol>
 
           <MYCol :span="8">
-            <MYForm-item prop="status" label="状态">
-              <MYSelect v-model="queryParams.status" placeholder="菜单状态" clearable style="width: 200px">
+            <MYForm-item prop="status" :label="t('system.menu.status')">
+              <MYSelect v-model="queryParams.status" :placeholder="t('system.menu.placeholder.menuStatus')" clearable style="width: 200px;">
                 <MYOption v-for="dict in sys_normal_disable" :key="dict.value" :label="dict.label"
                   :value="dict.value" />
               </MYSelect>
             </MYForm-item>
           </MYCol>
 
-          <MYCol :span="3">
+          <MYCol :span="3.5">
             <MYForm-item>
               <MYButton type="primary" icon="MYSearch" @click="handleQuery">
-                搜索
+                {{ t('system.user.query.search') }}
               </MYButton>
             </MYForm-item>
           </MYCol>
 
-          <MYCol :span="4">
+          <MYCol :span="2">
             <MYForm-item>
               <MYButton type="info" icon="MYRefreshRight" @click="resetQuery">
-                重置
+                {{ t('system.user.query.reset') }}
               </MYButton>
             </MYForm-item>
           </MYCol>
@@ -39,40 +39,40 @@
     </MYRow>
     <MYRow :gutter="10" class="mb8">
       <MYCol :span="3">
-        <MYButton type="info" icon="MYSortAlt" @click="toggleExpandAll">展开/折叠</MYButton>
+        <MYButton type="info" icon="MYSortAlt" @click="toggleExpandAll">{{ t('system.role.table.expandCollapse') }}</MYButton>
       </MYCol>
-      <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
+      <!-- <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar> -->
     </MYRow>
     <MYTable v-if="refreshTable" v-loading="loading" :data="menuList" row-key="menuId"
       headerBackgroundColor="var(--table-header-bg)" borderColor="var(--table-border-color)"
       bodyBackgroundColor="var(--table-body-bg)" headerTextColor="var(--general)" bodyTextColor="var(--general)"
       :default-expand-all="isExpandAll" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }">
-      <MYTable-column prop="menuName" label="菜单名称" :show-overflow-tooltip="true" width="160"></MYTable-column>
-      <MYTable-column prop="icon" label="图标" align="center" width="100" />
+      <MYTable-column prop="menuName" :label="t('system.menu.menuName')" :show-overflow-tooltip="true" width="160"></MYTable-column>
+      <MYTable-column prop="icon" :label="t('system.menu.icon')" align="center" width="100" />
       <template #icon="scope">
         <svg-icon :icon-class="scope.row.icon" />
       </template>
-      <MYTable-column prop="orderNum" label="排序" width="60"></MYTable-column>
-      <MYTable-column prop="perms" label="权限标识" :show-overflow-tooltip="true"></MYTable-column>
-      <MYTable-column prop="component" label="组件路径" :show-overflow-tooltip="true"></MYTable-column>
-      <MYTable-column prop="body" label="状态" width="100" />
+      <MYTable-column prop="orderNum" :label="t('system.menu.order')" width="60"></MYTable-column>
+      <MYTable-column prop="perms" :label="t('system.menu.identifier')" :show-overflow-tooltip="true"></MYTable-column>
+      <MYTable-column prop="component" :label="t('system.menu.component')" :show-overflow-tooltip="true"></MYTable-column>
+      <MYTable-column prop="body" :label="t('system.menu.status')" width="100" />
       <template #body="scope">
         <dict-tag :options="sys_normal_disable" :value="scope.row.status" />
       </template>
-      <MYTable-column label="创建时间" align="center" width="200" prop="createTime">
+      <MYTable-column :label="t('system.user.table.createTime')" align="center" width="200" prop="createTime">
         <template #default="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </MYTable-column>
-      <MYTable-column label="操作" prop="operation" align="center" width="210" class-name="small-padding fixed-width" />
+      <MYTable-column :label="t('system.user.table.operation')" prop="operation" align="center" width="210" class-name="small-padding fixed-width" />
       <template #operation="scope">
-        <MYButton size="supersmall" link type="primary" icon="MYEdit" colorBg="var(--table-body-bg)"
-          colorText="var(--general-text)" @click="handleUpdate(scope.row)" v-hasPermi="['system:menu:edit']">修改
+        <MYButton size="supersmall" link type="primary" icon="MYEdit" colorBackground="transparent"
+          colorText="var(--general-text)" @click="handleUpdate(scope.row)" v-hasPermi="['system:menu:edit']">{{ t('system.user.button.edit') }}
         </MYButton>
-        <MYButton size="supersmall" link type="primary" icon="MYPlus" colorBg="var(--table-body-bg)"
-          colorText="var(--general-text)" @click="handleAdd(scope.row)" v-hasPermi="['system:menu:add']">新增</MYButton>
-        <MYButton size="supersmall" link type="primary" icon="MYDelete" colorBg="var(--table-body-bg)"
-          colorText="var(--general-text)" @click="handleDelete(scope.row)" v-hasPermi="['system:menu:remove']">删除
+        <MYButton size="supersmall" link type="primary" icon="MYPlus" colorBackground="transparent"
+          colorText="var(--general-text)" @click="handleAdd(scope.row)" v-hasPermi="['system:menu:add']">{{ t('system.user.button.add') }}</MYButton>
+        <MYButton size="supersmall" link type="primary" icon="MYDelete" colorBackground="transparent"
+          colorText="var(--general-text)" @click="handleDelete(scope.row)" v-hasPermi="['system:menu:remove']">{{ t('system.user.button.delete') }}
         </MYButton>
       </template>
     </MYTable>
@@ -149,7 +149,9 @@ import { reactive, ref, nextTick, getCurrentInstance } from 'vue'
 import { addMenu, delMenu, getMenu, listMenu } from '@/api/system/menu'
 import { parseTime } from '@/utils/general'
 import type { MenuRow, MenuForm, MenuOption } from '@/types/views/menu'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n();
 const { proxy } = getCurrentInstance() as any
 
 // 字典

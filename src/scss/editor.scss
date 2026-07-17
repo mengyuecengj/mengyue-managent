@@ -102,16 +102,16 @@
             }
 
             .operation-list {
-                background-color: transparent;
+                background-color: transparent !important;
 
                 .my-input-wrapper {
                     .my-input {
-                        color: #fff !important;
+                        color: var(--general) !important;
                     }
                 }
 
                 .my-form-item__label {
-                    color: #cfd3dc;
+                    color: var(--general);
                     margin-bottom: 20px;
                     font-weight: 300;
                     font-size: 16px;
@@ -233,7 +233,7 @@
 
                 .my-input-wrapper {
                     .my-input {
-                        color: #fff !important;
+                        color: var(--general) !important;
                     }
                 }
             }
@@ -284,7 +284,8 @@
 }
 
 .m-dropdown__menu {
-    background: #2d343c !important;
+    // background: #2d343c !important;
+    background: var(--general);
     color: #fff;
     border: none !important;
 }

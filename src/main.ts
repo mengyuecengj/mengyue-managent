@@ -24,14 +24,17 @@ import '@/scss/index.scss'
 
 // UI组件库
 // import ElementPlus from 'element-plus'
-import MengyuePlus from 'mengyue-plus'
-import 'mengyue-plus/style.css'
+// import MengyuePlus from 'mengyue-plus'
+// import 'mengyue-plus/style.css'
+import MengyueComponents from 'mengyue-components'
+import 'mengyue-components/style.css'
 
 import { PiniaUndo } from 'pinia-undo';
 
 import App from './App.vue'
 import pinia from '@/store'
 import router from '@/router'
+import i18n from '@/i18n'
 
 import SvgIcon from '@/components/SvgIcon/index.vue';
 
@@ -73,8 +76,9 @@ app.component('RightToolbar', RightToolbar);
 app.use(router);
 app.use(pinia);
 app.use(plugins);
-app.use(MengyuePlus);
+app.use(MengyueComponents);
 app.use(DataVVue3)
+app.use(i18n);
 // app.use(ElementPlus);
 app.component('SvgIcon', SvgIcon);
 

@@ -18,6 +18,7 @@ declare module 'vue' {
     DecorateRenderer: typeof import('./components/dashboard/renderers/DecorateRenderer.vue')['default']
     DictTag: typeof import('./components/DictTag/index.vue')['default']
     DraggableResizableBlock: typeof import('./components/dashboard/blocks/DraggableResizableBlock.vue')['default']
+    ElButton: typeof import('element-plus/es')['ElButton']
     ElCascader: typeof import('element-plus/es')['ElCascader']
     ElCollapse: typeof import('element-plus/es')['ElCollapse']
     ElCollapseItem: typeof import('element-plus/es')['ElCollapseItem']

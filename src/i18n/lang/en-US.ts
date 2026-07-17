@@ -1,0 +1,955 @@
+export default {
+    login: {
+        title: 'MengYue Low-Code Platform',
+        leftContentA: 'Building the Future · Full Power of Code',
+        leftContentB: 'Simplify future applications, drive creativity with low code engines;',
+        leftContentC: 'Visual construction has no threshold, allowing everyone to develop with building blocks and create infinite possibilities.',
+        account: 'Account',
+        password: 'Password',
+        code: 'Code',
+        login: 'Login',
+        pleaseAccount: 'Please enter account',
+        pleasePassword: 'Please enter password',
+        pleaseCode: 'Please enter code'
+    },
+    menu: {
+        index: 'Home',
+        dashboardIndex: 'Dashboard',
+        dashboardDisplay: 'Dashboard View',
+        dashboardDesign: 'Dashboard Designer',
+        systemManagement: 'System Management',
+        userManagement: 'User Management',
+        roleManagement: 'Role Management',
+        menuManagement: 'Menu Management',
+        deptManagement: 'Dept Management',
+        postManagement: 'Post Management',
+        dictManagement: 'Data Dictionary',
+        configManagement: 'System Configuration',
+        notice: 'Announcements',
+        logManagement: 'Logs',
+        loginLog: 'Login History',
+        operateLog: 'Operation Logs',
+        systemMonitor: 'System Monitoring',
+        onlineUser: 'Online Users',
+        serverMonitor: 'Server Monitoring',
+        cacheMonitor: 'Cache Monitoring',
+        systemUtils: 'System Utilities',
+        buildForm: 'Form Builder',
+        apiDocs: 'API Docs',
+        leading: 'Pre',
+        systemApiDocs: 'System API Docs',
+        userApiDocs: 'User API Docs',
+        roleApiDocs: 'Role API Docs',
+        menuApiDocs: 'Menu API Docs',
+        deptApiDocs: 'Department API Docs',
+        dictApiDocs: 'Dictionary API Docs',
+        postApiDocs: 'Post API Docs',
+        configApiDocs: 'Configuration API Docs',
+        noticeApiDocs: 'Notice API Docs',
+        logApiDocs: 'Log API Docs',
+        operApiDocs: 'Operation API Docs',
+        loginApiDocs: 'Login API Docs',
+        MonitorApiDocs: 'Monitoring API Docs',
+        onlineApiDocs: 'Online Users API Docs',
+        serverApiDocs: 'Server API Docs',
+        cacheApiDocs: 'Cache API Docs',
+    },
+    person: {
+        personCenter: 'Personal Center',
+        layoutSettings: 'layout Settings',
+        logout: 'logout'
+    },
+    tagsView: {
+        refresh: 'refresh',
+        closeLeft: 'closeLeft',
+        closeRight: 'closeRight',
+        closeCurrent: 'closeCurrent',
+        closeOthers: 'closeOthers',
+        closeAll: 'closeAll'
+    },
+    selectSize: {
+        large: 'large',
+        medium: 'medium',
+        small: "small"
+    },
+    search: {
+        title: "search",
+        placeholder: "Enter search content. Supports fuzzy and pinyin search."
+    },
+    dashboard: {
+        title: "Global Distribution of Low-Code Enterprises",
+        subtitle: "Global distribution of low-code enterprises",
+        defaultTitle: 'Dashboard 1',
+
+        controls: {
+            enterFullscreen: "Enter Visual Fullscreen",
+            exitFullscreen: "Exit Visual Fullscreen",
+            exitSystem: "Exit Visual System"
+        },
+
+        panel: {
+            overview: "Data Overview",
+            userDistribution: "User Distribution",
+            systemStatus: "System Status",
+            worldMap: "Global Map",
+            realtimeData: "Realtime Data",
+            performance: "Performance Metrics",
+            resource: "Resource Usage",
+            alerts: "Alert Information"
+        },
+
+        data: {
+            visits: "Visits",
+            growth: "Growth Rate",
+            online: "Online",
+            warning: "Warning",
+            noAlerts: "No system alerts"
+        },
+        location: {
+            asia: "Asia",
+            northAmerica: "North America",
+            europe: "Europe",
+            southAmerica: "South America",
+            oceania: "Oceania",
+            africa: "Africa"
+        },
+
+        address: {
+            shenzhen: "Shenzhen, Guangdong, China",
+            losAngeles: "Los Angeles, California, USA",
+            berlin: "Berlin, Germany",
+            saoPaulo: "São Paulo, Brazil",
+            sydney: "Sydney, Australia",
+            capeTown: "Cape Town, South Africa",
+            tokyo: "Tokyo, Japan",
+            vancouver: "Vancouver, Canada",
+            paris: "Paris, France",
+            beijing: "Beijing, China"
+        },
+        design: {
+            newDashboard: 'New Dashboard',
+            edit: 'Edit',
+            dashboardName: 'Dashboard Name',
+            dashboardDesc: 'Dashboard Description',
+            placeholderName: 'Please enter dashboard name',
+            placeholderDesc: 'Please enter a basic description',
+            confirm: 'Confirm',
+            cancel: 'Cancel'
+        },
+        editor: {
+            preview: 'Preview',
+            exitPreview: 'Exit Preview',
+            save: 'Save',
+            undo: 'Undo',
+            redo: 'Redo',
+            enterFullscreen: 'Enter Visual Fullscreen',
+            exitFullscreen: 'Exit Visual Fullscreen',
+            exitSystem: 'Exit Visual System',
+            layer: 'Layer',
+            deleteLayer: 'Delete Layer',
+            copyLayer: 'Copy Layer',
+            emptyHint: 'Drag components from the left'
+        },
+        props: {
+            layerName: 'Layer Name',
+            hidden: 'Hidden',
+            color: 'Color',
+            maxWidth: 'Max Width',
+            titleSetting: 'Title Setting',
+            title: 'Title',
+            titleColor: 'Title Color',
+            titleWeight: 'Title Weight',
+            titleSize: 'Title Size',
+            data: 'Data',
+            editData: 'Edit',
+            xAxisSetting: 'X-Axis Setting',
+            xAxisName: 'X-Axis Name',
+            xAxisShow: 'Show',
+            xAxisGridLine: 'Grid Line',
+            xAxisGridLineColor: 'Color',
+            xAxisOffset: 'X-Axis Offset',
+            xAxisRotate: 'X-Axis Rotation',
+            xAxisReverse: 'Reverse Axis',
+            xAxisFontSize: 'Font Size',
+            yAxisSetting: 'Y-Axis Setting',
+            yAxisName: 'Name',
+            yAxisShow: 'Show',
+            yAxisGridLine: 'Grid Line',
+            yAxisGridLineColor: 'Color',
+            yAxisReverse: 'Reverse Axis',
+            yAxisFontSize: 'Font Size',
+            valueSetting: 'Value Setting',
+            valueShow: 'Show',
+            valueFontSize: 'Font Size',
+            valueFontColor: 'Font Color',
+            valueFontWeight: 'Font Weight',
+            coordinateMargin: 'Coordinate Margin',
+            topMargin: 'Top Margin',
+            bottomMargin: 'Bottom Margin',
+            leftMargin: 'Left Margin',
+            rightMargin: 'Right Margin',
+            dataEditor: {
+                title: 'Data Editor',
+                name: 'Name',
+                value: 'Value',
+                operation: 'Operation',
+                delete: 'Delete',
+                jsonPreview: 'JSON Preview',
+                cancel: 'Cancel',
+                save: 'Save'
+            },
+            backToParent: 'Back to Parent',
+            layerNamePlaceholder: 'Please enter layer name',
+            backgroundColor: 'Background Color',
+            backgroundColorPlaceholder: 'Please enter background color',
+            textContent: 'Text Content',
+            textContentPlaceholder: 'Please enter text content',
+            textColor: 'Text Color',
+            textColorPlaceholder: 'Please enter text color',
+            textSize: 'Text Size',
+            textSizePlaceholder: 'Please enter text size',
+            textWeight: 'Text Weight',
+            textWeightPlaceholder: 'Please enter text weight',
+            mapSetting: 'Map Settings',
+            mapZoom: 'Map Zoom',
+            hoverPlaceName: 'Hover Place Name',
+            fontSize: 'Font Size',
+            fontSizePlaceholder: 'Please enter font size',
+            fontColor: 'Font Color',
+            fontColorPlaceholder: 'Please enter font color',
+            highlightColor: 'Highlight Color',
+            highlightColorPlaceholder: 'Please enter highlight color',
+            borderWidth: 'Border Width',
+            borderColor: 'Border Color',
+            borderColorPlaceholder: 'Please enter border color',
+            areaColor: 'Area Color',
+            areaColorPlaceholder: 'Please enter area color',
+            areaHighlightColor: 'Area Highlight Color',
+            areaHighlightColorPlaceholder: 'Please enter area highlight color',
+        },
+        operation: {
+            screenWidth: 'Screen Width',
+            screenHeight: 'Screen Height',
+            screenTitle: 'Screen Title',
+            backgroundColor: 'Background Color'
+        },
+        menu: {
+            charts: 'Charts',
+            decorations: 'Decorations',
+            text: 'Text',
+            maps: 'Maps',
+            barChart: 'Bar Chart',
+            basicBar: 'Basic Bar Chart',
+            horizontalBar: 'Horizontal Bar Chart',
+            stackedBar: 'Stacked Bar Chart',
+            capsuleBar: 'Capsule Chart',
+            lineBar: 'Line-Bar Chart',
+            percentBar: 'Percentage Bar Chart',
+            lineChart: 'Line Chart',
+            basicLine: 'Basic Line Chart',
+            areaLine: 'Area Chart',
+            smoothLine: 'Smooth Line Chart',
+            pieChart: 'Pie Chart',
+            basicPie: 'Basic Pie Chart',
+            ringPie: 'Nightingale Rose',
+            rosePie: 'Ring Pie Chart',
+            rotatePie: 'Rotating Pie Chart',
+            ringChart: 'Ring Chart',
+            basicRing: 'Basic Ring Chart',
+            interactiveRing: 'Interactive Ring Chart',
+            scatterChart: 'Scatter Chart',
+            basicScatter: 'Basic Scatter Chart',
+            radarChart: 'Radar Chart',
+            basicRadar: 'Basic Radar Chart',
+            multipleRadar: 'Multiple Radar Chart',
+            funnelChart: 'Funnel Chart',
+            basicFunnel: 'Basic Funnel Chart',
+            pictogramChart: 'Pictogram Chart',
+            pictogramBar: 'Pictogram Bar',
+            pictogramLine: 'Pictogram Line',
+            gauge: 'Gauge',
+            basicGauge: 'Basic Gauge',
+            multiColorGauge: 'Multi-Color Gauge',
+            progressChart: 'Progress Chart',
+            waterWave: 'Water Wave',
+            ringProgress: 'Ring Progress',
+            textComponent: 'Text',
+            textBasic: 'Text',
+            worldMap: 'World Map',
+            chinaMap: 'China Map',
+            chinaProvinces: 'China Provinces',
+            beijing: 'Beijing',
+            tianjin: 'Tianjin',
+            hebei: 'Hebei',
+            shanxi: 'Shanxi',
+            neimenggu: 'Inner Mongolia',
+            liaoning: 'Liaoning',
+            jilin: 'Jilin',
+            heilongjiang: 'Heilongjiang',
+            shanghai: 'Shanghai',
+            jiangsu: 'Jiangsu',
+            zhejiang: 'Zhejiang',
+            anhui: 'Anhui',
+            fujian: 'Fujian',
+            jiangxi: 'Jiangxi',
+            shandong: 'Shandong',
+            henan: 'Henan',
+            hubei: 'Hubei',
+            hunan: 'Hunan',
+            guangdong: 'Guangdong',
+            guangxi: 'Guangxi',
+            hainan: 'Hainan',
+            chongqing: 'Chongqing',
+            sichuan: 'Sichuan',
+            guizhou: 'Guizhou',
+            yunnan: 'Yunnan',
+            xizang: 'Tibet',
+            shaanxi: 'Shaanxi',
+            gansu: 'Gansu',
+            qinghai: 'Qinghai',
+            ningxia: 'Ningxia',
+            xinjiang: 'Xinjiang',
+            taiwan: 'Taiwan',
+            hongkong: 'Hong Kong',
+            aomen: 'Macau',
+            borders: 'Borders',
+            border1: 'Border 1',
+            border2: 'Border 2',
+            border3: 'Border 3',
+            border4: 'Border 4',
+            border4Reverse: 'Border 4 Reverse',
+            border5: 'Border 5',
+            border5Reverse: 'Border 5 Reverse',
+            border6: 'Border 6',
+            border7: 'Border 7',
+            border8: 'Border 8',
+            border8Reverse: 'Border 8 Reverse',
+            border9: 'Border 9',
+            border10: 'Border 10',
+            border11: 'Border 11',
+            border12: 'Border 12',
+            border13: 'Border 13',
+            decorate: 'Decorate',
+            decorate1: 'Decorate 1',
+            decorate2: 'Decorate 2',
+            decorate2Reverse: 'Decorate 2 Reverse',
+            decorate3: 'Decorate 3',
+            decorate4: 'Decorate 4',
+            decorate4Reverse: 'Decorate 4 Reverse',
+            decorate5: 'Decorate 5',
+            decorate6: 'Decorate 6',
+            decorate7: 'Decorate 7',
+            decorate8: 'Decorate 8',
+            decorate8Reverse: 'Decorate 8 Reverse',
+            decorate9: 'Decorate 9',
+            decorate10: 'Decorate 10',
+            decorate11: 'Decorate 11',
+        }
+    },
+    system: {
+        user: {
+            query: {
+                userName: "UserName",
+                nickName: "Nickname",
+                phone: "Phone",
+                status: "Status",
+                search: "Search",
+                reset: "Reset"
+            },
+
+            table: {
+                userId: "User ID",
+                userName: "UserName",
+                nickName: "Nickname",
+                dept: "Department",
+                phone: "Phone",
+                status: "Status",
+                createTime: "Create Time",
+                operation: "Actions"
+            },
+
+            button: {
+                add: "Add",
+                edit: "Edit",
+                delete: "Delete",
+                resetPwd: "Reset Password",
+                auth: "Authorize"
+            },
+
+            form: {
+                nickName: "Nickname",
+                dept: "Department",
+                phone: "Phone",
+                email: "Email",
+                userName: "UserName",
+                password: "Password",
+                sex: "Gender",
+                status: "Status",
+                post: "Position",
+                role: "Role",
+                remark: "Remarks"
+            },
+
+            placeholder: {
+                userName: "Please enter user name",
+                nickName: "Please enter nickname",
+                phone: "Please enter phone number",
+                email: "Please enter email",
+                password: "Please enter password",
+                post: "Please select position",
+                role: "Please select role",
+                remark: "Please enter remarks",
+                status: "username status"
+            },
+
+            dialog: {
+                add: "Add User",
+                edit: "Edit User"
+            },
+
+            action: {
+                confirm: "Confirm",
+                cancel: "Cancel"
+            },
+            authRole: {
+                basicInfo: "basicInfo",
+                roleInfo: "roleInfo",
+                form: {
+                    nickName: "nickName",
+                    userName: "userName"
+                },
+                table: {
+                    index: "user Id",
+                    roleId: "role Id",
+                    roleName: "roleName",
+                    roleKey: "roleKey",
+                    createTime: "createTime"
+                },
+                button: {
+                    submit: "submit",
+                    back: "back"
+                }
+            },
+            auth: {
+                authRole: 'authRole',
+                authUser: 'authUser',
+            },
+            profile: {
+                personalInfo: 'Personal Information',
+                basicInfo: 'Basic Information',
+                userName: 'User Name',
+                phoneNumber: 'Phone Number',
+                email: 'Email',
+                dept: 'Department',
+                role: 'Role',
+                createTime: 'Created Date',
+                avatar: {
+                    title: 'Change Avatar',
+                    uploadTip: 'Click to upload avatar',
+                    uploadBtn: 'Upload',
+                    zoomIn: 'Zoom In',
+                    zoomOut: 'Zoom Out',
+                    rotateRight: 'Rotate Right',
+                    rotateLeft: 'Rotate Left',
+                    submit: 'Submit'
+                }
+            },
+        },
+        role: {
+            query: {
+                roleName: 'RoleName',
+                roleKey: 'Permission',
+                status: 'Status',
+                search: 'Search',
+                reset: 'Reset'
+            },
+            button: {
+                add: 'Add',
+                edit: 'Edit',
+                del: 'Delete',
+                dataScope: 'Data Scope'
+            },
+            placeholder: {
+                rolePlaceholder: 'please enter role name',
+                permissionPlaceholder: 'please enter permission',
+                status: 'role status'
+            },
+            table: {
+                roleId: 'Role ID',
+                roleName: 'Role Name',
+                roleKey: 'Permission Key',
+                orderNum: 'Display Order',
+                roleOrder: 'roleOrder',
+                status: 'Status',
+                createTime: 'create Time',
+                operation: 'Actions',
+                menuPerssion: 'Perssion',
+                expandCollapse: "Exp/Coll",
+                selectAllSelectnone: 'All/None',
+                fatherSon: 'father-son linkage',
+                remark: 'remark'
+            },
+            user: {
+                addUser: 'addUser',
+                cacelAuth: 'Authorization',
+                closeAuth: 'close Auth',
+                close: 'close'
+            },
+        },
+        menu: {
+            menuName: 'menu Name',
+            icon: 'icon',
+            order: 'order',
+            identifier: 'identifier',
+            component: 'component',
+            status: 'status',
+            placeholder: {
+                placeholderMenu: 'please enter menu Name',
+                menuStatus: 'Menu Status'
+            }
+        },
+        dept: {
+            deptName: 'dept Name',
+            status: 'status',
+            placeholder: {
+                placeholderDept: 'please enter dept Name',
+                statusDept: 'dept status'
+            }
+        },
+        post: {
+            postId: 'postId',
+            postCode: 'post Code',
+            postName: 'post Name',
+            postOrder: 'post Order',
+            status: 'status',
+            createTime: 'createTime',
+            actions: 'actions',
+            placeholder: {
+                postPlaceholder: "please enter post code",
+                postNamePlaceholder: 'please enter post name',
+                statusPlaceholder: 'post status'
+            }
+        },
+        dict: {
+            dictCode: "dict Code",
+            dictName: "dict Name",
+            dictType: "dict type",
+            status: "status",
+            refreshCache: "refreshCache",
+            placeholder: {
+                dictNameplaceholder: "please enter dict name",
+                dictTypeplaceholder: "please enter dict type",
+                dictStatus: "select status"
+            }
+        },
+        config: {
+            configMaster: 'config master',
+            configName: "Name",
+            configType: "Key name",
+            configValue: "Value",
+            configSystem: "built",
+            placeholder: {
+                configNameplaceholder: "please enter config name",
+                configTypeplaceholder: "please enter config key name",
+                configStatus: "select system built"
+            }
+        },
+        notice: {
+            noticeTitle: 'title',
+            noticeActions: 'actions',
+            type: "type",
+            id: 'id',
+            status: 'status',
+            created: 'created',
+            placeholder: {
+                placeholderNoticeTitle: 'please enter title notice',
+                placeholdernoticeActions: 'please enter actions notice',
+                placeholderType: "select type"
+            }
+        },
+        operlog: {
+            address: 'address',
+            module: 'module',
+            status: 'status',
+            logId: 'log Id',
+            details: 'details',
+            operationType: 'operation type',
+            operationPerson: 'operation person',
+            operationLocation: 'operation location',
+            operationStatus: 'operation status',
+            operationDate: 'operation date',
+            timeConsuming: 'time consuming',
+            operationLogDetails: 'operation log details',
+            loginInformation: 'login information',
+            requestUrl: 'request url',
+            requestMethod: 'request method',
+            operationMethod: 'operation method',
+            requestParameters: 'request parameters',
+            returnParameters: 'return parameters',
+            operationTime: 'operation time',
+            exceptionMessage: 'exception message',
+            close: 'close',
+            clear: 'clear',
+            placeholder: {
+                placeholderOperationAddress: 'please enter operation address',
+                placeholderOperationModule: 'please enter operation module'
+            }
+        },
+        logininfor: {
+            loginAddress: 'Login',
+            userName: 'UserName',
+            status: 'Status',
+            search: 'Search',
+            reset: 'Reset',
+            delete: 'Delete',
+            clean: 'Clear',
+            accessId: 'Access ID',
+            loginLocation: 'Login Location',
+            os: 'Operating System',
+            browser: 'Browser',
+            loginStatus: 'Login Status',
+            description: 'Description',
+            accessTime: 'Access Time',
+            placeholder: {
+                loginAdress: 'Please enter the login address',
+                userName: 'Please enter the user name'
+            }
+        },
+        online: {
+            loginAddress: 'Login Address',
+            os: 'Operating System',
+            loginAddressPlaceholder: 'Please enter login address',
+            osPlaceholder: 'Please enter operating system',
+            index: 'No.',
+            tokenId: 'Session ID',
+            userName: 'User Name',
+            deptName: 'Department',
+            host: 'Host',
+            loginLocation: 'Login Location',
+            browser: 'Browser',
+            loginTime: 'Login Time',
+            operation: 'Operation',
+            forceLogout: 'Force Logout'
+        },
+        server: {
+            cpu: 'CPU',
+            memory: 'Memory',
+            serverInfo: 'Server Information',
+            jvmInfo: 'Java Virtual Machine (JVM) Info',
+            diskStatus: 'Disk Status',
+
+            property: 'Property',
+            value: 'Value',
+            memoryLabel: 'Memory',
+            jvmLabel: 'JVM',
+            path: 'Mount Path',
+            fileSystem: 'File System',
+            diskType: 'Disk Type',
+            total: 'Total',
+            available: 'Available',
+            used: 'Used',
+            usage: 'Usage (%)',
+
+            coreCount: 'Core Count',
+            userUsage: 'User Usage',
+            systemUsage: 'System Usage',
+            idleRate: 'Idle Rate',
+            totalMemory: 'Total Memory',
+            usedMemory: 'Used Memory',
+            freeMemory: 'Free Memory',
+            memoryUsage: 'Usage',
+            serverName: 'Server Name',
+            os: 'Operating System',
+            serverIp: 'Server IP',
+            arch: 'Architecture',
+            javaName: 'Java Name',
+            javaVersion: 'Java Version',
+            startTime: 'Start Time',
+            runTime: 'Uptime',
+            installPath: 'Install Path',
+            projectPath: 'Project Path',
+            runArgs: 'Run Arguments'
+        },
+        cache: {
+            basicInfo: 'Basic Information',
+            commandStats: 'Command Statistics',
+            memoryInfo: 'Memory Information',
+            redisVersion: 'Redis Version',
+            runMode: 'Run Mode',
+            standalone: 'Standalone',
+            cluster: 'Cluster',
+            port: 'Port',
+            clientCount: 'Clients',
+            uptimeDays: 'Uptime (Days)',
+            usedMemory: 'Used Memory',
+            usedCPU: 'CPU Usage',
+            memoryConfig: 'Memory Config',
+            aofEnabled: 'AOF Enabled',
+            rdbSuccess: 'RDB Success',
+            keyCount: 'Key Count',
+            networkIO: 'Network I/O',
+            yes: 'Yes',
+            no: 'No'
+        },
+        builder: {
+            formGenerator: 'Form Generator',
+            exportVueFile: 'Export Vue File',
+            copyCode: 'Copy Code',
+            clearCanvas: 'Clear Canvas',
+            properties: 'Properties',
+            label: 'Label',
+            pleaseEnterLabel: 'Please enter label',
+            defaultValue: 'Default Value',
+            noComponentSelected: 'Please select a component to edit',
+            confirmClearAll: 'Are you sure you want to clear all components?',
+            codeCopiedSuccess: 'Code copied to clipboard!',
+            copyFailed: 'Copy failed',
+            enterDefaultValue: 'Please enter default value',
+            checkboxDefaultPlaceholder: 'For multiple selection, separate with commas, e.g.: Option1,Option2',
+            radioDefaultPlaceholder: 'Please enter a single value, e.g.: 1',
+
+            categories: {
+                '基础组件': 'Basic Components',
+                '表单组件': 'Form Components',
+                '数据展示组件': 'Data Display Components',
+                '其他组件': 'Other Components'
+            },
+
+            components: {
+                button: 'Button',
+                border: 'Border',
+                input: 'Input',
+                select: 'Select',
+                radio: 'Radio',
+                checkbox: 'Checkbox',
+                switch: 'Switch',
+                rate: 'Rate',
+                colorPicker: 'Color Picker',
+                slidebar: 'Slider',
+                badge: 'Badge',
+                progress: 'Progress',
+                result: 'Result',
+                timeline: 'Timeline',
+                pagination: 'Pagination',
+                collapse: 'Collapse Panel'
+            },
+
+            props: {
+                width: 'Component Width',
+                height: 'Component Height',
+                placeholder: 'Placeholder',
+                maxLength: 'Input Limit',
+                textColor: 'Text Color',
+                placeholderColor: 'Placeholder Color',
+                wordLimit: 'Character Count',
+                disabled: 'Disabled',
+                clearable: 'Clearable',
+                showPassword: 'Show Password',
+                dot: 'Dot',
+                color: 'Color',
+                position: 'Position',
+                accordion: 'Accordion',
+                max: 'Max',
+                gap: 'Gap',
+                text: 'Text',
+                size: 'Size',
+                label: 'Label',
+                icon: 'Icon',
+                colorText: 'Text Color',
+                colorBg: 'Background Color',
+                thumbColor: 'Thumb Color',
+                trackColor: 'Track Color',
+                noNum: 'No Number',
+                percentage: 'Percentage',
+                status: 'Status',
+                title: 'Title',
+                subTitle: 'Sub Title',
+                total: 'Total',
+                pageSize: 'Page Size',
+                currentPage: 'Current Page',
+                layout: 'Layout',
+                borderStyle: 'Border Style',
+                borderWidth: 'Border Width',
+                borderColor: 'Border Color',
+                topColor: 'Top Color',
+                bottomColor: 'Bottom Color',
+                leftColor: 'Left Color',
+                rightColor: 'Right Color',
+                boxShadow: 'Box Shadow',
+                directions: 'Directions',
+                direction: {
+                    horizontal: 'Horizontal',
+                    vertical: 'Vertical'
+                },
+                selectPlaceholder: 'selectPlaceholder',
+            }
+        }
+    },
+    apiGuide: {
+        title: 'API Documentation Usage Guide',
+        quickStartTitle: '🚀 Quick Start',
+        quickStartContent: 'This system has configured complete Axios request interceptors, response interceptors and error handling mechanisms. You can directly use the preset instance for API calls.',
+        importExample: '// Import the configured axios instance',
+        responseHandlingTitle: '📨 Response Handling',
+        successExampleTitle: 'Success Response (code: 200)',
+        errorExampleTitle: 'Error Response (code: 500)',
+        authExampleTitle: 'Authentication Failed (code: 401)',
+        bestPracticesTitle: '🎯 Best Practices',
+        practice1Title: '✅ Unified Error Handling',
+        practice1Desc: 'Use try-catch to wrap all API calls to ensure errors are correctly captured and handled',
+        practice2Title: '✅ Parameter Validation',
+        practice2Desc: 'Validate necessary parameters before calling the API to avoid invalid requests',
+        practice3Title: '✅ User Feedback',
+        practice3Desc: 'Provide success/failure user prompts for important operations (create, update, delete)',
+        practice4Title: '✅ Loading State',
+        practice4Desc: 'Display loading status for long-time operations to improve user experience',
+        actionHint: 'For details, please refer to the development documentation of this backend system: Link'
+    },
+    apiReference: {
+        title: 'User Management API Reference Documentation',
+        searchPlaceholder: 'Search interface name, description or path...',
+        filterMethodPlaceholder: 'Filter request method',
+        resetButton: 'Reset',
+        sidebarHeader: 'API List',
+        authRequired: 'Requires Login Authentication',
+        basicInfo: 'Basic Information',
+        tableProperty: 'Property',
+        tableValue: 'Value',
+        interfaceDesc: 'Interface Description',
+        requestMethod: 'Request Method',
+        interfacePath: 'Interface Path',
+        authRequirement: 'Authentication Requirement',
+        requiresAuth: 'Requires Login Authentication',
+        noAuth: 'No Authentication Required',
+        responseExample: 'Response Example',
+        callExample: 'Call Example',
+        errorResponseExample: 'Error Response Example',
+    },
+    apiReferenceCommon: {
+        searchPlaceholder: 'Search by name, description or path...',
+        filterMethodPlaceholder: 'Filter by request method',
+        resetButton: 'Reset',
+        sidebarHeader: 'API List',
+        authRequired: 'Authentication Required',
+        basicInfo: 'Basic Information',
+        tableProperty: 'Property',
+        tableValue: 'Value',
+        interfaceDesc: 'Description',
+        requestMethod: 'Request Method',
+        interfacePath: 'API Path',
+        authRequirement: 'Authentication',
+        requiresAuth: 'Login Required',
+        noAuth: 'No Authentication',
+        responseExample: 'Response Example',
+        callExample: 'Request Example',
+        errorResponseExample: 'Error Response Example'
+    },
+
+    apiReferenceModules: {
+        user: {
+            title: 'User Management API Reference'
+        },
+        role: {
+            title: 'Role Management API Reference'
+        },
+        menu: {
+            title: 'Menu Management API Reference'
+        },
+        dept: {
+            title: 'Department Management API Reference'
+        },
+        post: {
+            title: 'Post Management API Reference'
+        },
+        dict: {
+            title: 'Dictionary Management API Reference'
+        },
+        config: {
+            title: 'config Management API Reference'
+        },
+        notice: {
+            title: 'Notice Management API Reference'
+        },
+        operlog: {
+            title: 'Operation Log API Reference'
+        },
+        logininfor: {
+            title: 'Login Log API Reference'
+        },
+        online: {
+            title: 'Online User API Reference'
+        },
+        server: {
+            title: 'Server Monitor API Reference'
+        },
+        cache: {
+            title: 'Cache Monitor API Reference'
+        }
+    },
+    settings: {
+        title: 'Theme Settings',
+        desc: 'Customize visual style and layout of the system',
+        defaultThemeToggle: 'Default Theme Toggle',
+        primaryColor: 'Primary Color',
+        lightRecommend: 'Light Theme Recommendations',
+        darkRecommend: 'Dark Theme Recommendations',
+        topbarTheme: 'Topbar Background Theme',
+        menuTheme: 'Sidebar Menu Theme',
+        interfaceSettings: 'Interface Settings',
+        enableTagsView: 'Enable Tags-Views',
+        showLogo: 'Show Logo',
+        showBreadcrumb: 'Show Breadcrumb',
+        compactMode: 'Compact Mode',
+        pageAnimation: 'Page Animation',
+        resetConfig: 'Reset Configuration'
+    },
+    // Message prompts
+    message: {
+        createSuccess: 'Create successful',
+        createFailed: 'Create failed',
+        deleteSuccess: 'Delete successful',
+        deleteFailed: 'Delete failed',
+        saveSuccess: 'Save successful',
+        saveFailed: 'Save failed',
+        pleaseFillName: 'Please fill in the dashboard name',
+        getListFailed: 'Failed to get dashboard list'
+    },
+    error: {
+        title: 'Go back to the previous directory',
+        back: 'The requested page does not exist'
+    },
+    dict: {
+        normal: 'Normal',
+        disable: 'Disabled',
+
+        male: 'Male',
+        female: 'Female',
+        unknown: 'Unknown',
+
+        yes: 'Yes',
+        no: 'No',
+
+        notice: 'Announcement',
+        notification: 'Notification',
+
+        create: 'Create',
+        update: 'Update',
+        delete: 'Delete',
+        authorize: 'Authorize',
+
+        success: 'Success',
+        fail: 'Fail',
+    },
+    common: {
+        success: 'Operation successful',
+    },
+    toolbar: {
+        columnDisplay: 'Columns',
+        columnSetting: 'Column Settings',
+        show: 'Show',
+        hide: 'Hide',
+    },
+    app: {
+        title: 'Mengyue System'
+    }
+}

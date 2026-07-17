@@ -7,10 +7,10 @@
             </div>
             <div class="dashboard-controls" v-show="showControls">
                 <MYButton @click="toggleBrowserFullscreen" class="control-button" plain>
-                    {{ browserFullscreen ? '退出可视化全屏' : '进入可视化全屏' }}
+                    {{ browserFullscreen ? t('dashboard.controls.exitFullscreen') : t('dashboard.controls.enterFullscreen') }}
                 </MYButton>
                 <MYButton @click="exitAndBack" type="danger" class="control-button" style="margin-left: 8px">
-                    退出可视化系统
+                    {{ t('dashboard.controls.exitSystem') }}
                 </MYButton>
             </div>
             <svg viewBox="0 0 1400 110" preserveAspectRatio="xMidYMid meet" class="header-svg" ref="svgRoot">
@@ -65,11 +65,11 @@
 
                     <text :x="panelCenterX" :y="panelY + 28" text-anchor="middle" font-size="20" fill="#e8fbff"
                         font-family="PingFang SC, 'Microsoft Yahei', Arial">
-                        低代码企业全球分布
+                        {{ t('dashboard.title') }}
                     </text>
                     <text :x="panelCenterX" :y="panelY + 48" text-anchor="middle" font-size="12" fill="#9fd4ee"
                         font-family="PingFang SC, 'Microsoft Yahei', Arial">
-                        Global distribution of low-code enterprises
+                        {{ t('dashboard.subtitle') }}
                     </text>
                 </g>
             </svg>
@@ -82,7 +82,9 @@
 import fullscreen from './fullscreen.vue'
 import gsap from 'gsap'
 import dayjs from 'dayjs'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 // 面板参数
 const panelX = 500
 const panelY = 10

@@ -4,28 +4,28 @@
             <MYForm :modelValue="queryParams" ref="queryRef" :inline="true" v-show="showSearch">
                 <MYRow :gutter="20">
                     <MYCol :span="9">
-                        <MYForm-item label="部门名称" prop="deptName">
-                            <MYInput v-model="queryParams.deptName" placeholder="请输入部门名称" clearable
+                        <MYForm-item :label="t('system.dept.deptName')" prop="deptName">
+                            <MYInput v-model="queryParams.deptName" :placeholder="t('system.dept.placeholder.placeholderDept')" clearable
                                 @keyup.enter="handleQuery" placeholderColor="var(--navbar-text)"
                                 textColor="var(--navbar-text)" />
                         </MYForm-item>
                     </MYCol>
                     <MYCol :span="8">
-                        <MYForm-item label="状态" prop="status">
-                            <MYSelect v-model="queryParams.status" placeholder="部门状态" clearable style="width: 170px">
+                        <MYForm-item :label="t('system.dept.status')" prop="status">
+                            <MYSelect v-model="queryParams.status" :placeholder="t('system.dept.placeholder.statusDept')" clearable style="width: 170px">
                                 <MYOption v-for="dict in sys_normal_disable" :key="dict.value" :label="dict.label"
                                     :value="dict.value" />
                             </MYSelect>
                         </MYForm-item>
                     </MYCol>
-                    <MYCol :span="3">
-                        <MYForm-item>
-                            <MYButton type="primary" icon="MYSearch" @click="handleQuery">搜索</MYButton>
-                        </MYForm-item>
-                    </MYCol>
                     <MYCol :span="4">
                         <MYForm-item>
-                            <MYButton type="info" icon="MYRefreshRight" @click="resetQuery">重置</MYButton>
+                            <MYButton type="primary" icon="MYSearch" @click="handleQuery">{{ t('system.user.query.search') }}</MYButton>
+                        </MYForm-item>
+                    </MYCol>
+                    <MYCol :span="3">
+                        <MYForm-item>
+                            <MYButton type="info" icon="MYRefreshRight" @click="resetQuery">{{ t('system.user.query.reset') }}</MYButton>
                         </MYForm-item>
                     </MYCol>
                 </MYRow>
@@ -33,38 +33,38 @@
         </MYRow>
         <MYRow :gutter="10" class="mb8">
             <MYCol :span="3">
-                <MYButton type="info" icon="MYSortAlt" @click="toggleExpandAll">展开/折叠</MYButton>
+                <MYButton type="info" icon="MYSortAlt" @click="toggleExpandAll">{{ t('system.role.table.expandCollapse') }}</MYButton>
             </MYCol>
-            <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
+            <!-- <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar> -->
         </MYRow>
         <MYTable v-if="refreshTable" v-loading="loading" :data="deptList" row-key="deptId"
             headerBackgroundColor="var(--table-header-bg)" borderColor="var(--table-border-color)"
             bodyBackgroundColor="var(--table-body-bg)" headerTextColor="var(--general)" bodyTextColor="var(--general)"
             :default-expand-all="isExpandAll" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }">
-            <MYTable-column prop="deptName" label="部门名称" width="260"></MYTable-column>
-            <MYTable-column prop="orderNum" label="排序" width="200"></MYTable-column>
-            <MYTable-column prop="status" label="状态" width="100" />
+            <MYTable-column prop="deptName" :label="t('system.dept.deptName')" width="260"></MYTable-column>
+            <MYTable-column prop="orderNum" :label="t('system.menu.order')" width="200"></MYTable-column>
+            <MYTable-column prop="status" :label="t('system.menu.status')" width="100" />
             <template #status="scope">
                 <dict-tag :options="sys_normal_disable" :value="scope.row.status" />
             </template>
-            <MYTable-column prop="createTime" label="创建时间" width="200" align="center">
+            <MYTable-column prop="createTime" :label="t('system.user.table.createTime')" width="200" align="center">
                 <template #default="scope">
                     <span>{{ parseTime(scope.row.createTime) }}</span>
                 </template>
             </MYTable-column>
-            <MYTable-column label="操作" align="center" prop="operation" width="150"
+            <MYTable-column :label="t('system.user.table.createTime')" align="center" prop="operation" width="150"
                 class-name="small-padding fixed-width" />
             <template #operation="scope">
                 <div v-if="scope.row.roleId !== 1" class="operation-buttons">
                     <MYButton link type="primary" icon="MYEdit" @click="handleUpdate(scope.row)"
-                        v-hasPermi="['system:dept:edit']" colorBg="var(--table-body-bg)"
-                        colorText="var(--general-text)">修改</MYButton>
+                        v-hasPermi="['system:dept:edit']" colorBackground="transparent"
+                        colorText="var(--general-text)">{{ t('system.user.button.edit') }}</MYButton>
                     <MYButton link type="primary" icon="MYPlus" @click="handleAdd(scope.row)"
-                        v-hasPermi="['system:dept:add']" colorBg="var(--table-body-bg)" colorText="var(--general-text)">
-                        新增</MYButton>
+                        v-hasPermi="['system:dept:add']" colorBackground="transparent" colorText="var(--general-text)">
+                        {{ t('system.user.button.add') }}</MYButton>
                     <MYButton v-if="scope.row.deptId !== 0" link type="primary" icon="MYDelete"
                         @click="handleDelete(scope.row)" v-hasPermi="['system:dept:remove']"
-                        colorBg="var(--table-body-bg)" colorText="var(--general-text)">删除</MYButton>
+                        colorBackground="transparent" colorText="var(--general-text)">{{ t('system.user.button.delete') }}</MYButton>
                 </div>
             </template>
         </MYTable>
@@ -136,12 +136,13 @@ import { listDept, getDept, delDept, addDept, updateDept, listDeptExcludeChild }
 import { ComponentInternalInstance, getCurrentInstance } from 'vue';
 import { ProxyInstance, Dept, QueryParams, FormRules, FormData } from '@/types/views/dept';
 import { MYInput, MYOption, MYRadioGroup, MYSelect } from 'mengyue-plus';
-import { spawn } from 'child_process';
+import { useI18n } from 'vue-i18n';
 
 // Refs and reactive data
 const { proxy } = getCurrentInstance() as ComponentInternalInstance & { proxy: ProxyInstance };
 const { sys_normal_disable } = proxy.useDict("sys_normal_disable");
 
+const { t } = useI18n();
 const deptList = ref<Dept[]>([]);
 const open = ref<boolean>(false);
 const loading = ref<boolean>(true);

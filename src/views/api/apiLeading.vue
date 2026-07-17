@@ -1,18 +1,18 @@
 <template>
     <div class="api-guide-container">
         <div class="guide-header">
-            <h1 class="guide-title">API 文档使用指南</h1>
+            <h1 class="guide-title">{{ $t('apiGuide.title') }}</h1>
         </div>
 
         <div class="guide-content">
             <!-- 快速开始 -->
             <section class="guide-section">
-                <h2 class="section-title">🚀 快速开始</h2>
+                <h2 class="section-title">{{ $t('apiGuide.quickStartTitle') }}</h2>
                 <div class="section-content">
-                    <p>本系统已配置完整的 Axios 请求拦截器、响应拦截器和错误处理机制。您可以直接使用预设的实例进行 API 调用。</p>
+                    <p>{{ $t('apiGuide.quickStartContent') }}</p>
 
                     <div class="code-block">
-                        <pre><code class="language-javascript">// 导入配置好的 axios 实例
+                        <pre><code class="language-javascript">{{ $t('apiGuide.importExample') }}
 import request from '@/utils/request'
 </code></pre>
                     </div>
@@ -21,11 +21,11 @@ import request from '@/utils/request'
 
             <!-- 响应处理 -->
             <section class="guide-section">
-                <h2 class="section-title">📨 响应处理</h2>
+                <h2 class="section-title">{{ $t('apiGuide.responseHandlingTitle') }}</h2>
                 <div class="section-content">
                     <div class="response-examples">
                         <div class="example-item success">
-                            <h4>成功响应 (code: 200)</h4>
+                            <h4>{{ $t('apiGuide.successExampleTitle') }}</h4>
                             <div class="code-block">
                                 <pre><code class="language-json">{
   "code": 200,
@@ -39,7 +39,7 @@ import request from '@/utils/request'
                         </div>
 
                         <div class="example-item error">
-                            <h4>错误响应 (code: 500)</h4>
+                            <h4>{{ $t('apiGuide.errorExampleTitle') }}</h4>
                             <div class="code-block">
                                 <pre><code class="language-json">{
   "code": 500,
@@ -49,7 +49,7 @@ import request from '@/utils/request'
                         </div>
 
                         <div class="example-item auth">
-                            <h4>认证失败 (code: 401)</h4>
+                            <h4>{{ $t('apiGuide.authExampleTitle') }}</h4>
                             <div class="code-block">
                                 <pre><code class="language-json">{
   "code": 401,
@@ -63,24 +63,24 @@ import request from '@/utils/request'
 
             <!-- 最佳实践 -->
             <section class="guide-section">
-                <h2 class="section-title">🎯 最佳实践</h2>
+                <h2 class="section-title">{{ $t('apiGuide.bestPracticesTitle') }}</h2>
                 <div class="section-content">
                     <div class="best-practices">
                         <div class="practice-item">
-                            <h4>✅ 统一错误处理</h4>
-                            <p>使用 try-catch 包装所有 API 调用，确保错误被正确捕获和处理</p>
+                            <h4>{{ $t('apiGuide.practice1Title') }}</h4>
+                            <p>{{ $t('apiGuide.practice1Desc') }}</p>
                         </div>
                         <div class="practice-item">
-                            <h4>✅ 参数验证</h4>
-                            <p>在调用 API 前验证必要参数，避免无效请求</p>
+                            <h4>{{ $t('apiGuide.practice2Title') }}</h4>
+                            <p>{{ $t('apiGuide.practice2Desc') }}</p>
                         </div>
                         <div class="practice-item">
-                            <h4>✅ 用户反馈</h4>
-                            <p>重要的操作（创建、更新、删除）提供成功/失败的用户提示</p>
+                            <h4>{{ $t('apiGuide.practice3Title') }}</h4>
+                            <p>{{ $t('apiGuide.practice3Desc') }}</p>
                         </div>
                         <div class="practice-item">
-                            <h4>✅ 加载状态</h4>
-                            <p>长时间操作显示加载状态，提升用户体验</p>
+                            <h4>{{ $t('apiGuide.practice4Title') }}</h4>
+                            <p>{{ $t('apiGuide.practice4Desc') }}</p>
                         </div>
                     </div>
                 </div>
@@ -88,7 +88,7 @@ import request from '@/utils/request'
 
             <!-- 开始使用按钮 -->
             <div class="action-section">
-                <p class="action-hint">详细请查看该后台系统的开发文档：链接</p>
+                <p class="action-hint">{{ $t('apiGuide.actionHint') }}</p>
             </div>
         </div>
     </div>

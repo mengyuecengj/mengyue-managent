@@ -2,140 +2,132 @@
     <div class="app-container">
         <MYRow :gutter="20">
             <MYForm :modelValue="queryParams" ref="queryRef" v-show="showSearch" :inline="true" labelWidth="68">
-                <MYRow :gutter="16">
-                    <!-- 角色名称 -->
-                    <MYCol :span="6">
-                        <MYForm-item label="操作地址" prop="operIp">
-                            <MYInput v-model="queryParams.operIp" placeholder="请输入操作地址" clearable
+                <MYRow :gutter="24">
+                    <MYCol :span="8">
+                        <MYForm-item :label="t('system.operlog.address')" prop="operIp">
+                            <MYInput v-model="queryParams.operIp" :placeholder="t('system.operlog.placeholder.placeholderOperationAddress')" clearable
                                 @keyup.enter="handleQuery" placeholderColor="var(--navbar-text)"
                                 textColor="var(--navbar-text)" />
                         </MYForm-item>
                     </MYCol>
 
-                    <!-- 权限字符 -->
-                    <MYCol :span="6">
-                        <MYForm-item label="系统模块" prop="title">
-                            <MYInput v-model="queryParams.title" placeholder="请输入系统模块" clearable
+                    <MYCol :span="8">
+                        <MYForm-item :label="t('system.operlog.module')" prop="title">
+                            <MYInput v-model="queryParams.title" :placeholder="t('system.operlog.placeholder.placeholderOperationModule')" clearable
                                 @keyup.enter="handleQuery" placeholderColor="var(--navbar-text)"
                                 textColor="var(--navbar-text)" />
                         </MYForm-item>
                     </MYCol>
 
-                    <!-- 状态 -->
                     <MYCol :span="7">
-                        <MYForm-item label="状态" prop="status">
-                            <MYSelect v-model="queryParams.status" placeholder="角色状态" clearable>
+                        <MYForm-item :label="t('system.operlog.status')" prop="status">
+                            <MYSelect v-model="queryParams.status" :placeholder="t('system.user.placeholder.status')" clearable>
                                 <MYOption v-for="dict in sys_common_status" :key="dict.value" :label="dict.label"
                                     :value="dict.value" />
                             </MYSelect>
                         </MYForm-item>
                     </MYCol>
 
-                    <!-- 搜索按钮 -->
-                    <MYCol :span="2">
+                    <MYCol :span="2.5">
                         <MYForm-item>
-                            <MYButton type="primary" icon="MYSearch" @click="handleQuery">搜索</MYButton>
+                            <MYButton type="primary" icon="MYSearch" @click="handleQuery">{{ t('system.user.query.search') }}</MYButton>
                         </MYForm-item>
                     </MYCol>
 
-                    <!-- 重置按钮 -->
                     <MYCol :span="1">
                         <MYForm-item>
-                            <MYButton type="info" icon="MYRefreshRight" @click="resetQuery">重置</MYButton>
+                            <MYButton type="info" icon="MYRefreshRight" @click="resetQuery">{{ t('system.user.query.reset') }}</MYButton>
                         </MYForm-item>
                     </MYCol>
                 </MYRow>
             </MYForm>
         </MYRow>
-        <MYRow :gutter="10" class="mb8">
-            <MYCol :span="2">
-                <MYButton type="primary" icon="MYDelete" :disabled="multiple" @click="handleDelete"
-                    v-hasPermi="['monitor:operlog:remove']">删除</MYButton>
+        <MYRow :gutter="16" class="mb8">
+            <MYCol :span="2.5">
+                <MYButton type="danger" icon="MYDelete" :disabled="multiple" @click="handleDelete"
+                    v-hasPermi="['monitor:operlog:remove']">{{ t('system.user.button.delete') }}</MYButton>
             </MYCol>
             <MYCol :span="2">
-                <MYButton type="danger" icon="MYDelete" @click="handleClean" v-hasPermi="['monitor:operlog:remove']">清空
-                </MYButton>
+                <MYButton type="danger" icon="MYDelete" @click="handleClean" v-hasPermi="['monitor:operlog:remove']">{{ t('system.operlog.clear') }}</MYButton>
             </MYCol>
-            <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
+            <!-- <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar> -->
         </MYRow>
         <MYTable row-key="operId" headerBackgroundColor="var(--table-header-bg)" borderColor="var(--table-border-color)"
             bodyBackgroundColor="var(--table-body-bg)" headerTextColor="var(--general)" bodyTextColor="var(--general)"
             ref="operlogRef" v-loading="loading" :data="operlogList" @selection-change="handleSelectionChange"
             :default-sort="defaultSort" @sort-change="handleSortChange">
             <MYTable-column type="selection" width="50" align="center" />
-            <MYTable-column label="日志编号" align="center" prop="operId" />
-            <MYTable-column label="系统模块" align="center" prop="title" :show-overflow-tooltip="true" />
-            <MYTable-column label="操作类型" align="center" prop="businessType" />
+            <MYTable-column :label="t('system.operlog.logId')" align="center" prop="operId" />
+            <MYTable-column :label="t('system.operlog.systemModule')" align="center" prop="title" :show-overflow-tooltip="true" />
+            <MYTable-column :label="t('system.operlog.operationType')" align="center" prop="businessType" />
             <template #businessType="scope">
                 <dict-tag :options="sys_oper_type" :value="scope.row.businessType" />
             </template>
-            <MYTable-column label="操作人员" align="center" width="110" prop="operName" :show-overflow-tooltip="true" />
-            <MYTable-column label="操作地址" align="center" prop="operIp" width="130" :show-overflow-tooltip="true" />
-            <MYTable-column label="操作地点" align="center" prop="operLocation" width="130" :show-overflow-tooltip="true" />
-            <MYTable-column label="操作状态" align="center" prop="status" />
+            <MYTable-column :label="t('system.operlog.operationPerson')" align="center" width="110" prop="operName" :show-overflow-tooltip="true" />
+            <MYTable-column :label="t('system.operlog.operationAddress')" align="center" prop="operIp" width="130" :show-overflow-tooltip="true" />
+            <MYTable-column :label="t('system.operlog.operationLocation')" align="center" prop="operLocation" width="130" :show-overflow-tooltip="true" />
+            <MYTable-column :label="t('system.operlog.operationStatus')" align="center" prop="status" />
             <template #status="scope">
                 <dict-tag :options="sys_common_status" :value="scope.row.status" />
             </template>
-            <MYTable-column label="操作日期" align="center" prop="operTime" width="180" sortable="custom"
+            <MYTable-column :label="t('system.operlog.operationDate')" align="center" prop="operTime" width="180" sortable="custom"
                 :sort-orders="['descending', 'ascending']" />
-            <MYTable-column label="消耗时间" prop="costTime" />
+            <MYTable-column :label="t('system.operlog.timeConsuming')" prop="costTime" />
             <template #costTime="scope">
-                <span>{{ scope.row.costTime }}毫秒</span>
+                <span>{{ scope.row.costTime }} {{ t('system.operlog.timeConsuming') }}</span>
             </template>
-            <MYTable-column label="操作" align="center" prop="operation" class-name="small-padding fixed-width" />
+            <MYTable-column :label="t('system.user.table.operation')" align="center" prop="operation" class-name="small-padding fixed-width" />
             <template #operation="scope">
                 <MYButton link type="primary" icon="MYViewEye" @click="handleView(scope.row)"
-                    colorBg="var(--table-body-bg)" colorText="var(--general-text)">详细</MYButton>
+                    colorBackground="transparent" colorText="var(--general-text)">{{ t('system.operlog.details') }}</MYButton>
             </template>
         </MYTable>
         <pagination class="pagination-container" v-show="total > 0" :total="total" v-model:page="queryParams.pageNum"
             v-model:limit="queryParams.pageSize" @pagination="getList" />
 
         <!-- 操作日志详细 -->
-        <MYDialog title="操作日志详细" v-model="open" width="800px" height="650px" append-to-body backgroundColor="var(--dialog-bg) !important" textColor="var(--general)">
+        <MYDialog :title="t('system.operlog.operationLogDetails')" v-model="open" width="800px" height="650px" append-to-body backgroundColor="var(--dialog-bg) !important" textColor="var(--general)">
             <MYForm class="dialog_form" :model="form" label-width="100px">
                 <MYRow>
                     <MYCol :span="12">
-                        <MYForm-item label="操作模块: ">{{ form.title }} / {{ form.type ? typeFormat(form.type) : ''
-                        }}</MYForm-item>
-                        <MYForm-item label="登录信息: ">{{ form.operName }} / {{ form.operIp }} / {{
-                            form.operLocation }}</MYForm-item>
+                        <MYForm-item :label="t('system.operlog.systemModule') + ': '"> {{ form.title }} / {{ form.type ? typeFormat(form.type) : '' }}</MYForm-item>
+                        <MYForm-item :label="t('system.operlog.loginInformation') + ': '"> {{ form.operName }} / {{ form.operIp }} / {{ form.operLocation }}</MYForm-item>
                     </MYCol>
                     <MYCol :span="12">
-                        <MYForm-item label="请求地址: ">{{ form.operUrl }}</MYForm-item>
-                        <MYForm-item label="请求方式: ">{{ form.requestMethod }}</MYForm-item>
+                        <MYForm-item :label="t('system.operlog.requestUrl') + ': '"> {{ form.operUrl }}</MYForm-item>
+                        <MYForm-item :label="t('system.operlog.requestMethod') + ': '"> {{ form.requestMethod }}</MYForm-item>
                     </MYCol>
                     <MYCol :span="24">
-                        <MYForm-item label="操作方法: ">{{ form.method }}</MYForm-item>
+                        <MYForm-item :label="t('system.operlog.operationMethod') + ': '"> {{ form.method }}</MYForm-item>
                     </MYCol>
                     <MYCol :span="24">
-                        <MYForm-item label="请求参数: ">{{ form.operParam }}</MYForm-item>
+                        <MYForm-item :label="t('system.operlog.requestParameters') + ': '"> {{ form.operParam }}</MYForm-item>
                     </MYCol>
                     <MYCol :span="24">
-                        <MYForm-item label="返回参数: ">{{ form.jsonResult }}</MYForm-item>
+                        <MYForm-item :label="t('system.operlog.returnParameters') + ': '"> {{ form.jsonResult }}</MYForm-item>
                     </MYCol>
                     <MYCol :span="8">
-                        <MYForm-item label="操作状态: ">
-                            <div v-if="form.status === 0">正常</div>
+                        <MYForm-item :label="t('system.operlog.operationStatus') + ': '">
+                            <div v-if="form.status === 0">{{ t('system.operlog.data.noAlerts') ? '正常' : '正常' }}</div>
                             <div v-else-if="form.status === 1">失败</div>
                         </MYForm-item>
                     </MYCol>
                     <MYCol :span="8">
-                        <MYForm-item label="消耗时间: ">
-                            <span>{{ form.costTime }}毫秒</span>
+                        <MYForm-item :label="t('system.operlog.operationTime') + ': '">
+                            <span>{{ form.costTime }} {{ t('system.operlog.timeConsuming') }}</span>
                         </MYForm-item>
                     </MYCol>
                     <MYCol :span="8">
-                        <MYForm-item label="操作时间: ">{{ form.operTime }}</MYForm-item>
+                        <MYForm-item :label="t('system.operlog.operationDate') + ': '"> {{ form.operTime }}</MYForm-item>
                     </MYCol>
                     <MYCol :span="24">
-                        <MYForm-item label="异常信息: ">{{ form.errorMsg }}</MYForm-item>
+                        <MYForm-item :label="t('system.operlog.exceptionMessage') + ': '"> {{ form.errorMsg }}</MYForm-item>
                     </MYCol>
                 </MYRow>
             </MYForm>
             <template #footer>
                 <div class="dialog-footer">
-                    <MYButton @click="open = false">关 闭</MYButton>
+                    <MYButton @click="open = false">{{ t('system.operlog.close') }}</MYButton>
                 </div>
             </template>
         </MYDialog>
@@ -144,6 +136,7 @@
 <script setup lang="ts" name="Operlog">
 import { list, delOperlog, cleanOperlog } from '@/api/monitor/operlog';
 import modal from '@/plugins/modal';
+import { useI18n } from 'vue-i18n';
 
 interface OperLogRow {
     [x: string]: any;
@@ -153,6 +146,7 @@ interface OperLogRow {
 const { proxy } = getCurrentInstance() as any;
 const { sys_oper_type, sys_common_status } = proxy.useDict("sys_oper_type", "sys_common_status");
 
+const { t } = useI18n();
 const operlogList = ref([]);
 const open = ref(false);
 const loading = ref(true);

@@ -1,28 +1,28 @@
 <template>
   <div class="app-container">
-    <MYRow :gutter="20">
+    <MYRow :gutter="24">
       <MYForm :modelValue="queryParams" ref="queryRef" v-show="showSearch" :inline="true" labelWidth="68">
-        <MYRow :gutter="16">
+        <MYRow :gutter="20">
           <!-- 角色名称 -->
-          <MYCol :span="6">
-            <MYForm-item label="角色名称" prop="roleName">
-              <MYInput v-model="queryParams.roleName" placeholder="请输入角色名称" clearable @keyup.enter="handleQuery"
+          <MYCol :span="8">
+            <MYForm-item :label="t('system.role.query.roleName')" prop="roleName">
+              <MYInput v-model="queryParams.roleName" :placeholder="t('system.role.placeholder.rolePlaceholder')" clearable @keyup.enter="handleQuery"
                 placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" />
             </MYForm-item>
           </MYCol>
 
           <!-- 权限字符 -->
-          <MYCol :span="6">
-            <MYForm-item label="权限字符" prop="roleKey">
-              <MYInput v-model="queryParams.roleKey" placeholder="请输入权限字符" clearable @keyup.enter="handleQuery"
+          <MYCol :span="8">
+            <MYForm-item :label="t('system.role.query.roleKey')" prop="roleKey">
+              <MYInput v-model="queryParams.roleKey" :placeholder="t('system.role.placeholder.permissionPlaceholder')" clearable @keyup.enter="handleQuery"
                 placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" />
             </MYForm-item>
           </MYCol>
 
           <!-- 状态 -->
-          <MYCol :span="7">
-            <MYForm-item label="状态" prop="status">
-              <MYSelect v-model="queryParams.status" placeholder="角色状态" clearable>
+          <MYCol :span="8">
+            <MYForm-item :label="t('system.role.query.status')" prop="status">
+              <MYSelect v-model="queryParams.status" :placeholder="t('system.role.placeholder.status')" clearable>
                 <MYOption v-for="dict in sys_normal_disable" :key="dict.value" :label="dict.label"
                   :value="dict.value" />
               </MYSelect>
@@ -30,16 +30,16 @@
           </MYCol>
 
           <!-- 搜索按钮 -->
-          <MYCol :span="2">
+          <MYCol :span="3">
             <MYForm-item>
-              <MYButton type="primary" icon="MYSearch" @click="handleQuery">搜索</MYButton>
+              <MYButton type="primary" icon="MYSearch" @click="handleQuery">{{ $t('system.role.query.search') }}</MYButton>
             </MYForm-item>
           </MYCol>
 
           <!-- 重置按钮 -->
-          <MYCol :span="1">
+          <MYCol :span="2">
             <MYForm-item>
-              <MYButton type="info" icon="MYRefreshRight" @click="resetQuery">重置</MYButton>
+              <MYButton type="info" icon="MYRefreshRight" @click="resetQuery">{{ $t('system.role.query.reset') }}</MYButton>
             </MYForm-item>
           </MYCol>
         </MYRow>
@@ -49,19 +49,19 @@
     <!-- 操作按钮 -->
     <MYRow :gutter="10" class="mb8">
       <MYCol :span="2">
-        <MYButton type="primary" icon="MYPlus" @click="() => handleAdd()" v-hasPermi="['system:role:add']">新增
+        <MYButton type="primary" icon="MYPlus" @click="() => handleAdd()" v-hasPermi="['system:role:add']">{{ $t('system.role.button.add') }}
         </MYButton>
       </MYCol>
       <MYCol :span="2">
         <!-- 多选情况下禁用，单选情况下点击修改最早选中的 -->
         <MYButton type="success" icon="MYEdit" :disabled="single" @click="() => handleUpdate()"
-          v-hasPermi="['system:role:edit']">修改</MYButton>
+          v-hasPermi="['system:role:edit']">{{ $t('system.role.button.edit') }}</MYButton>
       </MYCol>
       <MYCol :span="2">
         <MYButton type="danger" icon="MYDelete" :disabled="multiple" @click="() => handleDelete()"
-          v-hasPermi="['system:role:remove']">删除</MYButton>
+          v-hasPermi="['system:role:remove']">{{ $t('system.role.button.del') }}</MYButton>
       </MYCol>
-      <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
+      <!-- <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar> -->
     </MYRow>
 
     <!-- 表格数据 -->
@@ -69,16 +69,16 @@
       bodyBackgroundColor="var(--table-body-bg)" headerTextColor="var(--general)" bodyTextColor="var(--general)"
       v-loading="loading" :data="roleList" @selection-change="handleSelectionChange" row-key="roleId">
       <MYTable-column type="selection" width="55" align="center" />
-      <MYTable-column label="角色编号" prop="roleId" width="120" />
-      <MYTable-column label="角色名称" prop="roleName" :show-overflow-tooltip="true" width="150" />
-      <MYTable-column label="权限字符" prop="roleKey" :show-overflow-tooltip="true" width="150" />
-      <MYTable-column label="显示顺序" prop="roleSort" width="100" />
-      <MYTable-column label="状态" align="center" width="100" prop="body" />
+      <MYTable-column :label="t('system.role.table.roleId')" prop="roleId" width="120" />
+      <MYTable-column :label="t('system.role.table.roleName')" prop="roleName" :show-overflow-tooltip="true" width="150" />
+      <MYTable-column :label="t('system.role.table.roleKey')" prop="roleKey" :show-overflow-tooltip="true" width="150" />
+      <MYTable-column :label="t('system.role.table.orderNum')" prop="roleSort" width="100" />
+      <MYTable-column :label="t('system.role.table.status')" align="center" width="100" prop="body" />
       <template #body="scope">
         <MYSwitch :modelValue="scope.row.status === '0'" size="small" :active-value="true" :inactive-value="false"
           @change="(val: boolean) => handleStatusChange(scope.row, val ? '0' : '1')" />
       </template>
-      <MYTable-column label="创建时间" align="center" prop="createTime">
+      <MYTable-column :label="t('system.role.table.createTime')" align="center" prop="createTime">
         <template #default="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
@@ -87,18 +87,19 @@
       <template #operation="scope">
         <div v-if="scope.row.roleId !== 1" class="operation-buttons">
           <div class="operation-buttons">
-            <MYButton size="supersmall" link type="primary" icon="MYEdit" colorBg="transparent"
+            <MYButton size="supersmall" link type="primary" icon="MYEdit" colorBackground="transparent"
               colorText="var(--general-text)" @click="() => handleUpdate(scope.row)" v-hasPermi="['system:role:edit']">
-              修改</MYButton>
-            <MYButton size="supersmall" link type="primary" icon="MYDelete" colorBg="transparent"
+              {{ t('system.role.button.edit') }}
+            </MYButton>
+            <MYButton size="supersmall" link type="primary" icon="MYDelete" colorBackground="transparent"
               colorText="var(--general-text)" @click="() => handleDelete(scope.row)"
-              v-hasPermi="['system:role:remove']">删除</MYButton>
-            <MYButton size="supersmall" link type="primary" icon="MYCircleCheck" colorBg="transparent"
+              v-hasPermi="['system:role:remove']">{{ t('system.role.button.del') }}</MYButton>
+            <MYButton size="supersmall" link type="primary" icon="MYCircleCheck" colorBackground="transparent"
               colorText="var(--general-text)" @click="() => handleDataScope(scope.row)"
-              v-hasPermi="['system:role:edit']">数据权限</MYButton>
-            <MYButton size="supersmall" link type="primary" icon="MYUserAlt" colorBg="transparent"
+              v-hasPermi="['system:role:edit']">{{ t('system.role.button.dataScope') }}</MYButton>
+            <MYButton size="supersmall" link type="primary" icon="MYUserAlt" colorBackground="transparent"
               colorText="var(--general-text)" @click="() => handleAuthUser(scope.row)"
-              v-hasPermi="['system:role:edit']">分配用户</MYButton>
+              v-hasPermi="['system:role:edit']">{{ t('system.user.auth.authUser') }}</MYButton>
           </div>
         </div>
       </template>
@@ -109,44 +110,44 @@
       v-model:limit="queryParams.pageSize" @pagination="getList" />
 
     <!-- 添加/修改 角色 对话框 -->
-    <MYDialog title="新增用户" v-model="open" width="550px" height="630px" backgroundColor="var(--dialog-bg) !important"
+    <MYDialog :title="t('system.user.dialog.add')" v-model="open" width="570px" height="650px" backgroundColor="var(--dialog-bg) !important"
       textColor="var(--general)" :show-close="false" append-to-body>
       <MYForm class="dialog_form" ref="roleRef" :modelValue="form" :rules="rules" labelWidth="100">
-        <MYForm-item label="角色名称" prop="roleName">
-          <MYInput v-model="form.roleName" placeholder="请输入角色名称" clearable @keyup.enter="handleQuery"
+        <MYForm-item :label="t('system.role.table.roleName')" prop="roleName">
+          <MYInput v-model="form.roleName" :placeholder="t('system.role.placeholder.rolePlaceholder')" clearable @keyup.enter="handleQuery"
             placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" />
         </MYForm-item>
-        <MYForm-item label="权限字符" prop="roleKey">
-          <MYInput v-model="form.roleKey" placeholder="请输入权限字符" clearable @keyup.enter="handleQuery"
+        <MYForm-item :label="t('system.role.table.roleKey')" prop="roleKey">
+          <MYInput v-model="form.roleKey" :placeholder="t('system.role.placeholder.permissionPlaceholder')" clearable @keyup.enter="handleQuery"
             placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" />
         </MYForm-item>
-        <MYForm-item label="角色顺序" prop="roleSort">
+        <MYForm-item :label="t('system.role.table.roleOrder')" prop="roleSort">
           <InputNumber v-model="form.roleSort" :min="0" :max="999" width="100px" />
         </MYForm-item>
-        <MYForm-item label="状态">
+        <MYForm-item :label="t('system.role.table.status')">
           <MYRadio-group v-model="form.status">
             <MYRadio v-for="dict in sys_normal_disable" :key="dict.value" :value="dict.value">{{ dict.label
             }}</MYRadio>
           </MYRadio-group>
         </MYForm-item>
-        <MYForm-item label="菜单权限">
+        <MYForm-item :label="t('system.role.table.menuPerssion')">
           <MYRow :gutter="20" :align="true" class="checkbox-row">
             <MYCol :span="8">
               <label class="checkbox-label">
                 <MYCheckbox v-model="menuExpand" :value="true" @change="handleMenuExpand" />
-                <span>展开/折叠</span>
+                <span>{{ t('system.role.table.expandCollapse') }}</span>
               </label>
             </MYCol>
             <MYCol :span="8">
               <label class="checkbox-label">
                 <MYCheckbox v-model="menuNodeAll" :value="true" @change="handleMenuNodeAll" />
-                <span>全选/全不选</span>
+                <span>{{ t('system.role.table.selectAllSelectnone') }}</span>
               </label>
             </MYCol>
             <MYCol :span="8">
               <label class="checkbox-label">
                 <MYCheckbox v-model="form.menuCheckStrictly" :value="true" @change="handleMenuTreeConnect" />
-                <span>父子联动</span>
+                <span>{{ t('system.role.table.fatherSon') }}</span>
               </label>
             </MYCol>
           </MYRow>
@@ -156,14 +157,14 @@
             :defaultExpandedKeys="menuExpand ? getAllMenuKeys(menuOptions) : []" @check-change="handleMenuCheckChange"
             node-key="id" empty-text="加载中，请稍候" backgroundColor="#0f1115" />
         </MYForm-item>
-        <MYForm-item label="备注">
-          <MYInput v-model="form.remark" type="textarea" placeholder="请输入内容" />
+        <MYForm-item :label="t('system.role.table.remark')">
+          <MYInput v-model="form.remark" type="textarea" :placeholder="t('system.user.placeholder.remark')" />
         </MYForm-item>
       </MYForm>
       <template #footer>
         <div class="dialog-footer">
-          <MYButton style="margin-right: 20px;" type="primary" @click="submitForm">确 定</MYButton>
-          <MYButton type="info" @click="cancel">取 消</MYButton>
+          <MYButton style="margin-right: 20px;" type="primary" @click="submitForm">{{ t('system.user.action.confirm') }}</MYButton>
+          <MYButton type="info" @click="cancel">{{ t('system.user.action.cancel') }}</MYButton>
         </div>
       </template>
     </MYDialog>
@@ -253,7 +254,7 @@ import { useDict } from '@/utils/dict';
 import { DictResult } from '@/types/views/user';
 import { Role, GetRoleResponse, MenuTreeSelectResponse, DeptTreeSelectResponse, Proxy } from '@/types/views/role';
 import InputNumber from '@/components/InuptNumber/index.vue'
-import { Rule } from '@/types/views/user'
+import { useI18n } from 'vue-i18n';
 
 interface TreeRef {
   getCheckedKeys(): number[];
@@ -265,6 +266,7 @@ interface TreeRef {
   };
 }
 
+const { t } = useI18n();
 const router = useRouter();
 const { proxy } = getCurrentInstance() as ComponentInternalInstance & {
   proxy: Proxy;
@@ -446,7 +448,7 @@ function handleStatusChange(row: Role, newVal: string | boolean | number) {
   const text = statusStr === '0' ? '启用' : '停用';
 
   row.status = statusStr;
-  
+
   ElMessageBox.confirm(`确认要"${text}" "${row.roleName}" 角色吗?`)
     .then(() => {
       return changeRoleStatus(String(row.roleId), statusStr);
@@ -455,9 +457,9 @@ function handleStatusChange(row: Role, newVal: string | boolean | number) {
       ElMessage.success(text + '成功');
     })
     .catch((error) => {
-      
+
       row.status = originalStatus;
-      
+
       if (error === 'cancel') {
         ElMessage.info('已取消操作');
       } else {
@@ -481,7 +483,7 @@ function getMenuTreeselect() {
 // 获取所有部门选中 keys
 function getDeptAllCheckedKeys(): number[] {
   if (!deptTreeRef.value) return [];
-  
+
   // 尝试使用 getCheckedKeys 方法
   try {
     if (typeof deptTreeRef.value.getCheckedKeys === 'function') {
@@ -491,7 +493,7 @@ function getDeptAllCheckedKeys(): number[] {
   } catch (e) {
     console.warn('getCheckedKeys 方法调用失败:', e);
   }
-  
+
   // 备用方案：直接使用 form.deptIds
   return form.value.deptIds || [];
 }
@@ -537,7 +539,7 @@ function handleAdd() {
 // 修改角色
 function handleUpdate(row?: Role) {
   reset();
-  
+
   // 修复角色ID获取逻辑
   let roleId: number | undefined;
   if (row) {
@@ -545,32 +547,32 @@ function handleUpdate(row?: Role) {
   } else if (ids.value.length > 0) {
     roleId = ids.value[0];
   }
-  
+
   if (!roleId) {
     ElMessage.warning('请选择要修改的角色');
     return;
   }
-    
+
   // 获取菜单树 & 角色信息
   const roleMenuPromise = getRoleMenuTreeselect(roleId);
-  
+
   getRole(String(roleId))
     .then((response: AxiosResponse<GetRoleResponse>) => {
       let res = (response as any).data ?? response;
       if (res && res.data) {
         res = res.data;
       }
-      
+
       // 确保表单数据正确设置
       form.value = {
         ...res,
         menuIds: res.menuIds || [],
         roleSort: Number(res.roleSort) || 0, // 确保 roleSort 是数字
       };
-      
+
       open.value = true;
       title.value = '修改角色';
-      
+
       // 等待菜单树
       roleMenuPromise
         .then((res2: AxiosResponse<MenuTreeSelectResponse>) => {
@@ -580,7 +582,7 @@ function handleUpdate(row?: Role) {
           }
           menuOptions.value = data2.menus || [];
           const checkedKeys = data2.checkedKeys || [];
-          
+
           nextTick(() => {
             if (menuTreeRef.value) {
               // 直接设置选中的键
@@ -801,7 +803,7 @@ function submitDataScope() {
     return;
   }
   form.value.deptIds = getDeptAllCheckedKeys();
-  
+
   dataScope(JSON.stringify(form.value))
     .then(() => {
       ElMessage.success('修改成功');

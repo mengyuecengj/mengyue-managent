@@ -3,30 +3,30 @@
     <div v-if="!selectedBlock" class="global-props">
       <div class="prop-group">
         <MYForm class="operation-list" v-model="screen">
-          <MYForm-item label="大屏宽度">
+          <MYForm-item :label="$t('dashboard.operation.screenWidth')">
             <MYInput
               v-model="screen.width"
-              placeholder="请输入宽度"
+              :placeholder="$t('dashboard.operation.screenWidth')"
               type="number"
             />
           </MYForm-item>
           
-          <MYForm-item label="大屏高度">
+          <MYForm-item :label="$t('dashboard.operation.screenHeight')">
             <MYInput
               v-model="screen.height"
-              placeholder="请输入高度"
+              :placeholder="$t('dashboard.operation.screenHeight')"
               type="number"
             />
           </MYForm-item>
           
-          <MYForm-item label="大屏标题">
+          <MYForm-item :label="$t('dashboard.operation.screenTitle')">
             <MYInput
               v-model="screen.title"
-              placeholder="请输入标题"
+              :placeholder="$t('dashboard.operation.screenTitle')"
             />
           </MYForm-item>
           
-          <MYForm-item label="背景颜色">
+          <MYForm-item :label="$t('dashboard.operation.backgroundColor')">
             <MYSelect-color v-model="screen.backgroundColor" />
           </MYForm-item>
         </MYForm>

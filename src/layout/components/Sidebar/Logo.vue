@@ -1,20 +1,23 @@
-<!-- logo -->
 <template>
   <div class="sidebar-logo-container" :class="{ 'collapse': collapse }">
     <transition name="sidebarLogoFade">
-      <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
+      <!-- 展开状态：图片 + 文字始终显示 -->
+      <router-link v-if="!collapse" key="expand" class="sidebar-logo-link" to="/">
         <img v-if="logo" :src="logo" class="sidebar-logo" />
-        <h1 v-else class="sidebar-title">{{ title }}</h1>
+        <h1 class="sidebar-title" :key="titleKey">{{ title }}</h1>
       </router-link>
-      <router-link v-else key="expand" class="sidebar-logo-link" to="/">
+
+      <!-- 收起状态：只显示图片（文字自动被 CSS 隐藏） -->
+      <router-link v-else key="collapse" class="sidebar-logo-link" to="/">
         <img v-if="logo" :src="logo" class="sidebar-logo" />
-        <h1 class="sidebar-title">{{ title }}</h1>
       </router-link>
     </transition>
   </div>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import logo from '@/assets/images/gou.png'
 import useSettingsStore from '@/store/modules/settings'
 
@@ -25,32 +28,31 @@ defineProps({
   }
 })
 
-const title = import.meta.env.VITE_APP_TITLE;
-const settingsStore = useSettingsStore();
-const sideTheme = computed(() => settingsStore.sideTheme);
+const { t, locale } = useI18n()
 
-// 修复后的计算属性
+const title = computed(() => t('app.title')) // eslint-disable-line
+
+const titleKey = computed(() => {
+  return typeof locale === 'string' ? locale : locale.value || 'zh-CN'
+})
+
+const settingsStore = useSettingsStore()
+const sideTheme = computed(() => settingsStore.sideTheme)
+
 const getLogoBackground = computed(() => {
-  if (settingsStore.isDark) {
-    return 'var(--sidebar-bg)';
-  }
-  return sideTheme.value === 'theme-dark'
-    ? 'var(--menu-bg)'       // 替换 variables.menuBg
-    : 'var(--menu-light-bg)'; // 替换 variables.menuLightBg
-});
+  if (settingsStore.isDark) return 'var(--sidebar-bg)'
+  return sideTheme.value === 'theme-dark' ? 'var(--menu-bg)' : 'var(--menu-light-bg)'
+})
 
 const getLogoTextColor = computed(() => {
-  if (settingsStore.isDark) {
-    return 'var(--sidebar-logo-text)';
-  }
-  return sideTheme.value === 'theme-dark'
-    ? '#fff'                 // 保持白色（深色主题下 Logo 文字需高对比度）
-    : 'var(--menu-light-text)'; // 替换 variables.menuLightText
-});
+  if (settingsStore.isDark) return 'var(--sidebar-logo-text)'
+  return sideTheme.value === 'theme-dark' ? '#fff' : 'var(--menu-light-text)'
+})
 </script>
 
 <style lang="scss" scoped>
 @use '@/scss/variables.base.scss';
+
 .sidebar-logo-container {
   position: relative;
   width: 100%;
@@ -60,32 +62,39 @@ const getLogoTextColor = computed(() => {
   text-align: center;
   overflow: hidden;
 
+
   & .sidebar-logo-link {
     height: 100%;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
 
     & .sidebar-logo {
       width: 32px;
       height: 32px;
-      vertical-align: middle;
-      margin-right: 12px;
+      flex-shrink: 0;
     }
 
     & .sidebar-title {
-      display: inline-block;
       margin: 0;
       color: v-bind(getLogoTextColor);
       font-weight: 600;
-      line-height: 50px;
       font-size: 14px;
       font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
-      vertical-align: middle;
+      white-space: nowrap;
     }
   }
 
   &.collapse {
-    .sidebar-logo {
-      margin-right: 0px;
+    .sidebar-logo-link {
+      justify-content: center;
+      gap: 0;
+    }
+
+    .sidebar-title {
+      display: none;
     }
   }
 }

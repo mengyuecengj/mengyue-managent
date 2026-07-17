@@ -1,7 +1,7 @@
 <template>
   <div style="padding: 0 15px;" @click="toggleClick">
-    <MYExpand color="var(--navbar-hamburger)" :class="{ 'is-active': isActive }" v-if="toggleFold" />
-    <MYFold v-else color="var(--navbar-hamburger)" />
+    <MYExpand color="var(--navbar-text)" :class="{ 'is-active': isActive }" v-if="toggleFold"  />
+    <MYFold v-else color="var(--navbar-text)" />
   </div>
 </template>
 

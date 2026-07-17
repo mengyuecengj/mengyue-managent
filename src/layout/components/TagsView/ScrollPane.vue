@@ -5,7 +5,7 @@
     :class="{ 'show-scrollbar': showScrollbar }"
     class="scroll-container"
     @wheel="handleScroll"
-    :ScrollWidth="'5px'"
+    scrollWidth='5px'
     thumbColor="#666"
     thumbHoverColor="#555"
   >

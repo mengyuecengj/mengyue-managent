@@ -1,61 +1,73 @@
 <template>
     <div class="app-container">
-        <MYRow :gutter="20">
+        <MYRow :gutter="24">
             <MYForm :modelValue="queryParams" ref="queryRef" :inline="true">
-                <MYRow :gutter="20">
-                    <MYCol :span="9">
-                        <MYForm-item label="登录地址" prop="ipaddr">
-                            <MYInput v-model="queryParams.ipaddr" placeholder="请输入登录地址" clearable
+                <MYRow :gutter="24">
+                    <MYCol :span="10">
+                        <MYForm-item :label="t('system.online.loginAddress')" prop="ipaddr">
+                            <MYInput v-model="queryParams.ipaddr"
+                                :placeholder="t('system.online.loginAddressPlaceholder')" clearable
                                 @keyup.enter="handleQuery" placeholderColor="var(--navbar-text)"
                                 textColor="var(--navbar-text)" />
                         </MYForm-item>
                     </MYCol>
-                    <MYCol :span="8">
-                        <MYForm-item label="操作系统" prop="os">
-                            <MYInput v-model="queryParams.os" placeholder="请输入操作系统" clearable
+                    <MYCol :span="12">
+                        <MYForm-item :label="t('system.online.os')" prop="os">
+                            <MYInput v-model="queryParams.os" :placeholder="t('system.online.osPlaceholder')" clearable
                                 @keyup.enter="handleQuery" placeholderColor="var(--navbar-text)"
                                 textColor="var(--navbar-text)" />
                         </MYForm-item>
                     </MYCol>
                     <MYCol :span="3">
                         <MYForm-item>
-                            <MYButton type="primary" icon="MYSearch" @click="handleQuery">搜索</MYButton>
+                            <MYButton type="primary" icon="MYSearch" @click="handleQuery">{{
+                                t('system.user.query.search') }}</MYButton>
                         </MYForm-item>
                     </MYCol>
                     <MYCol :span="4">
                         <MYForm-item>
-                            <MYButton type="info" icon="MYRefreshRight" @click="resetQuery">重置</MYButton>
+                            <MYButton type="info" icon="MYRefreshRight" @click="resetQuery">{{
+                                t('system.user.query.reset') }}</MYButton>
                         </MYForm-item>
                     </MYCol>
                 </MYRow>
             </MYForm>
         </MYRow>
+
         <MYTable headerBackgroundColor="var(--table-header-bg)" borderColor="var(--table-border-color)"
             bodyBackgroundColor="var(--table-body-bg)" headerTextColor="var(--general)" bodyTextColor="var(--general)"
             v-loading="loading" :data="onlineList.slice((pageNum - 1) * pageSize, pageNum * pageSize)"
             style="width: 100%">
-            <MYTable-column label="序号" width="80" align="center" prop="index" />
-            <MYTable-column label="回话编号" align="center" prop="tokenId" :show-overflow-tooltip="true" />
-            <MYTable-column label="登录名称" align="center" prop="userName" :show-overflow-tooltip="true" />
-            <MYTable-column label="所属部门" align="center" prop="deptName" :show-overflow-tooltip="true" />
-            <MYTable-column label="主机" align="center" prop="ipaddr" :show-overflow-tooltip="true" />
-            <MYTable-column label="登录地点" align="center" prop="loginLocation" :show-overflow-tooltip="true" />
-            <MYTable-column label="操作系统" align="center" prop="os" :show-overflow-tooltip="true" />
-            <MYTable-column label="浏览器" align="center" prop="browser" :show-overflow-tooltip="true" />
-            <MYTable-column label="登录时间" align="center" prop="loginTime" sortable="180">
+            <MYTable-column :label="t('system.online.index')" width="80" align="center" prop="index" />
+            <MYTable-column :label="t('system.online.tokenId')" align="center" prop="tokenId"
+                :show-overflow-tooltip="true" />
+            <MYTable-column :label="t('system.online.userName')" align="center" prop="userName"
+                :show-overflow-tooltip="true" />
+            <MYTable-column :label="t('system.online.deptName')" align="center" prop="deptName"
+                :show-overflow-tooltip="true" />
+            <MYTable-column :label="t('system.online.host')" align="center" prop="ipaddr"
+                :show-overflow-tooltip="true" />
+            <MYTable-column :label="t('system.online.loginLocation')" align="center" prop="loginLocation"
+                :show-overflow-tooltip="true" />
+            <MYTable-column :label="t('system.online.os')" align="center" prop="os" :show-overflow-tooltip="true" />
+            <MYTable-column :label="t('system.online.browser')" align="center" prop="browser"
+                :show-overflow-tooltip="true" />
+            <MYTable-column :label="t('system.online.loginTime')" align="center" prop="loginTime" sortable="180">
                 <template #default="scope">
                     <span>{{ parseTime(scope.row.loginTime) }}</span>
                 </template>
             </MYTable-column>
-            <MYTable-column label="操作" align="center" prop="operation" class-name="small-padding fixed-width" />
+            <MYTable-column :label="t('system.online.operation')" align="center" prop="operation"
+                class-name="small-padding fixed-width" />
             <template #operation="scope">
                 <MYButton type="primary" link icon="MYDelete" @click="handleForceLogout(scope.row)"
-                    v-hasPermi="['monitor:online:forceLogout']" colorBg="var(--table-body-bg)"
+                    v-hasPermi="['monitor:online:forceLogout']" colorBackground="transparent"
                     colorText="var(--general-text)">
-                    强退
+                    {{ t('system.online.forceLogout') }}
                 </MYButton>
             </template>
         </MYTable>
+
         <pagination class="pagination-container" v-show="total > 0" :total="total" v-model:page="queryParams.pageNum"
             v-model:limit="queryParams.pageSize" />
     </div>
@@ -66,6 +78,7 @@ import modal from '@/plugins/modal'
 import { getCurrentInstance, ref } from 'vue';
 import { forceLogout, list as initData } from '@/api/monitor/online';
 import { parseTime } from '@/utils/general';
+import { useI18n } from 'vue-i18n';
 
 // 定义在线用户的数据结构
 interface OnlineUser {
@@ -81,7 +94,7 @@ interface OnlineUser {
 
 const { proxy } = getCurrentInstance() as any;
 
-// 明确指定 onlineList 的类型为 OnlineUser[]
+const { t } = useI18n();
 const onlineList = ref<OnlineUser[]>([]);
 const loading = ref<boolean>(true);
 const total = ref<number>(0);

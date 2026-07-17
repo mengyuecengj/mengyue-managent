@@ -11,6 +11,7 @@
   box-shadow: $tags-shadow-base; // 添加基础阴影
   display: flex;
   align-items: center;
+  color: var(--tags-item-text);
 
   // 单个标签项样式
   .tag-item {
@@ -20,7 +21,7 @@
     height: $tags-item-height; // 标签高度
     margin: 4px 0 4px $tags-margin; // 上下外边距与左侧外边距
     text-decoration: none; // 去掉文本装饰
-    color: var(--tags-item-text); // 默认文字颜色
+    color: var(--tags-item-text);
     border: 1px solid $tags-border-color; // 边框颜色
     border-radius: $tags-border-radius; // 圆角
     transition: $tags-transition-base; // 过渡效果

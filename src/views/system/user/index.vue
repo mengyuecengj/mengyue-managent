@@ -6,66 +6,55 @@
         <MYRow :gutter="16">
           <!-- 用户名称 -->
           <MYCol :span="8">
-            <MYForm-item label="用户名称" prop="userName">
-              <MYInput
-                v-model="queryParams.userName"
-                placeholder="请输入用户名称"
-                clearable
-                @keyup.enter="handleQuery"
-                placeholder-color="var(--navbar-text)"
-                text-color="var(--navbar-text)"
-              />
+            <MYForm-item :label="t('system.user.query.userName')" prop="userName">
+              <MYInput v-model="queryParams.userName" :placeholder="t('system.user.placeholder.userName')" clearable
+                @keyup.enter="handleQuery" style="border-color: var(--general);"
+                placeholder-color="var(--text-color-content)" text-color="var(--text-color-content)"
+                class="dark-input" />
             </MYForm-item>
           </MYCol>
 
           <!-- 用户昵称 -->
           <MYCol :span="8">
-            <MYForm-item label="用户昵称" prop="nickName">
-              <MYInput
-                v-model="queryParams.nickName"
-                placeholder="请输入用户昵称"
-                placeholder-color="var(--navbar-text)"
-                clearable
-                @keyup.enter="handleQuery"
-                text-color="var(--navbar-text)"
-              />
+            <MYForm-item :label="t('system.user.query.nickName')" prop="nickName">
+              <MYInput v-model="queryParams.nickName" :placeholder="t('system.user.placeholder.nickName')"
+                placeholder-color="var(--text-color-content)" clearable @keyup.enter="handleQuery"
+                text-color="var(--text-color-content)" />
             </MYForm-item>
           </MYCol>
 
           <!-- 手机号码 -->
           <MYCol :span="8">
-            <MYForm-item label="手机号码" prop="phonenumber">
-              <MYInput
-                v-model="queryParams.phonenumber"
-                placeholder="请输入手机号码"
-                placeholder-color="var(--navbar-text)"
-                clearable
-                @keyup.enter="handleQuery"
-                text-color="var(--navbar-text)"
-              />
+            <MYForm-item :label="t('system.user.query.phone')" prop="phonenumber">
+              <MYInput v-model="queryParams.phonenumber" :placeholder="t('system.user.placeholder.phone')"
+                placeholder-color="var(--text-color-content)" clearable @keyup.enter="handleQuery"
+                text-color="var(--text-color-content)" />
             </MYForm-item>
           </MYCol>
 
           <!-- 状态 -->
-          <MYCol :span="8">
-            <MYForm-item label="状态" prop="status">
-              <MYSelect v-model="queryParams.status" placeholder="用户状态" clearable>
-                <MYOption v-for="dict in sys_normal_disable" :key="dict.value" :label="dict.label" :value="dict.value" />
+          <MYCol :span="7">
+            <MYForm-item :label="t('system.user.query.status')" prop="status">
+              <MYSelect v-model="queryParams.status" :placeholder="t('system.user.placeholder.status')" clearable>
+                <MYOption v-for="dict in sys_normal_disable" :key="dict.value" :label="dict.label"
+                  :value="dict.value" />
               </MYSelect>
             </MYForm-item>
           </MYCol>
 
           <!-- 搜索按钮 -->
-          <MYCol :span="2">
+          <MYCol :span="2.5">
             <MYForm-item>
-              <MYButton type="primary" icon="MYSearch" @click="handleQuery">搜索</MYButton>
+              <MYButton type="primary" icon="MYSearch" @click="handleQuery">{{ t('system.user.query.search') }}
+              </MYButton>
             </MYForm-item>
           </MYCol>
 
           <!-- 重置按钮 -->
           <MYCol :span="4">
             <MYForm-item>
-              <MYButton type="info" icon="MYRefreshRight" @click="resetQuery">重置</MYButton>
+              <MYButton type="info" icon="MYRefreshRight" @click="resetQuery">{{ t('system.user.query.reset') }}
+              </MYButton>
             </MYForm-item>
           </MYCol>
         </MYRow>
@@ -75,216 +64,136 @@
     <!-- 操作按钮 -->
     <MYRow :gutter="16" class="mb8">
       <MYCol :span="3">
-        <MYButton type="primary" icon="MYPlus" @click="handleAdd" color-text="#fff">新增</MYButton>
+        <MYButton type="primary" icon="MYPlus" @click="handleAdd" color-text="#fff">{{ t('system.user.button.add') }}
+        </MYButton>
       </MYCol>
       <MYCol :span="3">
         <MYButton type="success" :disabled="!single" @click="handleUpdate">
-          <MYEdit size="14px" color="white" /> 修改
+          <MYEdit size="14px" color="white" /> {{ t('system.user.button.edit') }}
         </MYButton>
       </MYCol>
       <MYCol :span="3">
         <MYButton type="danger" :disabled="!single" @click="handleDelete">
-          <MYDelete size="14px" color="white" /> 删除
+          <MYDelete size="14px" color="white" /> {{ t('system.user.button.delete') }}
         </MYButton>
       </MYCol>
-      <right-toolbar v-model:show-search="showSearch" @query-table="getList" :columns="columns" />
+      <!-- <right-toolbar v-model:show-search="showSearch" @query-table="getList" :columns="columns" /> -->
     </MYRow>
 
     <!-- 表格数据 -->
-    <MYTable
-      header-background-color="var(--table-header-bg)"
-      border-color="var(--table-border-color)"
-      body-background-color="var(--table-body-bg)"
-      v-loading="loading"
-      :data="userList"
-      @selection-change="handleSelectionChange"
-      header-text-color="var(--general)"
-      body-text-color="var(--general)"
-      row-key="userId"
-      stripe="var(--table-stripe-bg)"
-    >
+    <MYTable header-background-color="var(--table-header-bg)" border-color="var(--table-border-color)"
+      body-background-color="var(--table-body-bg)" v-loading="loading" :data="userList"
+      @selection-change="handleSelectionChange" header-text-color="var(--text-color-content)"
+      body-text-color="var(--text-color-content)" row-key="userId" stripe="var(--table-stripe-bg)">
       <MYTable-column type="selection" width="50" align="center" />
-      <MYTable-column label="用户编号" align="center" key="userId" prop="userId" v-if="columns[0].visible" />
-      <MYTable-column label="用户名称" align="center" key="userName" prop="userName" v-if="columns[1].visible" :show-overflow-tooltip="true" />
-      <MYTable-column label="用户昵称" align="center" key="nickName" prop="nickName" v-if="columns[2].visible" :show-overflow-tooltip="true" />
-      <MYTable-column label="部门" align="center" key="deptName" prop="deptName" v-if="columns[3].visible" :show-overflow-tooltip="true" />
-      <MYTable-column label="手机号码" align="center" key="phonenumber" prop="phonenumber" v-if="columns[4].visible" width="120" />
-      <MYTable-column label="状态" align="center" prop="status" key="status" v-if="columns[5].visible" />
+      <MYTable-column :label="t('system.user.table.userId')" align="center" key="userId" prop="userId"
+        v-if="columns[0].visible" />
+      <MYTable-column :label="t('system.user.table.userName')" align="center" key="userName" prop="userName"
+        v-if="columns[1].visible" :show-overflow-tooltip="true" />
+      <MYTable-column :label="t('system.user.table.nickName')" align="center" key="nickName" prop="nickName"
+        v-if="columns[2].visible" :show-overflow-tooltip="true" />
+      <MYTable-column :label="t('system.user.table.dept')" align="center" key="deptName" prop="deptName"
+        v-if="columns[3].visible" :show-overflow-tooltip="true" />
+      <MYTable-column :label="t('system.user.table.phone')" align="center" key="phonenumber" prop="phonenumber"
+        v-if="columns[4].visible" width="120" />
+      <MYTable-column :label="t('system.user.table.status')" align="center" prop="status" key="status"
+        v-if="columns[5].visible" />
       <template #status="scope">
-        <MYSwitch
-          :model-value="scope.row.status === '0'"
-          size="small"
-          :active-value="true"
-          :inactive-value="false"
-          @change="(val: boolean) => handleStatusChange(scope.row, val)"
-        />
+        <MYSwitch :model-value="scope.row.status === '0'" size="small" :active-value="true" :inactive-value="false"
+          @change="(val: boolean) => handleStatusChange(scope.row, val)" />
       </template>
-      <MYTable-column label="创建时间" align="center" prop="createTime" v-if="columns[6].visible" width="160">
+      <MYTable-column :label="t('system.user.table.createTime')" align="center" prop="createTime"
+        v-if="columns[6].visible" width="160">
         <template #createTime="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </MYTable-column>
-      <MYTable-column label="操作" align="center" prop="operation" class-name="small-padding fixed-width" />
+      <MYTable-column :label="t('system.user.table.operation')" align="center" prop="operation"
+        class-name="small-padding fixed-width" />
       <template #operation="scope">
         <div v-if="scope.row.userId !== 1" class="operation-buttons">
-          <MYButton
-            size="supersmall"
-            link
-            type="primary"
-            icon="MYEdit"
-            color-bg="transparent"
-            color-text="var(--general-text)"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['system:user:edit']"
-          >
-            修改
+          <MYButton size="supersmall" link type="primary" icon="MYEdit" colorBackground="transparent"
+            colorText="var(--general-text)" @click="handleUpdate(scope.row)" v-hasPermi="['system:user:edit']">
+            {{ t('system.user.button.edit') }}
           </MYButton>
-          <MYButton
-            size="supersmall"
-            link
-            type="primary"
-            icon="MYDelete"
-            color-bg="transparent"
-            color-text="var(--general-text)"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['system:user:remove']"
-          >
-            删除
+          <MYButton size="supersmall" link type="primary" icon="MYDelete" colorBackground="transparent"
+            colorText="var(--general-text)" @click="handleDelete(scope.row)" v-hasPermi="['system:user:remove']">
+            {{ t('system.user.button.delete') }}
           </MYButton>
-          <MYButton
-            size="supersmall"
-            link
-            type="primary"
-            icon="MYUnlockAlt"
-            color-bg="transparent"
-            color-text="var(--general-text)"
-            @click="handleResetPwd(scope.row)"
-            v-hasPermi="['system:user:resetPwd']"
-          >
-            重置
+          <MYButton size="supersmall" link type="primary" icon="MYUnlockAlt" colorBackground="transparent"
+            colorText="var(--general-text)" @click="handleResetPwd(scope.row)" v-hasPermi="['system:user:resetPwd']">
+            {{ t('system.user.button.resetPwd') }}
           </MYButton>
-          <MYButton
-            size="supersmall"
-            link
-            type="primary"
-            icon="MYCircleCheck"
-            color-bg="transparent"
-            color-text="var(--general-text)"
-            @click="handleAuthRole(scope.row)"
-            v-hasPermi="['system:user:edit']"
-          >
-            授权
+          <MYButton size="supersmall" link type="primary" icon="MYCircleCheck" colorBackground="transparent"
+            colorText="var(--general-text)" @click="handleAuthRole(scope.row)" v-hasPermi="['system:user:edit']">
+            {{ t('system.user.button.auth') }}
           </MYButton>
         </div>
       </template>
     </MYTable>
 
     <!-- 分页 -->
-    <pagination
-      class="pagination-container"
-      v-show="total > 0"
-      :total="total"
-      v-model:page="queryParams.pageNum"
-      v-model:limit="queryParams.pageSize"
-      @pagination="getList"
-    />
+    <pagination class="pagination-container" v-show="total > 0" :total="total" v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize" @pagination="getList" />
 
     <!-- 添加/修改用户对话框 -->
-    <MYDialog
-      :title="title"
-      v-model="open"
-      width="800px"
-      height="600px"
-      background-color="var(--dialog-bg) !important"
-      text-color="var(--general)"
-      :show-close="false"
-      append-to-body
-    >
+    <MYDialog :title="title" v-model="open" width="800px" height="600px" text-color="var(--text-color-content)"
+      :show-close="false" append-to-body>
       <MYForm class="dialog_form" ref="userRef" :model-value="form" :rules="rules" label-width="80">
         <MYRow>
           <MYCol :span="12">
-            <MYForm-item label="用户昵称" prop="nickName">
-              <MYInput
-                v-model="form.nickName"
-                placeholder="请输入用户昵称"
-                placeholder-color="var(--navbar-text)"
-                maxlength="30"
-              />
+            <MYForm-item :label="t('system.user.form.nickName')" prop="nickName">
+              <MYInput v-model="form.nickName" :placeholder="t('system.user.placeholder.nickName')"
+                placeholder-color="var(--text-color-content)" maxlength="30" />
             </MYForm-item>
           </MYCol>
           <MYCol :span="12">
-            <MYForm-item label="归属部门" prop="deptId">
-              <MYTree-select
-                v-model="form.deptId"
-                :data="enabledDeptOptions"
-                :props="{ label: 'label', children: 'children', value: 'id' }"
-                :multiple="false"
-                :filterable="false"
-                :showArrow="true"
-                :size="'large'"
-                :popper-class="'custom-dropdown'"
-                background-color="#0f1115"
-                height="10px"
-              />
+            <MYForm-item :label="t('system.user.form.dept')" prop="deptId">
+              <MYTree-select v-model="form.deptId" :data="enabledDeptOptions"
+                :props="{ label: 'label', children: 'children', value: 'id' }" :multiple="false" :filterable="false"
+                :showArrow="true" :size="'large'" :popper-class="'custom-dropdown'" background-color="#0f1115"
+                height="10px" />
             </MYForm-item>
           </MYCol>
         </MYRow>
         <MYRow>
           <MYCol :span="12">
-            <MYForm-item label="手机号码" prop="phonenumber">
-              <MYInput
-                v-model="form.phonenumber"
-                placeholder="请输入手机号码"
-                placeholder-color="var(--navbar-text)"
-                maxlength="11"
-              />
+            <MYForm-item :label="t('system.user.form.phone')" prop="phonenumber">
+              <MYInput v-model="form.phonenumber" :placeholder="t('system.user.placeholder.phone')"
+                placeholder-color="var(--text-color-content)" maxlength="11" />
             </MYForm-item>
           </MYCol>
           <MYCol :span="12">
-            <MYForm-item label="邮箱" prop="email">
-              <MYInput
-                v-model="form.email"
-                placeholder="请输入邮箱"
-                placeholder-color="var(--navbar-text)"
-                maxlength="50"
-              />
+            <MYForm-item :label="t('system.user.form.email')" prop="email">
+              <MYInput v-model="form.email" :placeholder="t('system.user.placeholder.email')"
+                placeholder-color="var(--text-color-content)" maxlength="50" />
             </MYForm-item>
           </MYCol>
         </MYRow>
         <MYRow>
           <MYCol :span="12">
-            <MYForm-item v-if="!form.userId" label="用户名称" prop="userName">
-              <MYInput
-                v-model="form.userName"
-                placeholder="请输入用户名称"
-                placeholder-color="var(--navbar-text)"
-                maxlength="30"
-              />
+            <MYForm-item v-if="!form.userId" :label="t('system.user.form.userName')" prop="userName">
+              <MYInput v-model="form.userName" :placeholder="t('system.user.placeholder.userName')"
+                placeholder-color="var(--text-color-content)" maxlength="30" />
             </MYForm-item>
           </MYCol>
           <MYCol :span="12">
-            <MYForm-item v-if="!form.userId" label="用户密码" prop="password">
-              <MYInput
-                v-model="form.password"
-                placeholder="请输入用户密码"
-                placeholder-color="var(--navbar-text)"
-                type="password"
-                maxlength="20"
-                show-password
-              />
+            <MYForm-item v-if="!form.userId" :label="t('system.user.form.password')" prop="password">
+              <MYInput v-model="form.password" :placeholder="t('system.user.placeholder.password')"
+                placeholder-color="var(--text-color-content)" type="password" maxlength="20" show-password />
             </MYForm-item>
           </MYCol>
         </MYRow>
         <MYRow>
           <MYCol :span="12">
-            <MYForm-item label="用户性别" prop="sex" v-if="dictLoaded">
-              <MYSelect v-model="form.sex" placeholder="请选择性别" clearable>
+            <MYForm-item :label="t('system.user.form.sex')" prop="sex" v-if="dictLoaded">
+              <MYSelect v-model="form.sex" :placeholder="t('system.user.placeholder.status')" clearable>
                 <MYOption v-for="dict in sys_user_sex" :key="dict.value" :label="dict.label" :value="dict.value" />
               </MYSelect>
             </MYForm-item>
           </MYCol>
           <MYCol :span="12">
-            <MYForm-item label="状态" prop="status">
+            <MYForm-item :label="t('system.user.form.status')" prop="status">
               <MYRadio-group v-model="form.status">
                 <MYRadio v-for="dict in sys_normal_disable" :key="dict.value" :value="dict.value">
                   {{ dict.label }}
@@ -295,43 +204,29 @@
         </MYRow>
         <MYRow>
           <MYCol :span="12">
-            <MYForm-item label="岗位" prop="postIds" v-if="postOptions?.length">
-              <MYSelect :v-model="form.postIds.join(',')" multiple placeholder="请选择岗位" @change="handlePostChange">
-                <MYOption
-                  v-for="item in postOptions"
-                  :key="item.postId"
-                  :label="item.postName"
-                  :value="item.postId"
-                  :disabled="item.status == 1"
-                />
+            <MYForm-item :label="t('system.user.form.post')" prop="postIds" v-if="postOptions?.length">
+              <MYSelect :v-model="form.postIds.join(',')" multiple :placeholder="t('system.user.placeholder.post')"
+                @change="handlePostChange">
+                <MYOption v-for="item in postOptions" :key="item.postId" :label="item.postName" :value="item.postId"
+                  :disabled="item.status == 1" />
               </MYSelect>
             </MYForm-item>
           </MYCol>
           <MYCol :span="12">
-            <MYForm-item label="角色" prop="roleIds" v-if="roleOptions?.length">
-              <MYSelect :v-model="form.roleIds.join(',')" multiple placeholder="请选择角色" @change="handleRoleChange">
-                <MYOption
-                  v-for="item in roleOptions"
-                  :key="item.roleId"
-                  :label="item.roleName"
-                  :value="item.roleId"
-                  :disabled="item.status == 1"
-                />
+            <MYForm-item :label="t('system.user.form.role')" prop="roleIds" v-if="roleOptions?.length">
+              <MYSelect :v-model="form.roleIds.join(',')" multiple :placeholder="t('system.user.placeholder.role')"
+                @change="handleRoleChange">
+                <MYOption v-for="item in roleOptions" :key="item.roleId" :label="item.roleName" :value="item.roleId"
+                  :disabled="item.status == 1" />
               </MYSelect>
             </MYForm-item>
           </MYCol>
         </MYRow>
         <MYRow>
           <MYCol :span="24">
-            <MYForm-item label="备注">
-              <MYInput
-                v-model="form.remark"
-                type="textarea"
-                placeholder="请输入内容"
-                placeholder-color="var(--navbar-text)"
-                :rows="3"
-                maxlength="500"
-              />
+            <MYForm-item :label="t('system.user.form.remark')">
+              <MYInput v-model="form.remark" type="textarea" :placeholder="t('system.user.placeholder.remark')"
+                placeholder-color="var(--text-color-content)" :rows="3" maxlength="500" />
             </MYForm-item>
           </MYCol>
         </MYRow>
@@ -340,10 +235,10 @@
         <div class="dialog-footer">
           <MYRow :gutter="20">
             <MYCol :span="12">
-              <MYButton type="primary" @click="submitForm">确定</MYButton>
+              <MYButton type="primary" @click="submitForm">{{ t('system.user.action.confirm') }}</MYButton>
             </MYCol>
             <MYCol :span="4">
-              <MYButton type="info" @click="cancel">取消</MYButton>
+              <MYButton type="info" @click="cancel">{{ t('system.user.action.cancel') }}</MYButton>
             </MYCol>
           </MYRow>
         </div>
@@ -368,7 +263,9 @@ import {
 import "splitpanes/dist/splitpanes.css";
 import { useDict } from '@/utils/dict'
 import { User, UserForm, QueryParams, Column, DeptNode, DictResult, Rule, ValidationError } from '@/types/views/user';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const router = useRouter();
 const { proxy } = getCurrentInstance() as any;
 const { sys_normal_disable, sys_user_sex } = useDict("sys_normal_disable", "sys_user_sex") as unknown as DictResult;
@@ -501,7 +398,7 @@ const reset = async () => {
 // 查询用户列表
 const getList = () => {
   loading.value = true;
-  
+
   const requestParams = {
     pageNum: queryParams.value.pageNum,
     pageSize: queryParams.value.pageSize,
@@ -511,10 +408,10 @@ const getList = () => {
     status: queryParams.value.status || undefined,
     deptId: queryParams.value.deptId || undefined, // 确保包含这个
   };
-    
+
   // 使用 addDateRange
   const finalParams = proxy.addDateRange(requestParams, dateRange.value);
-  
+
   listUser(finalParams).then((response: any) => {
     loading.value = false;
     userList.value = response.rows;
@@ -544,14 +441,14 @@ const filterDisabledDept = (deptList: DeptNode[]): DeptNode[] => {
 };
 // 节点点击
 const handleNodeClick = (data: DeptNode): void => {
-  
+
   // 确保部门ID正确设置
   if (data && data.id) {
     queryParams.value.deptId = Number(data.id);
   } else {
     queryParams.value.deptId = undefined;
   }
-  
+
   queryParams.value.pageNum = 1;
   handleQuery();
 };
@@ -565,7 +462,7 @@ const handleQuery = (): void => {
 // 重置查询
 const resetQuery = (): void => {
   dateRange.value = [];
-  
+
   // 手动重置所有查询参数到初始状态
   queryParams.value = {
     pageNum: 1,
@@ -576,15 +473,15 @@ const resetQuery = (): void => {
     deptId: undefined,
     status: '',
   };
-  
+
   // 重置搜索输入框
   deptName.value = "";
-  
+
   // 如果有表单引用，仍然调用 resetFields 来清除验证状态
   if (queryRef.value) {
     queryRef.value.resetFields();
   }
-  
+
   handleQuery();
 };
 
@@ -799,9 +696,9 @@ const submitForm = async (): Promise<void> => {
 
     // 客户端重复检查
     const currentUserId = form.value.userId;
-    
+
     // 检查用户名重复（新增时检查，修改时排除自己）
-    const existUserName = userList.value.find(user => 
+    const existUserName = userList.value.find(user =>
       user.userName === form.value.userName && user.userId !== currentUserId
     );
     if (existUserName) {
@@ -811,7 +708,7 @@ const submitForm = async (): Promise<void> => {
 
     // 检查手机号重复
     if (form.value.phonenumber) {
-      const existPhone = userList.value.find(user => 
+      const existPhone = userList.value.find(user =>
         user.phonenumber === form.value.phonenumber && user.userId !== currentUserId
       );
       if (existPhone) {
@@ -822,7 +719,7 @@ const submitForm = async (): Promise<void> => {
 
     // 检查邮箱重复
     if (form.value.email) {
-      const existEmail = userList.value.find(user => 
+      const existEmail = userList.value.find(user =>
         user.email === form.value.email && user.userId !== currentUserId
       );
       if (existEmail) {

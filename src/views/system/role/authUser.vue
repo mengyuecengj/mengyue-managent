@@ -3,29 +3,29 @@
     <!-- 查询表单 -->
     <MYForm :model-value="queryParams" ref="queryRef" v-show="showSearch" :inline="true" labelWidth="68">
       <MYRow>
-        <MYCol :span="6" :offset="2">
-          <MYForm-item label="用户名称" prop="userName">
-            <MYInput placeholder="请输入用户名称" v-model="queryParams.userName" disabled placeholderColor="var(--navbar-text)"
+        <MYCol :span="7" :offset="2">
+          <MYForm-item :label="t('system.user.query.userName')" prop="userName">
+            <MYInput :placeholder="t('system.user.placeholder.userName')" v-model="queryParams.userName" disabled placeholderColor="var(--navbar-text)"
               textColor="var(--navbar-text)" style="width: 200px;" />
           </MYForm-item>
         </MYCol>
-        <MYCol :span="6" :offset="2">
-          <MYForm-item label="手机号码" prop="phonenumber">
-            <MYInput placeholder="请输入手机号码" v-model="queryParams.phonenumber" disabled
+        <MYCol :span="6.5" :offset="2">
+          <MYForm-item :label="t('system.user.table.phone')" prop="phonenumber">
+            <MYInput :placeholder="t('system.user.placeholder.phone')" v-model="queryParams.phonenumber" disabled
               placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" style="width: 200px;" />
           </MYForm-item>
         </MYCol>
         <!-- 搜索按钮 -->
-        <MYCol :span="2">
+        <MYCol :span="3">
           <MYForm-item>
-            <MYButton type="primary" icon="MYSearch" @click="handleQuery">搜索</MYButton>
+            <MYButton type="primary" icon="MYSearch" @click="handleQuery">{{ t('system.user.query.search') }}</MYButton>
           </MYForm-item>
         </MYCol>
 
         <!-- 重置按钮 -->
         <MYCol :span="1">
           <MYForm-item>
-            <MYButton type="info" icon="MYRefreshRight" @click="resetQuery">重置</MYButton>
+            <MYButton type="info" icon="MYRefreshRight" @click="resetQuery">{{ t('system.user.query.reset') }}</MYButton>
           </MYForm-item>
         </MYCol>
       </MYRow>
@@ -34,15 +34,15 @@
     <!-- 操作按钮 -->
     <MYRow :gutter="10" class="mb8">
       <MYCol :span="3">
-        <MYButton type="primary" icon="MYPlus" @click="openSelectUser" v-hasPermi="['system:role:add']">添加用户
+        <MYButton type="primary" icon="MYPlus" @click="openSelectUser" v-hasPermi="['system:role:add']">{{ t('system.role.user.addUser') }}
         </MYButton>
       </MYCol>
       <MYCol :span="4">
         <MYButton type="danger" icon="MYCircleClose" :disabled="multiple" @click="cancelAuthUserAll"
-          v-hasPermi="['system:role:remove']">批量取消授权</MYButton>
+          v-hasPermi="['system:role:remove']">{{ t('system.role.user.cacelAuth') }}</MYButton>
       </MYCol>
       <MYCol :span="3">
-        <MYButton type="warning" icon="MYClose" @click="handleClose">关闭</MYButton>
+        <MYButton type="warning" icon="MYClose" @click="handleClose">{{ t('system.role.user.close') }}</MYButton>
       </MYCol>
       <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
     </MYRow>
@@ -52,25 +52,25 @@
       headerBackgroundColor="var(--table-header-bg)" borderColor="var(--table-border-color)"
       bodyBackgroundColor="var(--table-body-bg)" headerTextColor="var(--general)" bodyTextColor="var(--general)">
       <MYTable-column type="selection" width="55" align="center" />
-      <MYTable-column label="用户名称" prop="userName" :show-overflow-tooltip="true" />
-      <MYTable-column label="用户昵称" prop="nickName" :show-overflow-tooltip="true" />
-      <MYTable-column label="邮箱" prop="email" :show-overflow-tooltip="true" />
-      <MYTable-column label="手机" prop="phonenumber" :show-overflow-tooltip="true" />
-      <MYTable-column label="状态" align="center" prop="status">
+      <MYTable-column :label="t('system.user.table.userName')" prop="userName" :show-overflow-tooltip="true" />
+      <MYTable-column :label="t('system.user.table.nickName')" prop="nickName" :show-overflow-tooltip="true" />
+      <MYTable-column :label="t('system.user.form.email')" prop="email" :show-overflow-tooltip="true" />
+      <MYTable-column :label="t('system.user.query.phone')" prop="phonenumber" :show-overflow-tooltip="true" />
+      <MYTable-column :label="t('system.user.query.status')" align="center" prop="status">
         <template #default="scope">
           <dict-tag :options="sys_normal_disable" :value="scope.row.status" />
         </template>
       </MYTable-column>
-      <MYTable-column label="创建时间" align="center" prop="createTime" width="180">
+      <MYTable-column :label="t('system.user.table.createTime')" align="center" prop="createTime" width="180">
         <template #default="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </MYTable-column>
-      <MYTable-column label="操作" align="center" class-name="small-padding fixed-width" prop="operation" />
+      <MYTable-column :label="t('system.user.table.operation')" align="center" class-name="small-padding fixed-width" prop="operation" />
         <template #operation="scope">
-          <MYButton link type="primary" icon="MYCircleClose" colorBg="var(--table-body-bg)"
+          <MYButton link type="primary" icon="MYCircleClose" colorBackground="var(--table-body-bg)"
               colorText="var(--general-text)" @click="() => cancelAuthUser(scope.row)"
-            v-hasPermi="['system:role:remove']">取消授权</MYButton>
+            v-hasPermi="['system:role:remove']">{{ t('system.role.user.closeAuth') }}</MYButton>
         </template>
     </MYTable>
 
@@ -92,6 +92,9 @@ import { ElMessageBox, ElMessage } from 'element-plus';
 import { useDict } from '@/utils/dict';
 import { DictResult } from '@/types/views/user';
 import { User, QueryParams } from '@/types/views/role'
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 // useDict 类型假设已调整，返回 { dictLoaded: Ref<boolean>, sys_normal_disable: Ref<DictOption[]> }
 const { sys_normal_disable } = useDict('sys_normal_disable') as unknown as DictResult;

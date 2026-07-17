@@ -2,84 +2,75 @@
     <div class="app-container">
         <MYRow :gutter="20">
             <MYForm :modelValue="queryParams" ref="queryRef" v-show="showSearch" :inline="true" labelWidth="68">
-                <MYRow :gutter="16">
-                    <!-- 角色名称 -->
-                    <MYCol :span="6">
-                        <MYForm-item label="登录地址" prop="ipaddr">
-                            <MYInput v-model="queryParams.ipaddr" placeholder="请输入登录地址" clearable
+                <MYRow :gutter="24">
+                    <MYCol :span="8">
+                        <MYForm-item :label="t('system.logininfor.loginAddress')" prop="ipaddr">
+                            <MYInput v-model="queryParams.ipaddr" :placeholder="t('system.logininfor.placeholder.loginAdress')" clearable
                                 @keyup.enter="handleQuery" placeholderColor="var(--navbar-text)"
                                 textColor="var(--navbar-text)" />
                         </MYForm-item>
                     </MYCol>
 
-                    <!-- 权限字符 -->
-                    <MYCol :span="6">
-                        <MYForm-item label="用户名称" prop="userName">
-                            <MYInput v-model="queryParams.userName" placeholder="请输入用户名称" clearable
+                    <MYCol :span="8">
+                        <MYForm-item :label="t('system.logininfor.userName')" prop="userName">
+                            <MYInput v-model="queryParams.userName" :placeholder="t('system.logininfor.placeholder.userName')" clearable
                                 @keyup.enter="handleQuery" placeholderColor="var(--navbar-text)"
                                 textColor="var(--navbar-text)" />
                         </MYForm-item>
                     </MYCol>
 
-                    <!-- 状态 -->
                     <MYCol :span="7">
-                        <MYForm-item label="状态" prop="status">
-                            <MYSelect v-model="queryParams.status" placeholder="状态" clearable>
+                        <MYForm-item :label="t('system.logininfor.status')" prop="status">
+                            <MYSelect v-model="queryParams.status" :placeholder="t('system.logininfor.status')" clearable>
                                 <MYOption v-for="dict in sys_common_status" :key="dict.value" :label="dict.label"
                                     :value="dict.value" />
                             </MYSelect>
                         </MYForm-item>
                     </MYCol>
 
-                    <!-- 搜索按钮 -->
-                    <MYCol :span="2">
+                    <MYCol :span="2.5">
                         <MYForm-item>
-                            <MYButton type="primary" icon="MYSearch" @click="handleQuery">搜索</MYButton>
+                            <MYButton type="primary" icon="MYSearch" @click="handleQuery">{{ t('system.user.query.search') }}</MYButton>
                         </MYForm-item>
                     </MYCol>
 
-                    <!-- 重置按钮 -->
                     <MYCol :span="1">
                         <MYForm-item>
-                            <MYButton type="info" icon="MYRefreshRight" @click="resetQuery">重置</MYButton>
+                            <MYButton type="info" icon="MYRefreshRight" @click="resetQuery">{{ t('system.user.query.reset') }}</MYButton>
                         </MYForm-item>
                     </MYCol>
                 </MYRow>
             </MYForm>
         </MYRow>
         <MYRow :gutter="10" class="mb8">
-            <MYCol :span="2">
+            <MYCol :span="2.5">
                 <MYButton type="danger" icon="MYDelete" :disabled="multiple" @click="handleDelete"
-                    v-hasPermi="['monitor:logininfor:remove']">删除</MYButton>
+                    v-hasPermi="['monitor:logininfor:remove']">{{ t('system.user.button.delete') }}</MYButton>
             </MYCol>
             <MYCol :span="2">
                 <MYButton type="danger" icon="MYDelete" @click="handleClean" v-hasPermi="['monitor:logininfor:remove']">
-                    清空</MYButton>
+                    {{ t('system.logininfor.clean') }}</MYButton>
             </MYCol>
-            <!-- <MYCol :span="2">
-                <MYButton type="primary" icon="MYUnlock" :disabled="single" @click="handleUnlock"
-                    v-hasPermi="['monitor:logininfor:unlock']">解锁</MYButton>
-            </MYCol> -->
-            <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
+            <!-- <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar> -->
         </MYRow>
         <MYTable row-key="infoId" headerBackgroundColor="var(--table-header-bg)" borderColor="var(--table-border-color)"
             bodyBackgroundColor="var(--table-body-bg)" headerTextColor="var(--general)" bodyTextColor="var(--general)"
             ref="logininforRef" v-loading="loading" :data="logininforList" @selection-change="handleSelectionChange"
             :default-sort="defaultSort" @sort-change="handleSortChange" table-layout="fixed">
             <MYTableColumn type="selection" width="60" align="center" />
-            <MYTableColumn label="访问编号" align="center" prop="infoId" width="100" />
-            <MYTableColumn label="用户名称" align="center" prop="userName" width="120" :show-overflow-tooltip="true"
+            <MYTableColumn :label="t('system.logininfor.accessId')" align="center" prop="infoId" width="100" />
+            <MYTableColumn :label="t('system.logininfor.userName')" align="center" prop="userName" width="120" :show-overflow-tooltip="true"
                 sortable="custom" />
-            <MYTableColumn label="地址" align="center" prop="ipaddr" width="120" :show-overflow-tooltip="true" />
-            <MYTableColumn label="登录地点" align="center" prop="loginLocation" width="120" :show-overflow-tooltip="true" />
-            <MYTableColumn label="操作系统" align="center" prop="os" width="120" :show-overflow-tooltip="true" />
-            <MYTableColumn label="浏览器" align="center" prop="browser" width="120" />
-            <MYTableColumn label="登录状态" align="center" prop="status" width="100" />
+            <MYTableColumn :label="t('system.logininfor.loginAddress')" align="center" prop="ipaddr" width="120" :show-overflow-tooltip="true" />
+            <MYTableColumn :label="t('system.logininfor.loginLocation')" align="center" prop="loginLocation" width="120" :show-overflow-tooltip="true" />
+            <MYTableColumn :label="t('system.logininfor.os')" align="center" prop="os" width="120" :show-overflow-tooltip="true" />
+            <MYTableColumn :label="t('system.logininfor.browser')" align="center" prop="browser" width="120" />
+            <MYTableColumn :label="t('system.logininfor.loginStatus')" align="center" prop="status" width="100" />
             <template #status="scope">
                 <dict-tag :options="sys_common_status" :value="scope.row.status" />
             </template>
-            <MYTableColumn label="描述" align="center" prop="msg" width="150" :show-overflow-tooltip="true" />
-            <MYTableColumn label="访问时间" align="center" prop="loginTime" width="180" sortable="custom">
+            <MYTableColumn :label="t('system.logininfor.description')" align="center" prop="msg" width="150" :show-overflow-tooltip="true" />
+            <MYTableColumn :label="t('system.logininfor.accessTime')" align="center" prop="loginTime" width="180" sortable="custom">
                 <template #default="scope">
                     <span>{{ parseTime(scope.row.loginTime) }}</span>
                 </template>
@@ -93,10 +84,12 @@
 <script setup lang="ts" name="logininfor">
 import { parseTime } from '@/utils/general';
 import { list, delLogininfor, cleanLogininfor, unlockLogininfor } from '@/api/monitor/logininfor';
-import { MYOption } from 'mengyue-plus';
 import modal from '@/plugins/modal';
+import { useI18n } from 'vue-i18n';
+
 const { proxy } = getCurrentInstance() as any;
 const { sys_common_status } = proxy.useDict('sys_common_status');
+const { t } = useI18n();
 const logininforList = ref([]);
 const loading = ref<boolean>(true);
 const showSearch = ref<boolean>(true);

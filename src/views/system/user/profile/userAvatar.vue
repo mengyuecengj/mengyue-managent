@@ -1,7 +1,7 @@
 <template>
   <div class="user-info-head" @click="editCropper()">
-    <img :src="options.img" title="点击上传头像" class="img-circle img-lg" />
-    <MYDialog title="搜索" v-model="open" width="900px" height="540px" backgroundColor="#0F1115">
+    <img :src="options.img" :title="$t('system.user.profile.avatar.uploadTip')" class="img-circle img-lg" />
+    <MYDialog :title="$t('system.user.profile.avatar.title')" v-model="open" width="900px" height="540px" backgroundColor="#0F1115">
       <div class="dialog-avatar">
         <div class="cropper-wrapper" @mousedown.prevent="onDragStart" @mousemove="onMagnifierMove" @mouseup="onDragEnd"
           @mouseleave="onDragEnd" @mouseenter="magnifierVisible = true" @wheel="onWheel" ref="wrapper">
@@ -19,22 +19,20 @@
         <div class="upload">
           <MYUpload action="#" :show-file-list="false" :before-upload="beforeUpload">
             <MYUploadminimalistic size="14px" />
-            <span style="margin-left: 10px;">点击上传</span>
+            <span style="margin-left: 10px;">{{ $t('system.user.profile.avatar.uploadBtn') }}</span>
           </MYUpload>
         </div>
         <div class="action">
-          <MYButton type="primary" icon="MYPlus" @click="changeScale(1)">放大</MYButton>
-          <MYButton type="primary" icon="MYMinus" @click="changeScale(-1)">缩小</MYButton>
-          <MYButton type="primary" icon="MYRefreshRight" @click="rotateRight()">右旋转</MYButton>
-          <MYButton type="primary" icon="MYRefreshLeft" @click="rotateLeft()">左旋转</MYButton>
+          <MYButton type="primary" icon="MYPlus" @click="changeScale(1)">{{ $t('system.user.profile.avatar.zoomIn') }}</MYButton>
+          <MYButton type="primary" icon="MYMinus" @click="changeScale(-1)">{{ $t('system.user.profile.avatar.zoomOut') }}</MYButton>
+          <MYButton type="primary" icon="MYRefreshRight" @click="rotateRight()">{{ $t('system.user.profile.avatar.rotateRight') }}</MYButton>
+          <MYButton type="primary" icon="MYRefreshLeft" @click="rotateLeft()">{{ $t('system.user.profile.avatar.rotateLeft') }}</MYButton>
         </div>
-        <MYButton type="primary" @click="uploadImg()">提 交</MYButton>
-
+        <MYButton type="primary" @click="uploadImg()">{{ $t('system.user.profile.avatar.submit') }}</MYButton>
       </div>
     </MYDialog>
   </div>
 </template>
-
 <script setup lang="ts">
 import { CSSProperties, ComponentInternalInstance } from "vue";
 import modal from "@/plugins/modal";

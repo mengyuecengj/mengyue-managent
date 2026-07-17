@@ -16,7 +16,7 @@
         @contextmenu.prevent="openContextMenu(tag, $event)"
       >
         <span class="tag-indicator" />
-        <span class="tag-content">{{ tag.title }}</span>
+        <span class="tag-content">{{ t(tag.title as string) }}</span>
         <MYButton class="close-btn" @click.stop.prevent="onClose(tag)">×</MYButton>
       </router-link>
     </ScrollTags>
@@ -33,27 +33,27 @@
         >
           <li role="menuitem" @click.prevent.stop="handleRefresh">
             <MYLoadingA class="li-icon"></MYLoadingA>
-            <span>刷新页面</span>
+            <span>{{ $t('tagsView.refresh') }}</span>
           </li>
           <li role="menuitem" @click.prevent.stop="onCloseSelected">
             <MYClose class="li-icon"></MYClose>
-            <span>关闭当前</span>
+            <span>{{ $t('tagsView.closeCurrent') }}</span>
           </li>
           <li role="menuitem" @click.prevent.stop="closeOthers">
             <MYCircleXmark class="li-icon"></MYCircleXmark>
-            <span>关闭其他</span>
+            <span>{{ $t('tagsView.closeCurrent') }}</span>
           </li>
           <li role="menuitem" @click.prevent.stop="closeLeft">
             <MYArrowLeft class="li-icon"></MYArrowLeft>
-            <span>关闭左侧</span>
+            <span>{{ $t('tagsView.closeLeft') }}</span>
           </li>
           <li role="menuitem" @click.prevent.stop="closeRight">
             <MYArrowRight class="li-icon"></MYArrowRight>
-            <span>关闭右侧</span>
+            <span>{{ $t('tagsView.closeRight') }}</span>
           </li>
           <li role="menuitem" @click.prevent.stop="closeAll">
             <MYClose class="li-icon"></MYClose>
-            <span>全部关闭</span>
+            <span>{{ $t('tagsView.closeAll') }}</span>
           </li>
         </ul>
       </Transition>
@@ -63,17 +63,17 @@
 
 <script setup lang="ts">
 /**
- * 完整 TagsView.vue
- * 修复说明：
  * - 确保从 hook 导入路径正确（@/hooks/useTags）
  * - 将 context 内部的 refs 解构为组件顶层变量（menuVisible/menuLeft/menuTop/selectedTag）
  * - 使用 wrapper 方法（handleRefresh/contextClose）确保传入正确值并与 hook API 对齐
  */
 import ScrollTags from './ScrollPane.vue'
 import { useTags } from '@/hooks/useViewTags'
+import { useI18n } from "vue-i18n"
 
 // useTags 返回一个对象（不要一次性解构以保留类型），然后我们把需要的字段提取为顶层变量
 const tagsCtx = useTags()
+const { t } = useI18n()
 
 // 提取常用 API / 数据
 const tags = tagsCtx.tags

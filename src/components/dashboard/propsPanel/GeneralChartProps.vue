@@ -2,61 +2,61 @@
     <div v-if="selectedBlock" class="props-panel">
         <MYForm class="operation-list" v-model="formModel" :label-width="60">
             <MYScrollbar ScrollWidth="4px" height="100%">
-                <MYForm-item label="图层名称">
-                    <MYInput v-model="selectedBlock.name" placeholder="请输入图层名称" placeholderColor="#fff"
+                <MYForm-item :label="$t('dashboard.props.layerName')">
+                    <MYInput v-model="selectedBlock.name" :placeholder="$t('dashboard.props.layerName')" placeholderColor="#fff"
                         @input="updateName" />
                 </MYForm-item>
-                <MYForm-item label="隐藏">
+                <MYForm-item :label="$t('dashboard.props.hidden')">
                     <MYSwitch v-model="selectedBlock.visible" />
                 </MYForm-item>
-                <MYForm-item label="配色" v-if="isBarChart">
+                <MYForm-item :label="$t('dashboard.props.color')" v-if="isBarChart">
                     <MYSelect-color v-model="selectedBlock.color" />
                 </MYForm-item>
-                <MYForm-item label="最大宽度" v-if="isBarChart">
+                <MYForm-item :label="$t('dashboard.props.maxWidth')" v-if="isBarChart">
                     <MYSlidebar v-model="barWidth" :max="100" :min="0" thumbColor="#409EFF" style="width: 100px;"
                         @change="updateBarWidth" />
                 </MYForm-item>
-                <MYForm-item label="标题设置">
+                <MYForm-item :label="$t('dashboard.props.titleSetting')">
                     <MYSwitch v-model="selectedBlock.title" />
                 </MYForm-item>
                 <div v-if="selectedBlock.title === true">
-                    <MYForm-item label="标题">
-                        <MYInput v-model="titleText" placeholder="请输入标题" @input="updateTitleText" />
+                    <MYForm-item :label="$t('dashboard.props.title')">
+                        <MYInput v-model="titleText" :placeholder="$t('dashboard.props.title')" @input="updateTitleText" />
                     </MYForm-item>
-                    <MYForm-item label="标题颜色">
-                        <MYInput v-model="selectedBlock.titleColor" placeholder="请输入标题颜色" @input="updateTitleColor" />
+                    <MYForm-item :label="$t('dashboard.props.titleColor')">
+                        <MYInput v-model="selectedBlock.titleColor" :placeholder="$t('dashboard.props.titleColor')" @input="updateTitleColor" />
                     </MYForm-item>
-                    <MYForm-item label="标题粗细">
-                        <MYInput v-model="selectedBlock.fontWeight" placeholder="请输入标题粗细" @input="updateFontWeight" />
+                    <MYForm-item :label="$t('dashboard.props.titleWeight')">
+                        <MYInput v-model="selectedBlock.fontWeight" :placeholder="$t('dashboard.props.titleWeight')" @input="updateFontWeight" />
                     </MYForm-item>
-                    <MYForm-item label="标题大小">
-                        <MYInput v-model="selectedBlock.fontSize" placeholder="请输入标题大小" @input="updateFontSize" />
+                    <MYForm-item :label="$t('dashboard.props.titleSize')">
+                        <MYInput v-model="selectedBlock.fontSize" :placeholder="$t('dashboard.props.titleSize')" @input="updateFontSize" />
                     </MYForm-item>
                 </div>
-                <MYForm-item label="数据">
-                    <MYButton @click="openDataDialog">编辑</MYButton>
-                    <MYDialog v-model="dataDialogVisible" @close="closeDataDialog" title="数据编辑" width="800px"
+                <MYForm-item :label="$t('dashboard.props.data')">
+                    <MYButton @click="openDataDialog">{{ $t('dashboard.props.editData') }}</MYButton>
+                    <MYDialog v-model="dataDialogVisible" @close="closeDataDialog" :title="$t('dashboard.props.dataEditor.title')" width="800px"
                         height="650px" :show-close="false" append-to-body>
                         <div class="data-editor-container">
                             <div class="data-table">
                                 <div class="table-header">
-                                    <div class="header-cell">名称</div>
-                                    <div class="header-cell">值</div>
-                                    <div class="header-cell">操作</div>
+                                    <div class="header-cell">{{ $t('dashboard.props.dataEditor.name') }}</div>
+                                    <div class="header-cell">{{ $t('dashboard.props.dataEditor.value') }}</div>
+                                    <div class="header-cell">{{ $t('dashboard.props.dataEditor.operation') }}</div>
                                 </div>
 
                                 <div class="table-body">
                                     <MYScrollbar ScrollWidth="4px" trackColor="transparent">
                                         <div v-for="(item, index) in currentData" :key="index" class="table-row">
                                             <div class="cell">
-                                                <MYInput v-model="item.name" placeholder="名称" />
+                                                <MYInput v-model="item.name" :placeholder="$t('dashboard.props.dataEditor.name')" />
                                             </div>
                                             <div class="cell">
-                                                <MYInput v-model.number="item.value" type="number" placeholder="值" />
+                                                <MYInput v-model.number="item.value" type="number" :placeholder="$t('dashboard.props.dataEditor.value')" />
                                             </div>
                                             <div class="cell">
                                                 <MYButton type="danger" @click="removeDataItem(index)"
-                                                    class="btn-remove">删除
+                                                    class="btn-remove">{{ $t('dashboard.props.dataEditor.delete') }}
                                                 </MYButton>
                                             </div>
                                         </div>
@@ -65,126 +65,126 @@
                             </div>
                             <MYScrollbar ScrollWidth="4px" trackColor="transparent">
                                 <div class="data-preview">
-                                    <h4>JSON 预览</h4>
+                                    <h4>{{ $t('dashboard.props.dataEditor.jsonPreview') }}</h4>
                                     <pre>{{ JSON.stringify(currentData, null, 2) }}</pre>
                                 </div>
                             </MYScrollbar>
 
                             <div class="dialog-footer">
-                                <MYButton @click="closeDataDialog">取消</MYButton>
-                                <MYButton type="primary" @click="saveData">保存</MYButton>
+                                <MYButton @click="closeDataDialog">{{ $t('dashboard.props.dataEditor.cancel') }}</MYButton>
+                                <MYButton type="primary" @click="saveData">{{ $t('dashboard.props.dataEditor.save') }}</MYButton>
                             </div>
                         </div>
                     </MYDialog>
                 </MYForm-item>
-                <MYForm-item label="x轴设置" v-if="isAxisChart">
+                <MYForm-item :label="$t('dashboard.props.xAxisSetting')" v-if="isAxisChart">
                     <MYSwitch v-model="selectedBlock.xAlign" />
                 </MYForm-item>
                 <div v-if="selectedBlock.xAlign && isAxisChart">
-                    <MYForm-item label="x轴名称">
-                        <MYInput v-model="selectedBlock.xName" placeholder="请输入x轴名称" @input="updateXName" />
+                    <MYForm-item :label="$t('dashboard.props.xAxisName')">
+                        <MYInput v-model="selectedBlock.xName" :placeholder="$t('dashboard.props.xAxisName')" @input="updateXName" />
                     </MYForm-item>
-                    <MYForm-item label="是否显示">
+                    <MYForm-item :label="$t('dashboard.props.xAxisShow')">
                         <MYSwitch size="small" v-model="selectedBlock.xVisible" />
                     </MYForm-item>
-                    <MYForm-item label="网格线">
+                    <MYForm-item :label="$t('dashboard.props.xAxisGridLine')">
                         <MYSwitch size="small" v-model="selectedBlock.splitLine" />
                     </MYForm-item>
                     <div v-if="selectedBlock.splitLine">
-                        <MYForm-item label="颜色">
-                            <MYInput v-model="selectedBlock.splitLineColor" placeholder="请输入网格线颜色" />
+                        <MYForm-item :label="$t('dashboard.props.xAxisGridLineColor')">
+                            <MYInput v-model="selectedBlock.splitLineColor" :placeholder="$t('dashboard.props.xAxisGridLineColor')" />
                         </MYForm-item>
                     </div>
-                    <MYForm-item label="x轴偏移量">
+                    <MYForm-item :label="$t('dashboard.props.xAxisOffset')">
                         <MYSlidebar v-model="selectedBlock.xmove" :max="100" :min="0" thumbColor="#409EFF"
                             style="width: 100px;" />
                     </MYForm-item>
-                    <MYForm-item label="x轴旋转角度">
+                    <MYForm-item :label="$t('dashboard.props.xAxisRotate')">
                         <MYSlidebar v-model="selectedBlock.xRotate" :max="100" :min="0" thumbColor="#409EFF"
                             style="width: 100px;" />
                     </MYForm-item>
-                    <MYForm-item label="轴反向">
+                    <MYForm-item :label="$t('dashboard.props.xAxisReverse')">
                         <MYSwitch size="small" v-model="selectedBlock.xInverse" />
                     </MYForm-item>
-                    <MYForm-item label="数据字号">
-                        <MYInput v-model="selectedBlock.xDataSize" placeholder="请输入x轴数据字号" />
+                    <MYForm-item :label="$t('dashboard.props.xAxisFontSize')">
+                        <MYInput v-model="selectedBlock.xDataSize" :placeholder="$t('dashboard.props.xAxisFontSize')" />
                     </MYForm-item>
                 </div>
-                <MYForm-item label="y轴设置" v-if="isAxisChart">
+                <MYForm-item :label="$t('dashboard.props.yAxisSetting')" v-if="isAxisChart">
                     <MYSwitch v-model="selectedBlock.yAlign" />
                 </MYForm-item>
                 <div v-if="selectedBlock.yAlign && isAxisChart">
-                    <MYForm-item label="名称">
-                        <MYInput v-model="selectedBlock.yName" placeholder="请输入y轴名称" @input="updateYName" />
+                    <MYForm-item :label="$t('dashboard.props.yAxisName')">
+                        <MYInput v-model="selectedBlock.yName" :placeholder="$t('dashboard.props.yAxisName')" @input="updateYName" />
                     </MYForm-item>
-                    <MYForm-item label="是否显示">
+                    <MYForm-item :label="$t('dashboard.props.yAxisShow')">
                         <MYSwitch size="small" v-model="selectedBlock.yVisible" />
                     </MYForm-item>
-                    <MYForm-item label="网格线">
+                    <MYForm-item :label="$t('dashboard.props.yAxisGridLine')">
                         <MYSwitch size="small" v-model="selectedBlock.ySplitLine" />
                     </MYForm-item>
                     <div v-if="selectedBlock.ySplitLine">
-                        <MYForm-item label="颜色">
-                            <MYInput v-model="selectedBlock.ySplitLineColor" placeholder="请输入网格线颜色" />
+                        <MYForm-item :label="$t('dashboard.props.yAxisGridLineColor')">
+                            <MYInput v-model="selectedBlock.ySplitLineColor" :placeholder="$t('dashboard.props.yAxisGridLineColor')" />
                         </MYForm-item>
                     </div>
-                    <MYForm-item label="轴反向">
+                    <MYForm-item :label="$t('dashboard.props.yAxisReverse')">
                         <MYSwitch size="small" v-model="selectedBlock.yInverse" />
                     </MYForm-item>
-                    <MYForm-item label="数据字号">
-                        <MYInput v-model="selectedBlock.yDataSize" placeholder="请输入y轴数据字号" />
+                    <MYForm-item :label="$t('dashboard.props.yAxisFontSize')">
+                        <MYInput v-model="selectedBlock.yDataSize" :placeholder="$t('dashboard.props.yAxisFontSize')" />
                     </MYForm-item>
                 </div>
-                <MYForm-item label="数值设置">
+                <MYForm-item :label="$t('dashboard.props.valueSetting')">
                     <MYSwitch v-model="selectedBlock.dataSettingAlign" />
                 </MYForm-item>
                 <div v-if="selectedBlock.dataSettingAlign">
-                    <MYForm-item label="是否显示">
+                    <MYForm-item :label="$t('dashboard.props.valueShow')">
                         <MYSwitch size="small" v-model="selectedBlock.dataAlign" />
                     </MYForm-item>
                     <div v-if="selectedBlock.dataAlign">
-                        <MYForm-item label="字体大小">
-                            <MYInput v-model="selectedBlock.dataSize" placeholder="请输入字体大小" />
+                        <MYForm-item :label="$t('dashboard.props.valueFontSize')">
+                            <MYInput v-model="selectedBlock.dataSize" :placeholder="$t('dashboard.props.valueFontSize')" />
                         </MYForm-item>
-                        <MYForm-item label="字体颜色">
-                            <MYInput v-model="selectedBlock.dataSizeColor" placeholder="请输入字体颜色" />
+                        <MYForm-item :label="$t('dashboard.props.valueFontColor')">
+                            <MYInput v-model="selectedBlock.dataSizeColor" :placeholder="$t('dashboard.props.valueFontColor')" />
                         </MYForm-item>
-                        <MYForm-item label="字体粗细">
-                            <MYInput v-model="selectedBlock.dataWeight" placeholder="请输入字体粗细" />
+                        <MYForm-item :label="$t('dashboard.props.valueFontWeight')">
+                            <MYInput v-model="selectedBlock.dataWeight" :placeholder="$t('dashboard.props.valueFontWeight')" />
                         </MYForm-item>
                     </div>
                 </div>
-                <MYForm-item label="坐标边距" v-if="isAxisChart">
+                <MYForm-item :label="$t('dashboard.props.coordinateMargin')" v-if="isAxisChart">
                     <MYSwitch v-model="selectedBlock.MPAlign" />
                 </MYForm-item>
                 <div v-if="selectedBlock.MPAlign && isAxisChart">
-                    <MYForm-item label="顶边距">
+                    <MYForm-item :label="$t('dashboard.props.topMargin')">
                         <MYSlidebar v-model="selectedBlock.MPTop" :max="100" :min="0" thumbColor="#409EFF"
                             style="width: 100px;" />
                     </MYForm-item>
-                    <MYForm-item label="顶边距">
-                        <MYInput v-model="selectedBlock.MPTop" placeholder="请输入边距" />
+                    <MYForm-item :label="$t('dashboard.props.topMargin')">
+                        <MYInput v-model="selectedBlock.MPTop" :placeholder="$t('dashboard.props.topMargin')" />
                     </MYForm-item>
-                    <MYForm-item label="底边距">
+                    <MYForm-item :label="$t('dashboard.props.bottomMargin')">
                         <MYSlidebar v-model="selectedBlock.MPBottom" :max="100" :min="0" thumbColor="#409EFF"
                             style="width: 100px;" />
                     </MYForm-item>
-                    <MYForm-item label="底边距">
-                        <MYInput v-model="selectedBlock.MPBottom" placeholder="请输入边距" />
+                    <MYForm-item :label="$t('dashboard.props.bottomMargin')">
+                        <MYInput v-model="selectedBlock.MPBottom" :placeholder="$t('dashboard.props.bottomMargin')" />
                     </MYForm-item>
-                    <MYForm-item label="左边距">
+                    <MYForm-item :label="$t('dashboard.props.leftMargin')">
                         <MYSlidebar v-model="selectedBlock.MPLeft" :max="100" :min="0" thumbColor="#409EFF"
                             style="width: 100px;" />
                     </MYForm-item>
-                    <MYForm-item label="左边距">
-                        <MYInput v-model="selectedBlock.MPLeft" placeholder="请输入边距" />
+                    <MYForm-item :label="$t('dashboard.props.leftMargin')">
+                        <MYInput v-model="selectedBlock.MPLeft" :placeholder="$t('dashboard.props.leftMargin')" />
                     </MYForm-item>
-                    <MYForm-item label="右边距">
+                    <MYForm-item :label="$t('dashboard.props.rightMargin')">
                         <MYSlidebar v-model="selectedBlock.MPRight" :max="100" :min="0" thumbColor="#409EFF"
                             style="width: 100px;" />
                     </MYForm-item>
-                    <MYForm-item label="右边距">
-                        <MYInput v-model="selectedBlock.MPRight" placeholder="请输入边距" />
+                    <MYForm-item :label="$t('dashboard.props.rightMargin')">
+                        <MYInput v-model="selectedBlock.MPRight" :placeholder="$t('dashboard.props.rightMargin')" />
                     </MYForm-item>
                 </div>
             </MYScrollbar>
@@ -195,6 +195,9 @@
 <script setup lang="ts">
 import { useDashboardStore } from '@/store/modules/dashboard'
 import { cloneDeep } from 'lodash-es'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 // 基础数据
 const formModel = reactive({})

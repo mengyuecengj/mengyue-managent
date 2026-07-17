@@ -2,25 +2,25 @@
     <div class="indicator-left">
         <div class="indicator-left-top panel-card">
             <div class="panel-header">
-                <div class="header-title">数据概览</div>
+                <div class="header-title">{{ t('dashboard.panel.overview') }}</div>
                 <div class="header-icon">📊</div>
             </div>
             <div class="panel-content">
                 <div class="data-display">
                     <div class="data-item">
                         <div class="data-value">12.8K</div>
-                        <div class="data-label">访问量</div>
+                        <div class="data-label">{{ t('dashboard.data.visits') }}</div>
                     </div>
                     <div class="data-item">
                         <div class="data-value">86%</div>
-                        <div class="data-label">增长率</div>
+                        <div class="data-label">{{ t('dashboard.data.growth') }}</div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="indicator-left-top panel-card">
             <div class="panel-header">
-                <div class="header-title">用户分布</div>
+                <div class="header-title">{{ t('dashboard.panel.userDistribution') }}</div>
                 <div class="header-icon">👥</div>
             </div>
             <div class="panel-content">
@@ -37,18 +37,18 @@
         </div>
         <div class="indicator-left-top panel-card">
             <div class="panel-header">
-                <div class="header-title">系统状态</div>
+                <div class="header-title">{{ t('dashboard.panel.systemStatus') }}</div>
                 <div class="header-icon">⚙️</div>
             </div>
             <div class="panel-content">
                 <div class="status-container">
                     <div class="status-item">
                         <div class="status-indicator online"></div>
-                        <div class="status-label">在线</div>
+                        <div class="status-label">{{ t('dashboard.data.online') }}</div>
                     </div>
                     <div class="status-item">
                         <div class="status-indicator warning"></div>
-                        <div class="status-label">警告</div>
+                        <div class="status-label">{{ t('dashboard.data.warning') }}</div>
                     </div>
                 </div>
             </div>
@@ -57,7 +57,7 @@
     <div class="indicator">
         <div class="indicator-top panel-card">
             <div class="panel-header">
-                <div class="header-title">全球分布图</div>
+                <div class="header-title">{{ t('dashboard.panel.worldMap') }}</div>
                 <div class="header-icon">🌍</div>
             </div>
             <div class="panel-content">
@@ -66,7 +66,7 @@
         </div>
         <div class="indicator-bottom panel-card">
             <div class="panel-header">
-                <div class="header-title">实时数据</div>
+                <div class="header-title">{{ t('dashboard.panel.realtimeData') }}</div>
                 <div class="header-icon">📈</div>
             </div>
             <div class="panel-content">
@@ -81,7 +81,7 @@
     <div class="indicator-right">
         <div class="indicator-right-top panel-card">
             <div class="panel-header">
-                <div class="header-title">性能指标</div>
+                <div class="header-title">{{ t('dashboard.panel.performance') }}</div>
                 <div class="header-icon">⚡</div>
             </div>
             <div class="panel-content">
@@ -94,7 +94,7 @@
         </div>
         <div class="indicator-right-top panel-card">
             <div class="panel-header">
-                <div class="header-title">资源使用</div>
+                <div class="header-title">{{ t('dashboard.panel.resource') }}</div>
                 <div class="header-icon">💾</div>
             </div>
             <div class="panel-content">
@@ -107,14 +107,14 @@
         </div>
         <div class="indicator-right-top panel-card">
             <div class="panel-header">
-                <div class="header-title">告警信息</div>
+                <div class="header-title">{{ t('dashboard.panel.alerts') }}</div>
                 <div class="header-icon">🔔</div>
             </div>
             <div class="panel-content">
                 <div class="alert-list">
                     <div class="alert-item">
                         <div class="alert-dot"></div>
-                        <div class="alert-text">暂无系统告警</div>
+                        <div class="alert-text">{{ t('dashboard.data.noAlerts') }}</div>
                     </div>
                 </div>
             </div>
@@ -128,13 +128,15 @@ import { MapChart, ScatterChart, EffectScatterChart } from 'echarts/charts';
 import { GeoComponent, TooltipComponent } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
 import type { EChartsOption } from 'echarts';
+import { useI18n } from 'vue-i18n';
 
 echarts.use([MapChart, ScatterChart, EffectScatterChart, GeoComponent, TooltipComponent, CanvasRenderer]);
 
-import world from '~/MapWorld.json';
+import world from '~/geo-coordinate/map-JsonData/MapWorld.json';
 
 type UserItem = { location: string; address: string; ip: string };
 
+const { t } = useI18n();
 const container = ref<HTMLElement | null>(null);
 const distributionList = ref<HTMLElement | null>(null);
 
@@ -143,16 +145,16 @@ let animationFrameId: number | null = null;
 
 // 示例数据
 const userDistributionData = ref<UserItem[]>([
-    { location: '亚洲', address: '中国广东省深圳市', ip: '192.168.1.101' },
-    { location: '北美洲', address: '美国加利福尼亚州洛杉矶', ip: '10.0.0.52' },
-    { location: '欧洲', address: '德国柏林', ip: '172.16.32.45' },
-    { location: '南美洲', address: '巴西圣保罗', ip: '192.168.200.78' },
-    { location: '大洋洲', address: '澳大利亚悉尼', ip: '10.10.10.10' },
-    { location: '非洲', address: '南非开普敦', ip: '172.20.45.112' },
-    { location: '亚洲', address: '日本东京', ip: '192.168.10.205' },
-    { location: '北美洲', address: '加拿大温哥华', ip: '10.20.30.40' },
-    { location: '欧洲', address: '法国巴黎', ip: '172.18.90.67' },
-    { location: '亚洲', address: '中国北京', ip: '192.168.30.15' }
+    { location: "asia", address: "shenzhen", ip: "192.168.1.101" },
+    { location: "northAmerica", address: "losAngeles", ip: "10.0.0.52" },
+    { location: "europe", address: "berlin", ip: "172.16.32.45" },
+    { location: "southAmerica", address: "saoPaulo", ip: "192.168.200.78" },
+    { location: "oceania", address: "sydney", ip: "10.10.10.10" },
+    { location: "africa", address: "capeTown", ip: "172.20.45.112" },
+    { location: "asia", address: "tokyo", ip: "192.168.10.205" },
+    { location: "northAmerica", address: "vancouver", ip: "10.20.30.40" },
+    { location: "europe", address: "paris", ip: "172.18.90.67" },
+    { location: "asia", address: "beijing", ip: "192.168.30.15" }
 ]);
 
 // 地址 -> 经纬度 映射（建议后端直接返回 lng/lat）

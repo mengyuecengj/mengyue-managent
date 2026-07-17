@@ -1,3 +1,15 @@
+/**
+ * 
+ * 权限与动态路由管理：
+ * - 获取后端菜单数据（getRouters）
+ * - 将菜单转换为可渲染的 Vue Router 路由配置
+ * - 动态注入路由（包括平铺 ParentView 子路由、组件映射等）
+ * - 结合 auth 插件实现路由级权限控制（permissions / roles）
+ * - 管理侧边栏、顶栏、默认路由等多维度路由集合
+ * - 支持自动加载 views 目录下的组件（兼容 .vue 和 /index.vue 形式）
+ * 
+ */
+
 import auth from '@/plugins/auth'
 import router, { constantRoutes, dynamicRoutes } from '@/router'
 import { getRouters } from '@/api/menu'

@@ -5,8 +5,8 @@
       <MYCol :span="24" class="card-box">
         <MYCard>
           <template #header>
-            <Monitor style="width: 1em; height: 1em; vertical-align: middle;" /> 
-            <span style="color: var(--general)">基本信息</span>
+            <Monitor style="width: 1em; height: 1em; vertical-align: middle;" />
+            <span style="color: var(--general)">{{ t('system.cache.basicInfo') }}</span>
           </template>
           <template #body>
             <div class="custom-table custom-table--enable-row-hover custom-table--medium">
@@ -14,25 +14,25 @@
                 <tbody>
                   <tr>
                     <td class="custom-cell leaf">
-                      <div class="cell">Redis版本</div>
+                      <div class="cell">{{ t('system.cache.redisVersion') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="cache.info">{{ cache.info.redis_version }}</div>
                     </td>
                     <td class="custom-cell leaf">
-                      <div class="cell">运行模式</div>
+                      <div class="cell">{{ t('system.cache.runMode') }}</div>
                     </td>
                     <td class="custom-cell leaf">
-                      <div class="cell" v-if="cache.info">{{ cache.info.redis_mode == "standalone" ? "单机" : "集群" }}</div>
+                      <div class="cell" v-if="cache.info">{{ cache.info.redis_mode == 'standalone' ? t('system.cache.standalone') : t('system.cache.cluster') }}</div>
                     </td>
                     <td class="custom-cell leaf">
-                      <div class="cell">端口</div>
+                      <div class="cell">{{ t('system.cache.port') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="cache.info">{{ cache.info.tcp_port }}</div>
                     </td>
                     <td class="custom-cell leaf">
-                      <div class="cell">客户端数</div>
+                      <div class="cell">{{ t('system.cache.clientCount') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="cache.info">{{ cache.info.connected_clients }}</div>
@@ -40,25 +40,25 @@
                   </tr>
                   <tr>
                     <td class="custom-cell leaf">
-                      <div class="cell">运行时间(天)</div>
+                      <div class="cell">{{ t('system.cache.uptimeDays') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="cache.info">{{ cache.info.uptime_in_days }}</div>
                     </td>
                     <td class="custom-cell leaf">
-                      <div class="cell">使用内存</div>
+                      <div class="cell">{{ t('system.cache.usedMemory') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="cache.info">{{ cache.info.used_memory_human }}</div>
                     </td>
                     <td class="custom-cell leaf">
-                      <div class="cell">使用CPU</div>
+                      <div class="cell">{{ t('system.cache.usedCPU') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="cache.info">{{ parseFloat(cache.info.used_cpu_user_children).toFixed(2) }}</div>
                     </td>
                     <td class="custom-cell leaf">
-                      <div class="cell">内存配置</div>
+                      <div class="cell">{{ t('system.cache.memoryConfig') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="cache.info">{{ cache.info.maxmemory_human }}</div>
@@ -66,25 +66,25 @@
                   </tr>
                   <tr>
                     <td class="custom-cell leaf">
-                      <div class="cell">AOF是否开启</div>
+                      <div class="cell">{{ t('system.cache.aofEnabled') }}</div>
                     </td>
                     <td class="custom-cell leaf">
-                      <div class="cell" v-if="cache.info">{{ cache.info.aof_enabled == "0" ? "否" : "是" }}</div>
+                      <div class="cell" v-if="cache.info">{{ cache.info.aof_enabled == '0' ? t('system.cache.no') : t('system.cache.yes') }}</div>
                     </td>
                     <td class="custom-cell leaf">
-                      <div class="cell">RDB是否成功</div>
+                      <div class="cell">{{ t('system.cache.rdbSuccess') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="cache.info">{{ cache.info.rdb_last_bgsave_status }}</div>
                     </td>
                     <td class="custom-cell leaf">
-                      <div class="cell">Key数量</div>
+                      <div class="cell">{{ t('system.cache.keyCount') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="cache.dbSize">{{ cache.dbSize }}</div>
                     </td>
                     <td class="custom-cell leaf">
-                      <div class="cell">网络入口/出口</div>
+                      <div class="cell">{{ t('system.cache.networkIO') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="cache.info">{{ cache.info.instantaneous_input_kbps }}kps/{{ cache.info.instantaneous_output_kbps }}kps</div>
@@ -101,8 +101,8 @@
       <MYCol :span="12" class="card-box">
         <MYCard style="margin-top: 20px;">
           <template #header>
-            <PieChart style="width: 1em; height: 1em; vertical-align: middle;" /> 
-            <span style="color: var(--general)">命令统计</span>
+            <PieChart style="width: 1em; height: 1em; vertical-align: middle;" />
+            <span style="color: var(--general)">{{ t('system.cache.commandStats') }}</span>
           </template>
           <template #body>
             <div class="custom-table custom-table--enable-row-hover custom-table--medium">
@@ -116,8 +116,8 @@
       <MYCol :span="12" class="card-box">
         <MYCard style="margin-top: 20px;">
           <template #header>
-            <Odometer style="width: 1em; height: 1em; vertical-align: middle;" /> 
-            <span style="color: var(--general)">内存信息</span>
+            <Odometer style="width: 1em; height: 1em; vertical-align: middle;" />
+            <span style="color: var(--general)">{{ t('system.cache.memoryInfo') }}</span>
           </template>
           <template #body>
             <div class="custom-table custom-table--enable-row-hover custom-table--medium">
@@ -134,8 +134,10 @@
 import { getCache } from '@/api/monitor/cache';
 import modal from '@/plugins/modal';
 import * as echarts from 'echarts';
+import { useI18n } from 'vue-i18n';
 
 const cache = ref([]) as any;
+const { t } = useI18n();
 const commandstats = ref(null);
 const usedmemory = ref(null);
 

@@ -5,24 +5,24 @@
                 <MYRow :gutter="16">
                     <!-- 字典名称 -->
                     <MYCol :span="6">
-                        <MYForm-item label="字典名称" prop="dictName">
-                            <MYInput v-model="queryParams.dictName" placeholder="请输入字典名称" clearable
+                        <MYForm-item :label="t('system.dict.dictName')" prop="dictName">
+                            <MYInput v-model="queryParams.dictName" :placeholder="t('system.dict.placeholder.dictNameplaceholder')" clearable
                                 placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" />
                         </MYForm-item>
                     </MYCol>
 
                     <!-- 字典类型 -->
                     <MYCol :span="6">
-                        <MYForm-item label="字典类型" prop="dictCode">
-                            <MYInput v-model="queryParams.dictCode" placeholder="请输入字典类型" clearable
+                        <MYForm-item :label="t('system.dict.dictType')" prop="dictCode">
+                            <MYInput v-model="queryParams.dictCode" :placeholder="t('system.dict.placeholder.dictTypeplaceholder')" clearable
                                 placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" />
                         </MYForm-item>
                     </MYCol>
 
                     <!-- 状态 -->
                     <MYCol :span="7">
-                        <MYForm-item label="状态" prop="status">
-                            <MYSelect v-model="queryParams.status" placeholder="状态" clearable>
+                        <MYForm-item :label="t('system.dict.status')" prop="status">
+                            <MYSelect v-model="queryParams.status" :placeholder="t('system.dict.placeholder.dictStatus')" clearable>
                                 <MYOption v-for="dict in sys_normal_disable" :key="dict.value" :label="dict.label"
                                     :value="dict.value" />
                             </MYSelect>
@@ -30,16 +30,16 @@
                     </MYCol>
 
                     <!-- 搜索按钮 -->
-                    <MYCol :span="2">
+                    <MYCol :span="2.5">
                         <MYForm-item>
-                            <MYButton type="primary" icon="MYSearch" @click="handleQuery">搜索</MYButton>
+                            <MYButton type="primary" icon="MYSearch" @click="handleQuery">{{ t('system.user.query.search') }}</MYButton>
                         </MYForm-item>
                     </MYCol>
 
                     <!-- 重置按钮 -->
                     <MYCol :span="1">
                         <MYForm-item>
-                            <MYButton type="info" icon="MYRefreshRight" @click="resetQuery">重置</MYButton>
+                            <MYButton type="info" icon="MYRefreshRight" @click="resetQuery">{{ t('system.user.query.reset') }}</MYButton>
                         </MYForm-item>
                     </MYCol>
                 </MYRow>
@@ -48,16 +48,16 @@
 
         <MYRow :gutter="10" class="mb8">
             <MYCol :span="2">
-                <MYButton type="primary" icon="MYPlus" @click="dictAdd">新增</MYButton>
+                <MYButton type="primary" icon="MYPlus" @click="dictAdd">{{ t('system.user.button.add') }}</MYButton>
             </MYCol>
             <MYCol :span="2">
-                <MYButton type="success" icon="MYEdit" :disabled="single" @click="dictUpdate">修改</MYButton>
+                <MYButton type="success" icon="MYEdit" :disabled="single" @click="dictUpdate">{{ t('system.user.button.edit') }}</MYButton>
+            </MYCol>
+            <MYCol :span="2.5">
+                <MYButton type="danger" icon="MYDelete" :disabled="multiple" @click="handleDelete">{{ t('system.user.button.delete') }}</MYButton>
             </MYCol>
             <MYCol :span="2">
-                <MYButton type="danger" icon="MYDelete" :disabled="multiple" @click="handleDelete">删除</MYButton>
-            </MYCol>
-            <MYCol :span="2">
-                <MYButton type="danger" icon="MYLoadingA" @click="refresh">刷新缓存</MYButton>
+                <MYButton type="danger" icon="MYLoadingA" @click="refresh">{{ t('system.dict.refreshCache') }}</MYButton>
             </MYCol>
         </MYRow>
 
@@ -66,46 +66,46 @@
             headerTextColor="var(--general)" bodyTextColor="var(--general)" @select-change="handleSelectionChange"
             @selection-change="handleSelectionChange">
             <MYTable-column type="selection" width="55" align="center" />
-            <MYTable-column label="字典编号" prop="dictId" width="120" />
-            <MYTable-column label="字典名称" prop="dictName" :show-overflow-tooltip="true" width="150" />
-            <MYTable-column label="字典类型" prop="dictCode" :show-overflow-tooltip="true" width="150" />
-            <MYTable-column label="状态" align="center" width="100" prop="status" />
-                <template #status="scope">
-                    <dict-tag :options="sys_normal_disable" :value="scope.row.status" />
-                </template>
-            <MYTable-column label="备注" prop="remark" :show-overflow-tooltip="true" />
-            <MYTable-column label="创建时间" align="center" prop="createTime" width="180" />
-            <MYTable-column label="操作" align="center" width="200" class-name="small-padding fixed-width" prop="operation" />
-                <template #operation="scope">
-                    <MYButton type="primary" size="small" icon="MYEdit" @click="dictUpdate(scope.row)" colorBg="var(--table-body-bg)"
-          colorText="var(--general-text)">修改</MYButton>
-                    <MYButton type="danger" size="small" icon="MYDelete" @click="handleDelete(scope.row)" colorBg="var(--table-body-bg)"
-          colorText="var(--general-text)">删除</MYButton>
-                </template>
+            <MYTable-column :label="t('system.dict.dictCode')" prop="dictId" width="120" />
+            <MYTable-column :label="t('system.dict.dictName')" prop="dictName" :show-overflow-tooltip="true" width="150" />
+            <MYTable-column :label="t('system.dict.dictType')" prop="dictCode" :show-overflow-tooltip="true" width="150" />
+            <MYTable-column :label="t('system.dict.status')" align="center" width="100" prop="status" />
+            <template #status="scope">
+                <dict-tag :options="sys_normal_disable" :value="scope.row.status" />
+            </template>
+            <MYTable-column :label="t('system.user.form.remark')" prop="remark" :show-overflow-tooltip="true" />
+            <MYTable-column :label="t('system.post.createTime')" align="center" prop="createTime" width="180" />
+            <MYTable-column :label="t('system.post.actions')" align="center" width="200" class-name="small-padding fixed-width"
+                prop="operation" />
+            <template #operation="scope">
+                <MYButton type="primary" size="small" icon="MYEdit" @click="dictUpdate(scope.row)"
+                    colorBackground="transparent" colorText="var(--general-text)">{{ t('system.user.button.edit') }}</MYButton>
+                <MYButton type="danger" size="small" icon="MYDelete" @click="handleDelete(scope.row)"
+                    colorBackground="transparent" colorText="var(--general-text)">{{ t('system.user.button.delete') }}</MYButton>
+            </template>
         </MYTable>
 
-        <pagination class="pagination-container" v-show="total > 0" :total="total" 
-            v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" 
-            @pagination="handlePagination" />
+        <pagination class="pagination-container" v-show="total > 0" :total="total" v-model:page="queryParams.pageNum"
+            v-model:limit="queryParams.pageSize" @pagination="handlePagination" />
 
         <MYDialog :title="title" v-model="open" width="600px" height="450px" append-to-body backgroundColor="#0b1115">
             <MYForm class="dialog_form" ref="formRef" :model-value="data.form" :rules="rules" labelWidth="80">
                 <MYRow :gutter="20">
                     <MYCol :span="20">
-                        <MYForm-item label="字典名称" prop="dictName">
-                            <MYInput v-model="data.form.dictName" placeholder="请输入字典名称" clearable
+                        <MYForm-item :label="t('system.dict.dictName')" prop="dictName">
+                            <MYInput v-model="data.form.dictName" :placeholder="t('system.dict.placeholder.dictNameplaceholder')" clearable
                                 placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" />
                         </MYForm-item>
                     </MYCol>
                     <MYCol :span="20">
-                        <MYForm-item label="字典类型" prop="dictCode">
-                            <MYInput v-model="data.form.dictCode" placeholder="请输入字典类型" clearable
+                        <MYForm-item :label="t('system.dict.dictType')" prop="dictCode">
+                            <MYInput v-model="data.form.dictCode" :placeholder="t('system.dict.placeholder.dictTypeplaceholder')" clearable
                                 placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" />
                         </MYForm-item>
                     </MYCol>
                     <MYCol :span="20">
-                        <MYForm-item label="状态" prop="status">
-                            <MYRadio-group v-model="data.form.status">
+                        <MYForm-item :label="t('system.dict.status')" prop="status">
+                            <MYRadio-group v-model="data.form.status" style="color: var(--text-color-content)">
                                 <MYRadio v-for="dict in sys_normal_disable" :key="dict.value" :value="dict.value">
                                     {{ dict.label }}
                                 </MYRadio>
@@ -113,8 +113,8 @@
                         </MYForm-item>
                     </MYCol>
                     <MYCol :span="20">
-                        <MYForm-item label="备注" prop="remark">
-                            <MYInput v-model="data.form.remark" placeholder="请输入备注" clearable
+                        <MYForm-item :label="t('system.user.form.remark')" prop="remark">
+                            <MYInput v-model="data.form.remark" :placeholder="t('system.user.form.remark')" clearable
                                 placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" />
                         </MYForm-item>
                     </MYCol>
@@ -122,8 +122,8 @@
             </MYForm>
             <template #footer>
                 <div class="dialog-footer">
-                    <MYButton type="primary" @click="submitAddDict">确定</MYButton>
-                    <MYButton type="info" @click="cancel">取消</MYButton>
+                    <MYButton type="primary" @click="submitAddDict">{{ t('system.user.action.confirm') }}</MYButton>
+                    <MYButton type="info" @click="cancel">{{ t('system.user.action.cancel') }}</MYButton>
                 </div>
             </template>
         </MYDialog>
@@ -136,33 +136,36 @@ import { listDict, addDict, updateDict, getDict, deleteDict, refreshCache } from
 import { DictResult } from '@/types/views/user'
 import { useDict } from '@/utils/dict'
 import modal from '@/plugins/modal';
+import { useI18n } from 'vue-i18n';
 
 // 定义接口
 interface DictItem {
-  dictId: number;
-  dictName: string;
-  dictCode: string;
-  status: string;
-  remark: string;
-  createTime: string;
+    dictId: number;
+    dictName: string;
+    dictCode: string;
+    status: string;
+    remark: string;
+    createTime: string;
 }
 
 interface DictForm {
-  dictId?: number;
-  dictName: string;
-  dictCode: string;
-  status: string;
-  remark: string;
-  createTime?: string;
+    dictId?: number;
+    dictName: string;
+    dictCode: string;
+    status: string;
+    remark: string;
+    createTime?: string;
 }
 
 interface QueryParams {
-  dictName: string;
-  dictCode: string;
-  status: string;
-  pageSize: number;
-  pageNum: number;
+    dictName: string;
+    dictCode: string;
+    status: string;
+    pageSize: number;
+    pageNum: number;
 }
+
+const { t } = useI18n();
 
 // 使用字典
 const { sys_normal_disable } = useDict('sys_normal_disable') as unknown as DictResult;
@@ -235,7 +238,7 @@ const reset = () => {
 const getList = async () => {
     loading.value = true
     try {
-         const response: any = await listDict(queryParams.value)
+        const response: any = await listDict(queryParams.value)
 
         if (response && response.code === 200) {
             allDictList.value = response.data || []
@@ -360,7 +363,7 @@ const handleDelete = async (row?: DictItem) => {
         modal.msgError('请选择要删除的字典')
         return
     }
-    
+
     modal.confirm(`是否确认删除字典编号为"${dictIds}"的数据项?`).then(() => {
         return deleteDict(dictIds.join(','));
     }).then((response: any) => {
@@ -383,7 +386,7 @@ const refresh = async () => {
     } else {
         modal.msgError('刷新失败')
     }
-} 
+}
 
 // 取消对话框
 const cancel = () => {

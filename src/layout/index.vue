@@ -7,14 +7,29 @@
       </router-view>
     </template>
 
-    <!-- 2. 次高优先级：fullscreen 路由（你原来那种带标题栏的全屏大屏） -->
+    <!-- 2. 次高优先级：fullscreen 路由 -->
     <template v-else-if="isFullscreen">
-      <div class="fullscreen-wrapper">
+      <div
+        class="fullscreen-wrapper"
+        :class="layoutClasses"
+      >
         <MYMain class="main-content main-content--fullscreen">
           <router-view v-slot="{ Component }">
-            <transition name="slide-fade" mode="out-in">
+
+            <!-- 页面动画控制 -->
+            <transition
+              v-if="settingsStore.pageAnimation"
+              name="slide-fade"
+              mode="out-in"
+            >
               <component :is="Component" />
             </transition>
+
+            <component
+              v-else
+              :is="Component"
+            />
+
           </router-view>
         </MYMain>
       </div>
@@ -22,28 +37,65 @@
 
     <!-- 3. 普通后台页面布局 -->
     <template v-else>
-      <div class="layout-container">
-        <MYScroll class="layout-scrollbar" thumbColor="#454a58" thumbHoverColor="#454a58"
-          trackColor="var(--track-color)">
-          <MYAside class="aside" :class="{ collapsed: !sidebarOpened }" :width="sidebarWidth" height="100vh">
+      <div
+        class="layout-container"
+        :class="layoutClasses"
+      >
+        <MYScroll
+          class="layout-scrollbar"
+          thumbColor="#454a58"
+          thumbHoverColor="#454a58"
+          trackColor="var(--track-color)"
+        >
+
+          <MYAside
+            class="aside"
+            :class="{ collapsed: !sidebarOpened }"
+            :width="sidebarWidth"
+            height="100vh"
+          >
             <Sidebar />
           </MYAside>
 
           <div class="content-wrapper">
-            <MYHeader class="header" height="50px" fixed>
+
+            <MYHeader
+              class="header"
+              height="50px"
+              fixed
+            >
               <Navbar @setLayout="showSettings = true" />
             </MYHeader>
 
-            <TagsView class="tags-view" />
+            <TagsView
+              class="tags-view"
+              v-show="settingsStore.tagsView"
+            />
 
             <MYMain class="main-content">
+
               <router-view v-slot="{ Component }">
-                <transition name="slide-fade" mode="out-in">
+
+                <!-- 页面动画控制 -->
+                <transition
+                  v-if="settingsStore.pageAnimation"
+                  name="slide-fade"
+                  mode="out-in"
+                >
                   <component :is="Component" />
                 </transition>
+
+                <component
+                  v-else
+                  :is="Component"
+                />
+
               </router-view>
+
             </MYMain>
+
           </div>
+
         </MYScroll>
       </div>
     </template>
@@ -51,26 +103,39 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import useAppStore from '@/store/modules/app'
 import Sidebar from './components/Sidebar/index.vue'
 import { Navbar, TagsView } from './components/index'
+import useSettingStore from '@/store/modules/settings'
 
 const route = useRoute()
 const appStore = useAppStore()
+const settingsStore = useSettingStore()
 
-// 1. 大屏编辑器专用：完全不走任何 Layout
 const isNoLayoutRoute = computed(() => route.meta?.noLayout === true)
-
-// 2. 你原来支持的伪全屏大屏（有标题栏、控制按钮等）
 const isFullscreen = computed(() => !!route.meta?.fullscreen)
 
-// 侧边栏逻辑保持不变
 const sidebarOpened = computed(() => appStore.sidebar.opened)
-const sidebarWidth = computed(() => (sidebarOpened.value ? '220px' : '54px'))
+
+const sidebarWidth = computed(() =>
+  sidebarOpened.value ? '220px' : '54px'
+)
 
 const showSettings = ref(false)
+
+/* =============================
+   新增：布局模式 class 控制
+   ============================= */
+
+const layoutClasses = computed(() => {
+  return {
+    'compact-mode': settingsStore.compactMode,
+    'shadow-mode': settingsStore.enableShadow,
+    'radius-mode': settingsStore.enableRadius
+  }
+})
 </script>
 
 <style scoped lang="scss">
@@ -79,22 +144,36 @@ const showSettings = ref(false)
   height: 100%;
 }
 
-/* 原有样式的细节可按你项目微调 */
 .layout-scrollbar {
   height: 100vh;
 }
 
-/* fullscreen 分支样式：覆盖整个视口 */
+/* ==================== 核心修改：内容区域背景同步右侧主题 ==================== */
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--content-bg);
+  transition: background 0.3s ease;
+}
+
+.main-content {
+  background: var(--content-bg);
+  transition: background 0.3s ease;
+}
+
+/* fullscreen 模式也同步 */
+
 .fullscreen-wrapper {
   position: fixed;
   inset: 0;
   z-index: 999;
-  background: var(--dashboard-bg, #0b1220);
+  background: var(--content-bg);
   display: flex;
   flex-direction: column;
 }
 
-/* 保证 main 在 fullscreen 时铺满 */
 .main-content--fullscreen {
   flex: 1 1 auto;
   width: 100%;
@@ -102,12 +181,89 @@ const showSettings = ref(false)
   padding: 0;
   box-sizing: border-box;
   overflow: auto;
+  background: var(--content-bg);
+  transition: background 0.3s ease;
+}
+</style>
+
+<style lang="scss">
+.compact-mode {
+
+  .my-form {
+    --form-item-margin-bottom: 12px;
+  }
+
+  .my-table td,
+  .my-table th {
+    padding: 6px 10px;
+  }
+
+  .my-button {
+    padding: 4px 10px;
+  }
+
+  .my-card {
+    padding: 12px;
+  }
+
 }
 
-/* 你原有的 .content-wrapper/.header/.tags-view 等样式保持不变（若需可继续放在这里） */
-.content-wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+.slide-fade-enter-active {
+  transition: all .25s ease;
 }
+
+.slide-fade-leave-active {
+  transition: all .2s ease;
+}
+
+.slide-fade-enter-from {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.slide-fade-leave-to {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+
+.my-form {
+  background-color: var(--content-bg) !important;
+  box-shadow: none !important;
+}
+
+
+.my-table {
+  background-color: var(--table-bg) !important;
+}
+
+.my-table thead,
+.my-table thead tr {
+  background-color: var(--table-header-bg) !important;
+}
+
+.my-table tbody tr,
+.my-table .my-table-row,
+.my-table tr {
+  background-color: var(--table-stripe-bg) !important;
+}
+
+.my-table tbody tr:hover,
+.my-table .my-table-row:hover {
+  background-color: var(--table-hover-bg) !important;
+}
+
+
+.my-pagination,
+.my-pagination.has-background {
+  background-color: var(--content-bg) !important;
+}
+
+
+.app-container,
+.my-row,
+.my-col {
+  background-color: var(--content-bg) !important;
+}
+
 </style>

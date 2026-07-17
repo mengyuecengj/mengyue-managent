@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref, reactive, markRaw, shallowRef } from 'vue'
-import { findItem } from '@/data/dashboard/dropdownTop'
+import { findItem } from '@/api-data/dashboard/dropdownTop'
 import { DashboardBlock } from '@/types/store/dashboard'
 import modal from '@/plugins/modal'
 import { cloneDeep } from 'lodash-es'
+import { useI18n } from 'vue-i18n'
 
 // 图表
 const BASE_BLOCK_CONFIG = {
@@ -48,6 +49,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
   const previewMode = ref(false)
   const dashboards = ref<Record<string, any>>({})
   const currentId = ref<string>('')
+  const { t } = useI18n()
 
   // 切换大屏
   const loadDashboard = (id: string) => {
@@ -69,7 +71,8 @@ export const useDashboardStore = defineStore('dashboard', () => {
     height: "1080",
     backgroundColor: '#0f0f0f',
     backgroundImage: '',
-    title: '大屏展示1',
+    // title: 'dashboard.defaultTitle',
+    title: t('dashboard.defaultTitle'),
     description: '这是大屏的描述',
     thumbnail: ''
   })
@@ -148,14 +151,14 @@ export const useDashboardStore = defineStore('dashboard', () => {
     }
   }
 
-  const addBlock = (value: string, componentConfig: any, x = 200, y = 200) => {
+  const addBlock = (value: string, componentConfig: any, x = 200, y = 200, name?: any) => {
     const item = findItem(value)
     if (!item) {
       console.warn(`未找到组件: ${value}`)
       return
     }
 
-    const defaultName = item.text || '未命名组件'
+    const defaultName = name || item.text || '未命名组件'
     let blockData: {
       rendererType: 'chart' | 'border' | 'text' | 'map' | undefined,
       config: any,
@@ -187,8 +190,8 @@ export const useDashboardStore = defineStore('dashboard', () => {
     const newBlock: DashboardBlock = {
       id: `block_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
       type: value,
-      name: blockData.defaultName,
-      titleText: blockData.defaultName,
+      name: defaultName,                  // 图层名称，与左侧列表同步
+      titleText: defaultName,
       config: blockData.config,
       rendererType: blockData.rendererType,
       component: shallowRef(blockData.component ?? null),
@@ -201,13 +204,13 @@ export const useDashboardStore = defineStore('dashboard', () => {
       ...BASE_BLOCK_CONFIG,
 
       // 边框
-      borderName: blockData.defaultName,
+      borderName: defaultName,
       borderMasterColor: '',
       borderSlaveColor: '',
       backgroundColor: '',
 
-      // 文本
-      textName: blockData.defaultName,
+      // 文本（保留 textName 用于向后兼容，初始值与 name 相同）
+      textName: defaultName,
       textVisible: false,
       textContainer: '这是段文本内容',
       textColor: '#fff',
@@ -247,6 +250,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
     blocks.value.push(newBlock)
     selectedId.value = newBlock.id
   }
+
   const updateBlock = (id: string, updates: Partial<DashboardBlock>) => {
     const block = blocks.value.find(b => b.id === id)
     if (!block) return
@@ -287,16 +291,18 @@ export const useDashboardStore = defineStore('dashboard', () => {
       block.config.fontWeight = updates.textWeight
     }
   }
+
   const renameBlock = (id: string, newName: string) => {
     const block = blocks.value.find(b => b.id === id)
     if (block) {
       block.name = newName.trim()
+      // 保持 textName 同步，以兼容可能仍在使用 textName 的地方
+      block.textName = newName.trim()
       if (block.title) {
         block.titleText = newName.trim()
       }
     }
   }
-
 
   const removeBlock = (id: string) => {
     blocks.value = blocks.value.filter(b => b.id !== id)

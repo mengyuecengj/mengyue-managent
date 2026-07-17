@@ -2,76 +2,69 @@
   <div v-if="selectedBlock" class="props-panel">
     <div class="back-btn">
       <MYButton type="info" size="small" @click="dashboardStore.selectBlock(null)">
-        返回上一层操作
+        {{ t('dashboard.props.backToParent') }}
       </MYButton>
     </div>
 
     <MYForm v-model="modelForm" class="operation-list" :label-width="60">
       <MYScrollbar ScrollWidth="4px" height="100%">
-        <MYForm-item label="图层名称">
-          <MYInput v-model="mapName" placeholder="请输入图层名称" />
+        <MYForm-item :label="t('dashboard.props.layerName')">
+          <!-- 直接绑定到 selectedBlock.name -->
+          <MYInput v-model="selectedBlock.name" :placeholder="t('dashboard.props.layerNamePlaceholder')" />
         </MYForm-item>
-        <MYForm-item label="隐藏">
+        <MYForm-item :label="t('dashboard.props.hidden')">
           <MYSwitch v-model="selectedBlock.visible" />
         </MYForm-item>
-        <MYForm-item label="地图设置">
+        <MYForm-item :label="t('dashboard.props.mapSetting')">
           <MYSwitch v-model="selectedBlock.mapSetting" />
         </MYForm-item>
         <div v-if="selectedBlock.mapSetting">
-          <MYForm-item label="地图缩放">
+          <MYForm-item :label="t('dashboard.props.mapZoom')">
             <MYSlidebar v-model="mapZoom" :max="100" thumbColor="#409EFF" style="width: 100px;" />
           </MYForm-item>
-          <MYForm-item label="悬浮地名">
+          <MYForm-item :label="t('dashboard.props.hoverPlaceName')">
             <MYSwitch v-model="visibleName" />
           </MYForm-item>
           <div v-if="visibleName">
-            <MYForm-item label="文字大小">
-              <MYInput v-model="mapNameSize" placeholder="请输入文字大小" />
+            <MYForm-item :label="t('dashboard.props.fontSize')">
+              <MYInput v-model="mapNameSize" :placeholder="t('dashboard.props.fontSizePlaceholder')" />
             </MYForm-item>
-            <MYForm-item label="文字颜色">
-              <MYInput v-model="mapNameColor" placeholder="请输入文字颜色" />
+            <MYForm-item :label="t('dashboard.props.fontColor')">
+              <MYInput v-model="mapNameColor" :placeholder="t('dashboard.props.fontColorPlaceholder')" />
             </MYForm-item>
-            <MYForm-item label="高亮颜色">
-              <MYInput v-model="mapNameColorHover" placeholder="请输入文字高亮颜色" />
+            <MYForm-item :label="t('dashboard.props.highlightColor')">
+              <MYInput v-model="mapNameColorHover" :placeholder="t('dashboard.props.highlightColorPlaceholder')" />
             </MYForm-item>
           </div>
-          <MYForm-item label="边框线宽">
+          <MYForm-item :label="t('dashboard.props.borderWidth')">
             <MYSlidebar v-model="borderWidth" :max="100" thumbColor="#409EFF" style="width: 100px;" />
           </MYForm-item>
-          <MYForm-item label="边框颜色">
-            <MYInput v-model="borderColor" placeholder="请输入边框颜色" />
+          <MYForm-item :label="t('dashboard.props.borderColor')">
+            <MYInput v-model="borderColor" :placeholder="t('dashboard.props.borderColorPlaceholder')" />
           </MYForm-item>
-          <MYForm-item label="区域颜色">
-            <MYInput v-model="areaColor" placeholder="请输入区域颜色" />
+          <MYForm-item :label="t('dashboard.props.areaColor')">
+            <MYInput v-model="areaColor" :placeholder="t('dashboard.props.areaColorPlaceholder')" />
           </MYForm-item>
-          <MYForm-item label="高亮颜色">
-            <MYInput v-model="mapNameColorHover" placeholder="请输入区域高亮颜色" />
+          <MYForm-item :label="t('dashboard.props.areaHighlightColor')">
+            <MYInput v-model="mapNameColorHover" :placeholder="t('dashboard.props.areaHighlightColorPlaceholder')" />
           </MYForm-item>
         </div>
       </MYScrollbar>
     </MYForm>
   </div>
 </template>
+
 <script setup lang="ts">
 import { useDashboardStore } from '@/store/modules/dashboard'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 const dashboardStore = useDashboardStore()
 const modelForm = ref({})
 
 const selectedBlock = computed(() => {
   if (!dashboardStore.selectedId) return null
   return dashboardStore.blocks.find((b: any) => b.id === dashboardStore.selectedId) || null
-})
-
-const mapName = computed({
-  get() {
-    return selectedBlock.value?.textName ?? ''
-  },
-  set(val: string) {
-    if (!selectedBlock.value) return
-    const id = selectedBlock.value.id
-    dashboardStore.updateBlock(id, { textName: val })
-    dashboardStore.renameBlock(id, val)
-  }
 })
 
 // 地图缩放
@@ -188,7 +181,6 @@ const mapNameColor = computed({
     const id = selectedBlock.value.id
     const config = { ...selectedBlock.value.config }
     
-    // 确保 options 和 tooltip 结构完整
     if (!config.options) {
       config.options = {}
     }
@@ -213,7 +205,7 @@ const mapNameColor = computed({
   }
 })
 
-// 悬浮地名高亮颜色
+// 悬浮地名高亮颜色（与区域高亮共用）
 const mapNameColorHover = computed({
   get() {
     const series = selectedBlock.value?.config.options?.series?.[0]

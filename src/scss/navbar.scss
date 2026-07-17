@@ -11,11 +11,13 @@
         height: 100%;
         float: left;
         cursor: pointer;
+        color: var(--navbar-text);
     }
 
     // 面包屑容器样式
     .breadcrumb-container {
         float: left;
+        color: var(--general) !important;
     }
 
     // 顶部菜单容器样式

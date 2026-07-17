@@ -3,26 +3,23 @@
         <MYRow :gutter="20">
             <MYForm :modelValue="queryParams" ref="queryRef" :inline="true" labelWidth="68">
                 <MYRow :gutter="16">
-                    <!-- 参数名称 -->
                     <MYCol :span="6">
-                        <MYForm-item label="公告标题" prop="configName">
-                            <MYInput v-model="queryParams.noticeTitle" placeholder="请输入公告标题" clearable
+                        <MYForm-item :label="t('system.notice.noticeTitle')" prop="configName">
+                            <MYInput v-model="queryParams.noticeTitle" :label="t('system.notice.placeholder.placeholderNoticeTitle')"  clearable
                                 placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" />
                         </MYForm-item>
                     </MYCol>
 
-                    <!-- 参数类型 -->
                     <MYCol :span="6">
-                        <MYForm-item label="操作人员" prop="createBy">
-                            <MYInput v-model="queryParams.createBy" placeholder="请输入操作人员" clearable
+                        <MYForm-item :label="t('system.notice.noticeActions')" prop="createBy">
+                            <MYInput v-model="queryParams.createBy" :label="t('system.notice.placeholder.placeholderNoticeActions')" clearable
                                 placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" />
                         </MYForm-item>
                     </MYCol>
 
-                    <!-- 状态 -->
                     <MYCol :span="7">
-                        <MYForm-item label="类型" prop="noticeType">
-                            <MYSelect v-model="queryParams.noticeType" placeholder="系统内置" clearable
+                        <MYForm-item :label="t('system.notice.type')" prop="noticeType">
+                            <MYSelect v-model="queryParams.noticeType" :label="t('system.notice.placeholder.placeholderType')" clearable
                                 style="width: 200px;">
                                 <MYOption v-for="dict in sys_yes_no" :key="dict.value" :label="dict.label"
                                     :value="dict.value" />
@@ -30,17 +27,15 @@
                         </MYForm-item>
                     </MYCol>
 
-                    <!-- 搜索按钮 -->
-                    <MYCol :span="2">
+                    <MYCol :span="3 ">
                         <MYForm-item>
-                            <MYButton type="primary" icon="MYSearch" @click="handleQuery">搜索</MYButton>
+                            <MYButton type="primary" icon="MYSearch" @click="handleQuery">{{ t('system.user.query.search') }}</MYButton>
                         </MYForm-item>
                     </MYCol>
 
-                    <!-- 重置按钮 -->
                     <MYCol :span="1">
                         <MYForm-item>
-                            <MYButton type="info" icon="MYRefreshRight" @click="resetQuery">重置</MYButton>
+                            <MYButton type="info" icon="MYRefreshRight" @click="resetQuery">{{ t('system.user.query.reset') }}</MYButton>
                         </MYForm-item>
                     </MYCol>
                 </MYRow>
@@ -49,16 +44,16 @@
 
         <MYRow :gutter="10" class="mb8">
             <MYCol :span="2">
-                <MYButton type="primary" icon="MYPlus" @click="noticeAdd">新增</MYButton>
+                <MYButton type="primary" icon="MYPlus" @click="noticeAdd">{{ t('system.user.button.add') }}</MYButton>
             </MYCol>
             <MYCol :span="2">
-                <MYButton type="success" icon="MYEdit" :disabled="single" @click="handleNoticeUpdate">修改</MYButton>
+                <MYButton type="success" icon="MYEdit" :disabled="single" @click="handleNoticeUpdate">{{ t('system.user.button.edit') }}</MYButton>
             </MYCol>
             <MYCol :span="2">
-                <MYButton type="danger" icon="MYDelete" :disabled="multiple" @click="handleDelete">删除</MYButton>
+                <MYButton type="danger" icon="MYDelete" :disabled="multiple" @click="handleDelete">{{ t('system.user.button.delete') }}</MYButton>
             </MYCol>
             <MYCol :span="2">
-                <MYButton type="danger" icon="MYLoadingA" @click="refresh">刷新缓存</MYButton>
+                <MYButton type="danger" icon="MYLoadingA" @click="refresh">{{ t('system.dict.refreshCache') }}</MYButton>
             </MYCol>
         </MYRow>
 
@@ -67,71 +62,65 @@
             headerTextColor="var(--general)" bodyTextColor="var(--general)" @select-change="handleSelectionChange"
             @selection-change="handleSelectionChange">
             <MYTable-column type="selection" width="55" align="center" />
-            <MYTable-column label="序号" prop="noticeId" width="120" />
-            <MYTable-column label="公告标题" prop="noticeTitle" :show-overflow-tooltip="true" width="150" />
-            <MYTable-column label="公告类型" prop="noticeType" :show-overflow-tooltip="true" width="150" />
+            <MYTable-column :label="t('system.notice.id')" prop="noticeId" width="120" />
+            <MYTable-column :label="t('system.notice.noticeTitle')" prop="noticeTitle" :show-overflow-tooltip="true" width="150" />
+            <MYTable-column :label="t('system.notice.type')" prop="noticeType" :show-overflow-tooltip="true" width="150" />
             <template #noticeType="scope">
                 <dict-tag :options="sys_notice_type" :value="scope.row.status" />
             </template>
-            <MYTable-column label="状态" align="center" width="100" prop="type" />
+            <MYTable-column :label="t('system.notice.status')" align="center" width="100" prop="type" />
             <template #type="scope">
                 <dict-tag :options="sys_yes_no" :value="scope.row.status" />
             </template>
-            <MYTable-column label="创建者" prop="createBy" :show-overflow-tooltip="true" />
-            <MYTable-column label="创建时间" align="center" prop="createTime" width="180" />
-            <MYTable-column label="操作" align="center" width="200" class-name="small-padding fixed-width"
+            <MYTable-column :label="t('system.notice.created')" prop="createBy" :show-overflow-tooltip="true" />
+            <MYTable-column :label="t('system.post.createTime')" align="center" prop="createTime" width="180" />
+            <MYTable-column :label="t('system.post.actions')" align="center" width="200" class-name="small-padding fixed-width"
                 prop="operation" />
             <template #operation="scope">
-                <MYButton type="primary" size="small" icon="MYEdit" @click="handleNoticeUpdate(scope.row)" colorBg="var(--table-body-bg)"
-          colorText="var(--general-text)">修改</MYButton>
-                <MYButton type="danger" size="small" icon="MYDelete" @click="handleDelete(scope.row)" colorBg="var(--table-body-bg)"
-          colorText="var(--general-text)">删除</MYButton>
+                <MYButton type="primary" size="small" icon="MYEdit" @click="handleNoticeUpdate(scope.row)" colorBackground="transparent"
+          colorText="var(--general-text)">{{ t('system.user.button.edit') }}</MYButton>
+                <MYButton type="danger" size="small" icon="MYDelete" @click="handleDelete(scope.row)" colorBackground="transparent"
+          colorText="var(--general-text)">{{ t('system.user.button.delete') }}</MYButton>
             </template>
         </MYTable>
 
         <pagination class="pagination-container" v-show="total > 0" :total="total" v-model:page="queryParams.pageNum"
             v-model:limit="queryParams.pageSize" @pagination="handlePagination" />
 
-        <MYDialog :title="title" v-model="open" width="600px" height="450px" append-to-body backgroundColor="#0b1115">
+        <MYDialog :title="title" v-model="open" width="600px" height="370px" append-to-body backgroundColor="#0b1115">
             <MYForm class="dialog_form" style="background-color: transparent !important;" ref="formRef"
                 :model-value="form" :rules="rules" labelWidth="80">
                 <MYRow :gutter="20">
                     <MYCol :span="20">
-                        <MYForm-item label="公告标题" prop="noticeTitle">
-                            <MYInput v-model="form.noticeTitle" placeholder="请输入公告标题" clearable
+                        <MYForm-item :label="t('system.notice.noticeTitle')" prop="noticeTitle">
+                            <MYInput v-model="form.noticeTitle" :label="t('system.notice.placeholder.placeholderNoticeTitle')" clearable
                                 placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" />
                         </MYForm-item>
                     </MYCol>
                     <!-- 添加公告类型字段 -->
                     <MYCol :span="20">
-                        <MYForm-item label="公告类型" prop="noticeType">
-                            <MYSelect v-model="form.noticeType" placeholder="请选择公告类型" clearable>
+                        <MYForm-item :label="t('system.notice.type')" prop="noticeType">
+                            <MYSelect v-model="form.noticeType" :label="t('system.notice.placeholder.placeholderNoticeType')" clearable>
                                 <MYOption v-for="dict in sys_notice_type" :key="dict.value" :label="dict.label"
                                     :value="dict.value" />
                             </MYSelect>
                         </MYForm-item>
                     </MYCol>
                     <MYCol :span="20">
-                        <MYForm-item label="状态" prop="status">
-                            <MYRadio-group v-model="form.status">
+                        <MYForm-item :label="t('system.notice.status')" prop="status">
+                            <MYRadio-group v-model="form.status" style="color: var(--text-color-content)">
                                 <MYRadio v-for="dict in sys_yes_no" :key="dict.value" :value="dict.value">
                                     {{ dict.label }}
                                 </MYRadio>
                             </MYRadio-group>
                         </MYForm-item>
                     </MYCol>
-                    <!-- <MYCol :span="20">
-                        <MYForm-item label="内容" prop="remark">
-                            <MYInput v-model="form.remark" placeholder="请输入内容" clearable
-                                placeholderColo     r="var(--navbar-text)" textColor="var(--navbar-text)" />
-                        </MYForm-item>
-                    </MYCol> -->
                 </MYRow>
             </MYForm>
             <template #footer>
                 <div class="dialog-footer">
-                    <MYButton style="margin-right: 20px;" type="primary" @click="submitAddNotice" >确定</MYButton>
-                    <MYButton type="info" @click="cancel">取消</MYButton>
+                    <MYButton style="margin-right: 20px;" type="primary" @click="submitAddNotice">{{ t('system.user.action.confirm') }}</MYButton>
+                    <MYButton type="info" @click="cancel">{{ t('system.user.action.cancel') }}</MYButton>
                 </div>
             </template>
         </MYDialog>
@@ -144,6 +133,7 @@ import { refreshCache } from '@/api/system/dict'
 import { DictResult } from '@/types/views/user'
 import { useDict } from '@/utils/dict'
 import modal from '@/plugins/modal';
+import { useI18n } from 'vue-i18n'
 
 // 定义接口
 interface NoticeItem {
@@ -173,6 +163,8 @@ interface QueryParams {
     pageSize: number;
     pageNum: number;
 }
+
+const { t } = useI18n()
 
 // 使用参数
 const { sys_notice_type, sys_yes_no } = useDict('sys_notice_type', 'sys_yes_no') as unknown as DictResult;

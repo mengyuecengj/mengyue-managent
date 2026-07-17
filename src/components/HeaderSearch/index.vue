@@ -1,30 +1,48 @@
 <template>
   <div class="header-search">
     <svg-icon class-name="search-icon" icon-class="search" @click.stop="click" />
-    <MYDialog title="搜索" v-model="show" width="600px" height="420px" backgroundColor="var(--navbar-bg)" textColor="var(--navbar-text)"
-      @close="close" :show-close="false" append-to-body>
-      <MYInput 
+
+    <MYDialog
+      :title="t('search.title')"
+      v-model="show"
+      width="600px"
+      height="420px"
+      backgroundColor="var(--navbar-bg)"
+      textColor="var(--navbar-text)"
+      @close="close"
+      :show-close="false"
+      append-to-body
+    >
+      <MYInput
         v-model="search"
         ref="headerSearchSelectRef"
         size="large"
         @input="querySearch"
         prefix-icon="Search"
-        placeholder="菜单搜索，支持标题、URL模糊查询"
+        :placeholder="t('search.placeholder')"
         placeholderColor="var(--navbar-text)"
         textColor="var(--navbar-text) !important"
-        clearable 
-        class="search-input"  
+        clearable
+        class="search-input"
       />
+
       <div class="result-wrap">
         <MYScrollbar ScrollWidth="8px" trackColor="var(--track-color)">
-          <div class="search-item" tabindex="1" v-for="item in options" :key="item.path">
+          <div
+            class="search-item"
+            tabindex="1"
+            v-for="item in options"
+            :key="item.path"
+          >
             <div class="left">
               <svg-icon class="menu-icon" :icon-class="item.icon" />
             </div>
+
             <div class="search-info" @click="change(item)">
               <div class="menu-title">
                 {{ item.title.join(" / ") }}
               </div>
+
               <div class="menu-path">
                 {{ item.path }}
               </div>
@@ -37,28 +55,36 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
-import Fuse from 'fuse.js'
-import type { FuseResult } from 'fuse.js'
-import { getNormalPath } from '@/utils/general'
-import { isHttp } from '@/utils/validate'
-import usePermissionStore from '@/store/modules/permission'
-import { Route, RouteItem } from '@/types/components/headerSearch'
-// 引入拼音库
-import { pinyin } from 'pinyin-pro'
+import { ref, computed, onMounted, watch, nextTick } from "vue"
+import { useRouter } from "vue-router"
+import { useI18n } from "vue-i18n"
+import Fuse from "fuse.js"
+import type { FuseResult } from "fuse.js"
+import { getNormalPath } from "@/utils/general"
+import { isHttp } from "@/utils/validate"
+import usePermissionStore from "@/store/modules/permission"
+import { Route, RouteItem } from "@/types/components/headerSearch"
+import { pinyin } from "pinyin-pro"
 
-const search = ref<string>('')
+const { t } = useI18n()
+
+const search = ref<string>("")
 const options = ref<RouteItem[]>([])
 const searchPool = ref<RouteItem[]>([])
 const show = ref<boolean>(false)
 const fuse = ref<Fuse<RouteItem> | undefined>(undefined)
-// script setup 父组件
+
 const headerSearchSelectRef = ref<any>(null)
+
 const router = useRouter()
-const routes = computed<Route[]>(() => usePermissionStore().defaultRoutes as Route[])
+
+const routes = computed<Route[]>(
+  () => usePermissionStore().defaultRoutes as Route[]
+)
 
 function click() {
   show.value = !show.value
+
   if (show.value) {
     headerSearchSelectRef.value && headerSearchSelectRef.value.focus()
     options.value = searchPool.value
@@ -67,7 +93,7 @@ function click() {
 
 function close() {
   headerSearchSelectRef.value && headerSearchSelectRef.value.blur()
-  search.value = ''
+  search.value = ""
   options.value = []
   show.value = false
 }
@@ -75,9 +101,10 @@ function close() {
 function change(val: RouteItem) {
   const path = val.path
   const query = val.query
+
   if (isHttp(path)) {
-    const pindex = path.indexOf('http')
-    window.open(path.substr(pindex, path.length), '_blank')
+    const pindex = path.indexOf("http")
+    window.open(path.substr(pindex, path.length), "_blank")
   } else {
     if (query) {
       router.push({ path, query: JSON.parse(query) })
@@ -86,8 +113,9 @@ function change(val: RouteItem) {
     }
   }
 
-  search.value = ''
+  search.value = ""
   options.value = []
+
   nextTick(() => {
     show.value = false
   })
@@ -101,62 +129,82 @@ function initFuse(list: RouteItem[]) {
     distance: 100,
     minMatchCharLength: 1,
     keys: [
-      { name: 'title', weight: 0.5 },
-      { name: 'path', weight: 0.3 },
-      { name: 'pinyinTitle', weight: 0.2 } // 添加拼音搜索权重
-    ]
+      { name: "title", weight: 0.5 },
+      { name: "path", weight: 0.3 },
+      { name: "pinyinTitle", weight: 0.2 },
+    ],
   })
 }
 
-// 修改 generateRoutes 函数，添加拼音支持
 function generateRoutes(
   routes: Route[],
-  basePath: string = '',
-  prefixTitle: string[] = []
+  basePath: string = "",
+  prefixTitle: string[] = [],
+  parentIcon: string = ""
 ): RouteItem[] {
   let res: RouteItem[] = []
 
   for (const r of routes) {
     if (r.hidden) continue
-    const p = r.path.length > 0 && r.path[0] === '/' ? r.path : '/' + r.path
+
+    const p = r.path.length > 0 && r.path[0] === "/" ? r.path : "/" + r.path
+
+    const currentIcon = r.meta?.icon || parentIcon
+
     const data: RouteItem = {
       path: !isHttp(r.path) ? getNormalPath(basePath + p) : r.path,
       title: [...prefixTitle],
-      icon: '',
-      pinyinTitle: ''
+      icon: currentIcon,
+      pinyinTitle: "",
     }
 
     if (r.meta && r.meta.title) {
-      data.title = [...data.title, r.meta.title]
-      data.icon = r.meta.icon || ''
+      // i18n翻译
+      const translatedTitle = t(r.meta.title)
 
-      // 添加拼音字段
-      data.pinyinTitle = pinyin(data.title.join(''), { toneType: 'none', type: 'array' }).join('')
+      data.title = [...data.title, translatedTitle]
+      data.icon = currentIcon
 
-      if (r.redirect !== 'noRedirect') {
+      data.pinyinTitle = pinyin(data.title.join(""), {
+        toneType: "none",
+        type: "array",
+      }).join("")
+
+      // 只加入叶子节点
+      if ((!r.children || r.children.length === 0) && r.redirect !== "noRedirect") {
         res.push(data)
       }
     }
+
     if (r.query) {
       data.query = r.query
     }
 
     if (r.children) {
-      const tempRoutes = generateRoutes(r.children, data.path, data.title)
+      const tempRoutes = generateRoutes(
+        r.children,
+        data.path,
+        data.title,
+        currentIcon
+      )
+
       if (tempRoutes.length >= 1) {
         res = [...res, ...tempRoutes]
       }
     }
   }
+
   return res
 }
 
 function querySearch(query: string) {
-  if (query !== '') {
+  if (query !== "") {
     if (fuse.value) {
-      options.value = fuse.value.search(query).map((item: FuseResult<RouteItem>) => item.item)
+      options.value = fuse.value
+        .search(query)
+        .map((item: FuseResult<RouteItem>) => item.item)
     } else {
-      console.error('Fuse is not initialized')
+      console.error("Fuse is not initialized")
       options.value = searchPool.value
     }
   } else {

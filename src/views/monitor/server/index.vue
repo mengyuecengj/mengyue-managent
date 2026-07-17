@@ -5,8 +5,8 @@
       <MYCol :span="12" class="card-box">
         <MYCard>
           <template #header>
-            <Cpu style="width: 1em; height: 1em; vertical-align: middle;" /> 
-            <span style="color: var(--general)">CPU</span>
+            <Cpu style="width: 1em; height: 1em; vertical-align: middle;" />
+            <span style="color: var(--general)">{{ t('system.server.cpu') }}</span>
           </template>
           <template #body>
             <div class="custom-table custom-table--enable-row-hover custom-table--medium">
@@ -14,17 +14,17 @@
                 <thead>
                   <tr>
                     <th class="custom-cell leaf">
-                      <div class="cell">属性</div>
+                      <div class="cell">{{ t('system.server.property') }}</div>
                     </th>
                     <th class="custom-cell leaf">
-                      <div class="cell">值</div>
+                      <div class="cell">{{ t('system.server.value') }}</div>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td class="custom-cell leaf">
-                      <div class="cell">核心数</div>
+                      <div class="cell">{{ t('system.server.coreCount') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="server.cpu">{{ server.cpu.cpuNum }}</div>
@@ -32,7 +32,7 @@
                   </tr>
                   <tr>
                     <td class="custom-cell leaf">
-                      <div class="cell">用户使用率</div>
+                      <div class="cell">{{ t('system.server.userUsage') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="server.cpu">{{ server.cpu.used }}%</div>
@@ -40,7 +40,7 @@
                   </tr>
                   <tr>
                     <td class="custom-cell leaf">
-                      <div class="cell">系统使用率</div>
+                      <div class="cell">{{ t('system.server.systemUsage') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="server.cpu">{{ server.cpu.sys }}%</div>
@@ -48,7 +48,7 @@
                   </tr>
                   <tr>
                     <td class="custom-cell leaf">
-                      <div class="cell">当前空闲率</div>
+                      <div class="cell">{{ t('system.server.idleRate') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="server.cpu">{{ server.cpu.free }}%</div>
@@ -65,8 +65,8 @@
       <MYCol :span="12" class="card-box">
         <MYCard>
           <template #header>
-            <Tickets style="width: 1em; height: 1em; vertical-align: middle;" /> 
-            <span style="color: var(--general)">内存</span>
+            <Tickets style="width: 1em; height: 1em; vertical-align: middle;" />
+            <span style="color: var(--general)">{{ t('system.server.memory') }}</span>
           </template>
           <template #body>
             <div class="custom-table custom-table--enable-row-hover custom-table--medium">
@@ -74,20 +74,20 @@
                 <thead>
                   <tr>
                     <th class="custom-cell leaf">
-                      <div class="cell">属性</div>
+                      <div class="cell">{{ t('system.server.property') }}</div>
                     </th>
                     <th class="custom-cell leaf">
-                      <div class="cell">内存</div>
+                      <div class="cell">{{ t('system.server.memoryLabel') }}</div>
                     </th>
                     <th class="custom-cell leaf">
-                      <div class="cell">JVM</div>
+                      <div class="cell">{{ t('system.server.jvmLabel') }}</div>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td class="custom-cell leaf">
-                      <div class="cell">总内存</div>
+                      <div class="cell">{{ t('system.server.totalMemory') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="server.mem">{{ server.mem.total }}G</div>
@@ -98,7 +98,7 @@
                   </tr>
                   <tr>
                     <td class="custom-cell leaf">
-                      <div class="cell">已用内存</div>
+                      <div class="cell">{{ t('system.server.usedMemory') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="server.mem">{{ server.mem.used }}G</div>
@@ -109,7 +109,7 @@
                   </tr>
                   <tr>
                     <td class="custom-cell leaf">
-                      <div class="cell">剩余内存</div>
+                      <div class="cell">{{ t('system.server.freeMemory') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="server.mem">{{ server.mem.free }}G</div>
@@ -120,7 +120,7 @@
                   </tr>
                   <tr>
                     <td class="custom-cell leaf">
-                      <div class="cell">使用率</div>
+                      <div class="cell">{{ t('system.server.memoryUsage') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="server.mem" :class="{ 'text-danger': server.mem.usage > 80 }">{{
@@ -144,8 +144,8 @@
       <MYCol :span="24" class="card-box">
         <MYCard style="margin-top: 20px;">
           <template #header>
-            <Monitor style="width: 1em; height: 1em; vertical-align: middle;" /> 
-            <span style="color: var(--general)">服务器信息</span>
+            <Monitor style="width: 1em; height: 1em; vertical-align: middle;" />
+            <span style="color: var(--general)">{{ t('system.server.serverInfo') }}</span>
           </template>
           <template #body>
             <div class="custom-table custom-table--enable-row-hover custom-table--medium">
@@ -153,13 +153,13 @@
                 <tbody>
                   <tr>
                     <td class="custom-cell leaf">
-                      <div class="cell">服务器名称</div>
+                      <div class="cell">{{ t('system.server.serverName') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="server.sys">{{ server.sys.computerName }}</div>
                     </td>
                     <td class="custom-cell leaf">
-                      <div class="cell">操作系统</div>
+                      <div class="cell">{{ t('system.server.os') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="server.sys">{{ server.sys.osName }}</div>
@@ -167,13 +167,13 @@
                   </tr>
                   <tr>
                     <td class="custom-cell leaf">
-                      <div class="cell">服务器IP</div>
+                      <div class="cell">{{ t('system.server.serverIp') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="server.sys">{{ server.sys.computerIp }}</div>
                     </td>
                     <td class="custom-cell leaf">
-                      <div class="cell">系统架构</div>
+                      <div class="cell">{{ t('system.server.arch') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="server.sys">{{ server.sys.osArch }}</div>
@@ -190,8 +190,8 @@
       <MYCol :span="24" class="card-box">
         <MYCard style="margin-top: 20px;">
           <template #header>
-            <CoffeeCup style="width: 1em; height: 1em; vertical-align: middle;" /> 
-            <span style="color: var(--general)">Java虚拟机信息</span>
+            <CoffeeCup style="width: 1em; height: 1em; vertical-align: middle;" />
+            <span style="color: var(--general)">{{ t('system.server.jvmInfo') }}</span>
           </template>
           <template #body>
             <div class="custom-table custom-table--enable-row-hover custom-table--medium">
@@ -199,13 +199,13 @@
                 <tbody>
                   <tr>
                     <td class="custom-cell leaf">
-                      <div class="cell">Java名称</div>
+                      <div class="cell">{{ t('system.server.javaName') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="server.jvm">{{ server.jvm.name }}</div>
                     </td>
                     <td class="custom-cell leaf">
-                      <div class="cell">Java版本</div>
+                      <div class="cell">{{ t('system.server.javaVersion') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="server.jvm">{{ server.jvm.version }}</div>
@@ -213,13 +213,13 @@
                   </tr>
                   <tr>
                     <td class="custom-cell leaf">
-                      <div class="cell">启动时间</div>
+                      <div class="cell">{{ t('system.server.startTime') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="server.jvm">{{ server.jvm.startTime }}</div>
                     </td>
                     <td class="custom-cell leaf">
-                      <div class="cell">运行时长</div>
+                      <div class="cell">{{ t('system.server.runTime') }}</div>
                     </td>
                     <td class="custom-cell leaf">
                       <div class="cell" v-if="server.jvm">{{ server.jvm.runTime }}</div>
@@ -227,7 +227,7 @@
                   </tr>
                   <tr>
                     <td colspan="1" class="custom-cell leaf">
-                      <div class="cell">安装路径</div>
+                      <div class="cell">{{ t('system.server.installPath') }}</div>
                     </td>
                     <td colspan="3" class="custom-cell leaf">
                       <div class="cell" v-if="server.jvm">{{ server.jvm.home }}</div>
@@ -235,7 +235,7 @@
                   </tr>
                   <tr>
                     <td colspan="1" class="custom-cell leaf">
-                      <div class="cell">项目路径</div>
+                      <div class="cell">{{ t('system.server.projectPath') }}</div>
                     </td>
                     <td colspan="3" class="custom-cell leaf">
                       <div class="cell" v-if="server.sys">{{ server.sys.userDir }}</div>
@@ -243,7 +243,7 @@
                   </tr>
                   <tr>
                     <td colspan="1" class="custom-cell leaf">
-                      <div class="cell">运行参数</div>
+                      <div class="cell">{{ t('system.server.runArgs') }}</div>
                     </td>
                     <td colspan="3" class="custom-cell leaf">
                       <div class="cell" v-if="server.jvm">{{ server.jvm.inputArgs }}</div>
@@ -260,8 +260,8 @@
       <MYCol :span="24" class="card-box">
         <MYCard style="margin-top: 20px;">
           <template #header>
-            <MessageBox style="width: 1em; height: 1em; vertical-align: middle;" /> 
-            <span style="color: var(--general)">磁盘状态</span>
+            <MessageBox style="width: 1em; height: 1em; vertical-align: middle;" />
+            <span style="color: var(--general)">{{ t('system.server.diskStatus') }}</span>
           </template>
           <template #body>
             <div class="custom-table custom-table--enable-row-hover custom-table--medium">
@@ -269,25 +269,25 @@
                 <thead>
                   <tr>
                     <th class="custom-cell leaf">
-                      <div class="cell">盘符路径</div>
+                      <div class="cell">{{ t('system.server.path') }}</div>
                     </th>
                     <th class="custom-cell leaf">
-                      <div class="cell">文件系统</div>
+                      <div class="cell">{{ t('system.server.fileSystem') }}</div>
                     </th>
                     <th class="custom-cell leaf">
-                      <div class="cell">盘符类型</div>
+                      <div class="cell">{{ t('system.server.diskType') }}</div>
                     </th>
                     <th class="custom-cell leaf">
-                      <div class="cell">总大小</div>
+                      <div class="cell">{{ t('system.server.total') }}</div>
                     </th>
                     <th class="custom-cell leaf">
-                      <div class="cell">可用大小</div>
+                      <div class="cell">{{ t('system.server.available') }}</div>
                     </th>
                     <th class="custom-cell leaf">
-                      <div class="cell">已用大小</div>
+                      <div class="cell">{{ t('system.server.used') }}</div>
                     </th>
                     <th class="custom-cell leaf">
-                      <div class="cell">已用百分比</div>
+                      <div class="cell">{{ t('system.server.usage') }}</div>
                     </th>
                   </tr>
                 </thead>
@@ -330,8 +330,10 @@ import { ref } from 'vue'
 import { getServer } from '@/api/monitor/server'
 import modal from '@/plugins/modal'
 import { ServerData } from '@/types/views/server'
+import { useI18n } from 'vue-i18n'
 
 const server = ref<ServerData>({})
+const { t } = useI18n()
 
 function getList() {
   modal.loading("正在加载服务监控数据，请稍候！")

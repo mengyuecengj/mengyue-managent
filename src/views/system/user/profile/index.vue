@@ -5,7 +5,7 @@
             <MYCard class="box-card">
                <template v-slot:header>
                   <div class="clearfix">
-                     <span class="person">个人信息</span>
+                     <span class="person">{{ $t('system.user.profile.personalInfo') }}</span>
                   </div>
                   <MYBorder borderStyle="solid" borderColor="rgba(0, 0, 0, 0.1)" />
                </template>
@@ -17,33 +17,33 @@
                      <ul class="list-group list-group-striped">
                         <li class="list-group-item">
                            <svg-icon icon-class="user" />
-                           <span>用户名称</span>
+                           <span>{{ $t('system.user.profile.userName') }}</span>
                            <div class="pull-right">{{ state.user.userName }}</div>
                         </li>
                         <li class="list-group-item">
                            <svg-icon icon-class="phone" />
-                           <span>手机号码</span>
+                           <span>{{ $t('system.user.profile.phoneNumber') }}</span>
                            <div class="pull-right">{{ state.user.phonenumber }}</div>
                         </li>
                         <li class="list-group-item">
                            <svg-icon icon-class="email" />
-                           <span>用户邮箱</span>
+                           <span>{{ $t('system.user.profile.email') }}</span>
                            <div class="pull-right">{{ state.user.email }}</div>
                         </li>
                         <li class="list-group-item">
                            <svg-icon icon-class="tree" />
-                           <span>所属部门</span>
+                           <span>{{ $t('system.user.profile.dept') }}</span>
                            <div class="pull-right" v-if="state.user.dept">{{ state.user.dept.deptName }} / {{
                               state.postGroup }}</div>
                         </li>
                         <li class="list-group-item">
                            <svg-icon icon-class="peoples" />
-                           <span>所属角色</span>
+                           <span>{{ $t('system.user.profile.role') }}</span>
                            <div class="pull-right">{{ state.roleGroup }}</div>
                         </li>
                         <li class="list-group-item">
                            <svg-icon icon-class="date" />
-                           <span>创建日期</span>
+                           <span>{{ $t('system.user.profile.createTime') }}</span>
                            <div class="pull-right">{{ state.user.createTime }}</div>
                         </li>
                      </ul>
@@ -55,7 +55,7 @@
             <MYCard class="box-card">
                <template v-slot:header>
                   <div class="clearfix">
-                     <span class="person">基本资料</span>
+                     <span class="person">{{ $t('system.user.profile.basicInfo') }}</span>
                   </div>
                   <MYBorder borderStyle="solid" borderColor="rgba(0, 0, 0, 0.1)" />
                </template>
@@ -71,10 +71,8 @@
 <script setup name="Profile" lang="ts">
 import userAvatar from "./userAvatar.vue";
 import userInfo from "./userInfo.vue";
-import resetPwd from "./resetPwd.vue";
 import { getUserProfile } from "@/api/system/user";
 
-const activeTab = ref("userinfo");
 const state = reactive({
    user: {
       userName: "",

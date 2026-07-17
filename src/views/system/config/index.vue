@@ -5,24 +5,24 @@
                 <MYRow :gutter="16">
                     <!-- 参数名称 -->
                     <MYCol :span="6">
-                        <MYForm-item label="参数名称" prop="configName">
-                            <MYInput v-model="queryParams.configName" placeholder="请输入参数名称" clearable
+                        <MYForm-item :label="t('system.config.configName')" prop="configName">
+                            <MYInput v-model="queryParams.configName" :placeholder="t('system.config.placeholder.configNameplaceholder')" clearable
                                 placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" />
                         </MYForm-item>
                     </MYCol>
 
                     <!-- 参数类型 -->
-                    <MYCol :span="6">
-                        <MYForm-item label="" prop="configCode">
-                            <MYInput v-model="queryParams.configCode" placeholder="请输入参数键名" clearable
+                    <MYCol :span="7">
+                        <MYForm-item :label="t('system.config.configType')" prop="configCode">
+                            <MYInput v-model="queryParams.configCode" :placeholder="t('system.config.placeholder.configTypeplaceholder')" clearable
                                 placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" />
                         </MYForm-item>
                     </MYCol>
 
                     <!-- 状态 -->
-                    <MYCol :span="7">
-                        <MYForm-item label="系统内置" prop="status">
-                            <MYSelect v-model="queryParams.status" placeholder="系统内置" clearable style="width: 200px;">
+                    <MYCol :span="6">
+                        <MYForm-item :label="t('system.config.configSystem')" prop="status">
+                            <MYSelect v-model="queryParams.status" :placeholder="t('system.config.placeholder.configStatus')" clearable style="width: 200px;">
                                 <MYOption v-for="dict in sys_yes_no" :key="dict.value" :label="dict.label"
                                     :value="dict.value" />
                             </MYSelect>
@@ -30,16 +30,16 @@
                     </MYCol>
 
                     <!-- 搜索按钮 -->
-                    <MYCol :span="2">
+                    <MYCol :span="3">
                         <MYForm-item>
-                            <MYButton type="primary" icon="MYSearch" @click="handleQuery">搜索</MYButton>
+                            <MYButton type="primary" icon="MYSearch" @click="handleQuery">{{ t('system.user.query.search') }}</MYButton>
                         </MYForm-item>
                     </MYCol>
 
                     <!-- 重置按钮 -->
                     <MYCol :span="1">
                         <MYForm-item>
-                            <MYButton type="info" icon="MYRefreshRight" @click="resetQuery">重置</MYButton>
+                            <MYButton type="info" icon="MYRefreshRight" @click="resetQuery">{{ t('system.user.query.reset') }}</MYButton>
                         </MYForm-item>
                     </MYCol>
                 </MYRow>
@@ -48,16 +48,16 @@
 
         <MYRow :gutter="10" class="mb8">
             <MYCol :span="2">
-                <MYButton type="primary" icon="MYPlus" @click="configAdd">新增</MYButton>
+                <MYButton type="primary" icon="MYPlus" @click="configAdd">{{ t('system.user.button.add') }}</MYButton>
             </MYCol>
             <MYCol :span="2">
-                <MYButton type="success" icon="MYEdit" :disabled="single" @click="handleConfigUpdate">修改</MYButton>
+                <MYButton type="success" icon="MYEdit" :disabled="single" @click="handleConfigUpdate">{{ t('system.user.button.edit') }}</MYButton>
+            </MYCol>
+            <MYCol :span="3">
+                <MYButton type="danger" icon="MYDelete" :disabled="multiple" @click="handleDelete">{{ t('system.user.button.delete') }}</MYButton>
             </MYCol>
             <MYCol :span="2">
-                <MYButton type="danger" icon="MYDelete" :disabled="multiple" @click="handleDelete">删除</MYButton>
-            </MYCol>
-            <MYCol :span="2">
-                <MYButton type="danger" icon="MYLoadingA" @click="refresh">刷新缓存</MYButton>
+                <MYButton type="danger" icon="MYLoadingA" @click="refresh">{{ t('system.dict.refreshCache') }}</MYButton>
             </MYCol>
         </MYRow>
 
@@ -66,53 +66,53 @@
             headerTextColor="var(--general)" bodyTextColor="var(--general)" @select-change="handleSelectionChange"
             @selection-change="handleSelectionChange">
             <MYTable-column type="selection" width="55" align="center" />
-            <MYTable-column label="参数主键" prop="configId" width="120" />
-            <MYTable-column label="参数名称" prop="configName" :show-overflow-tooltip="true" width="150" />
-            <MYTable-column label="参数键名" prop="configCode" :show-overflow-tooltip="true" width="150" />
-            <MYTable-column label="参数键值" prop="configValue" :show-overflow-tooltip="true" width="150" />
-            <MYTable-column label="系统内置" align="center" width="100" prop="type" />
+            <MYTable-column :label="t('system.config.configMaster')" prop="configId" width="120" />
+            <MYTable-column :label="t('system.config.configName')" prop="configName" :show-overflow-tooltip="true" width="150" />
+            <MYTable-column :label="t('system.config.configType')" prop="configCode" :show-overflow-tooltip="true" width="150" />
+            <MYTable-column :label="t('system.config.configValue')" prop="configValue" :show-overflow-tooltip="true" width="150" />
+            <MYTable-column :label="t('system.config.configSystem')" align="center" width="100" prop="type" />
             <template #type="scope">
                 <dict-tag :options="sys_yes_no" :value="scope.row.status" />
             </template>
             <!-- <MYTable-column label="备注" prop="remark" :show-overflow-tooltip="true" /> -->
-            <MYTable-column label="创建时间" align="center" prop="createTime" width="180" />
-            <MYTable-column label="操作" align="center" width="200" class-name="small-padding fixed-width"
+            <MYTable-column :label="t('system.post.createTime')" align="center" prop="createTime" width="180" />
+            <MYTable-column :label="t('system.post.actions')" align="center" width="200" class-name="small-padding fixed-width"
                 prop="operation" />
             <template #operation="scope">
-                <MYButton type="primary" size="small" icon="MYEdit" @click="handleConfigUpdate(scope.row)" colorBg="var(--table-body-bg)"
-          colorText="var(--general-text)">修改</MYButton>
-                <MYButton type="danger" size="small" icon="MYDelete" @click="handleDelete(scope.row)" colorBg="var(--table-body-bg)"
-          colorText="var(--general-text)">删除</MYButton>
+                <MYButton type="primary" size="small" icon="MYEdit" @click="handleConfigUpdate(scope.row)" colorBackground="transparent"
+          colorText="var(--general-text)">{{ t('system.user.button.edit') }}</MYButton>
+                <MYButton type="danger" size="small" icon="MYDelete" @click="handleDelete(scope.row)" colorBackground="transparent" 
+          colorText="var(--general-text)">{{ t('system.user.button.delete') }}</MYButton>
             </template>
         </MYTable>
 
         <pagination class="pagination-container" v-show="total > 0" :total="total" v-model:page="queryParams.pageNum"
             v-model:limit="queryParams.pageSize" @pagination="handlePagination" />
 
-        <MYDialog :title="title" v-model="open" width="600px" height="450px" append-to-body backgroundColor="#0b1115">
+        <MYDialog :title="title" v-model="open" width="600px" height="470px" append-to-body backgroundColor="#0b1115">
             <MYForm class="dialog_form" style="background-color: transparent !important;" ref="formRef" :model-value="data.form" :rules="rules" labelWidth="80">
                 <MYRow :gutter="20">
                     <MYCol :span="20">
-                        <MYForm-item label="参数名称" prop="configName">
-                            <MYInput v-model="form.configName" placeholder="请输入参数名称" clearable
+                        <MYForm-item :label="t('system.config.configName')" prop="configName">
+                            <MYInput v-model="form.configName" :placeholder="t('system.config.placeholder.configNameplaceholder')" clearable
                                 placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" />
                         </MYForm-item>
                     </MYCol>
                     <MYCol :span="20">
-                        <MYForm-item label="参数键名" prop="configCode">
-                            <MYInput v-model="form.configCode" placeholder="请输入参数键名" clearable
+                        <MYForm-item :label="t('system.config.configType')" prop="configCode">
+                            <MYInput v-model="form.configCode" :placeholder="t('system.config.placeholder.configTypeplaceholder')" clearable
                                 placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" />
                         </MYForm-item>
                     </MYCol>
                     <MYCol :span="20">
-                        <MYForm-item label="参数键值" prop="configCode">
-                            <MYInput v-model="form.configValue" placeholder="请输入参数键值" clearable
+                        <MYForm-item :label="t('system.config.configValue')" prop="configCode">
+                            <MYInput v-model="form.configValue" :placeholder="t('system.config.placeholder.configStatus')" clearable
                                 placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" />
                         </MYForm-item>
                     </MYCol>
                     <MYCol :span="20">
-                        <MYForm-item label="系统内置" prop="status">
-                            <MYRadio-group v-model="form.status">
+                        <MYForm-item :label="t('system.config.configSystem')" prop="status">
+                            <MYRadio-group v-model="form.status" style="color: var(--text-color-content)">
                                 <MYRadio v-for="dict in sys_yes_no" :key="dict.value" :value="dict.value">
                                     {{ dict.label }}
                                 </MYRadio>
@@ -120,8 +120,8 @@
                         </MYForm-item>
                     </MYCol>
                     <MYCol :span="20">
-                        <MYForm-item label="备注" prop="remark">
-                            <MYInput v-model="form.remark" placeholder="请输入备注" clearable
+                        <MYForm-item :label="t('system.user.form.remark')" prop="remark">
+                            <MYInput v-model="form.remark" :placeholder="t('system.user.form.remark')" clearable
                                 placeholderColor="var(--navbar-text)" textColor="var(--navbar-text)" />
                         </MYForm-item>
                     </MYCol>
@@ -129,8 +129,8 @@
             </MYForm>
             <template #footer>
                 <div class="dialog-footer">
-                    <MYButton style="margin-right: 20px;" type="primary" @click="submitAddDict">确定</MYButton>
-                    <MYButton type="info" @click="cancel">取消</MYButton>
+                    <MYButton style="margin-right: 20px;" type="primary" @click="submitAddDict">{{ t('system.user.action.confirm') }}</MYButton>
+                    <MYButton type="info" @click="cancel">{{ t('system.user.action.cancel') }}</MYButton>
                 </div>
             </template>
         </MYDialog>
@@ -143,6 +143,7 @@ import { refreshCache } from '@/api/system/dict'
 import { DictResult } from '@/types/views/user'
 import { useDict } from '@/utils/dict'
 import modal from '@/plugins/modal';
+import { useI18n } from 'vue-i18n'
 
 // 定义接口
 interface ConfigItem {
@@ -171,6 +172,8 @@ interface QueryParams {
     pageSize: number;
     pageNum: number;
 }
+
+const { t } = useI18n()
 
 // 使用参数
 const { sys_yes_no } = useDict('sys_yes_no') as unknown as DictResult;

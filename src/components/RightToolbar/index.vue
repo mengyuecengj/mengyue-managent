@@ -1,21 +1,25 @@
 <template>
   <div class="top-right-btn">
     <MYButton circle type="primary" plain @click="refresh()" icon="MYLoadingA" style="margin-right: 10px;" />
-    <!-- <MYButton circle></MYButton> -->
+
     <MYButton size="small" circle icon="Menu" @click="showColumn()" v-if="showColumnsType === 'transfer'" />
+
     <MYDropdown trigger="click" :hide-on-click="false" style="padding-left: 12px"
       v-else-if="showColumnsType === 'checkbox'">
       <MYButton circle>
         <MYOdometer />
       </MYButton>
+
       <template #dropdown>
         <MYDropdown-menu>
           <MYDropdown-item>
             <MYCheckbox :indeterminate="isIndeterminate" :checked="isChecked" @change="toggleCheckAll">
-              列展示
+              {{ t('toolbar.columnDisplay') }}
             </MYCheckbox>
           </MYDropdown-item>
+
           <div class="check-line"></div>
+
           <template v-for="col in columns" :key="col.key">
             <MYDropdown-item>
               <MYCheckbox :checked="col.visible" @change="(val: string) => checkboxChange(val, col.key)">
@@ -26,32 +30,45 @@
         </MYDropdown-menu>
       </template>
     </MYDropdown>
+
     <MYButton circle type="info" plain @click="showColumn()" v-else>
       <MYOdometerText color="var(--general)" />
     </MYButton>
-    <!-- <MYOdometerText color="var(--general-text)" /> -->
-    <MYDialog title="列展示" v-model="open" width="600px" height="600px" backgroundColor="#0F1115" :show-close="false"
-      append-to-body>
-      <MYTransfer :titles="['显示', '隐藏']" :model-value="value" :data="transferData" @update:model-value="dataChange"
-        hoverBackground="transparent" colorText="var(--general)" />
+
+    <MYDialog
+      :title="t('toolbar.columnSetting')"
+      v-model="open"
+      width="600px"
+      height="600px"
+      backgroundColor="#0F1115"
+      :show-close="false"
+      append-to-body
+    >
+      <MYTransfer
+        :titles="[t('toolbar.show'), t('toolbar.hide')]"
+        :model-value="value"
+        :data="transferData"
+        @update:model-value="dataChange"
+        hoverBackground="transparent"
+        colorText="var(--general)"
+      />
     </MYDialog>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
-import type { CSSProperties } from 'vue';
+import { useI18n } from 'vue-i18n';
 import type { Props, Emits } from '@/types/components/rightToolbar';
+
+const { t } = useI18n();
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
-// 响应式变量
 const isChecked = ref(false);
 const isIndeterminate = ref(false);
 const value = ref<number[]>([]);
 const open = ref(false);
-const title = ref('列设置');
 
 // 转换 columns 为 transfer 所需格式
 const transferData = computed(() => {
@@ -62,7 +79,7 @@ const transferData = computed(() => {
   }));
 });
 
-// 监听 columns 变化
+// 监听 columns
 watch(
   () => props.columns,
   (newColumns) => {
@@ -84,17 +101,12 @@ watch(
   { immediate: true }
 );
 
-const toggleSearch = () => {
-  emit('update:showSearch', !props.showSearch);
-};
-
 const refresh = () => {
   emit('queryTable');
 };
 
 const showColumn = () => {
   open.value = true;
-  title.value = '列设置';
 };
 
 const toggleCheckAll = (val: string) => {
@@ -129,6 +141,7 @@ const dataChange = (newModelValue: number[]) => {
   }
 };
 </script>
+
 <style scoped lang="scss">
 .top-right-btn {
   display: flex;

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import BarChartRenderer from '@/components/dashboard/renderers/BarChartRenderer.vue'
 
-import type { ChartConfig } from '@/data/dashboard/barChart'
+import type { ChartConfig } from '@/api-data/dashboard/barChart'
 
 interface BlockItem {
   id: string
