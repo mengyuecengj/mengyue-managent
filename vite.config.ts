@@ -61,7 +61,7 @@ export default defineConfig(({ mode, command }) => {
       chunkSizeWarningLimit: 2000,
       rollupOptions: {
         output: {
-          manualChunks: () => 'bundle',
+          // manualChunks: () => 'bundle',
           entryFileNames: 'static/js/[name].js',
           chunkFileNames: 'static/js/[name].js',
           assetFileNames: 'static/[ext]/[name].[ext]'

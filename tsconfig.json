@@ -11,7 +11,7 @@
     // "moduleResolution": "node",
     // 使用mock为下面这种
     "moduleResolution": "bundler",
-    "ignoreDeprecations": "6.0",
+    // "ignoreDeprecations": "5.0",
     // 允许混合导入CommonJS和ES模块（关键解决path导入报错）
     "esModuleInterop": true,
     // 允许导入JSON文件
